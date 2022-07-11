@@ -9,18 +9,7 @@ import Button from "@mui/material/Button";
 import { Project } from "../common/types";
 
 const Search: NextPage = () => {
-  const [data, setData] = useState<Project[]>([
-    {
-      author: "first",
-      country: "",
-      imageLink: "",
-      language: "",
-      link: "",
-      pages: 0,
-      title: "",
-      year: 0,
-    },
-  ]);
+  const [data, setData] = useState<Project[]>([]);
 
   const [filteredData, setFilteredData] = useState(data);
 
@@ -54,6 +43,14 @@ const Search: NextPage = () => {
   const uniq = (a: string[]) => {
     return Array.from(new Set(a));
   };
+
+  if (data == undefined) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div>
