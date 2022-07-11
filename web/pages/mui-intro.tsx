@@ -8,7 +8,7 @@ import Link from "../src/Link";
 import ProTip from "../src/ProTip";
 import Copyright from "../src/Copyright";
 
-const About: NextPage = () => {
+const MuiIntro: NextPage = () => {
   return (
     <Container maxWidth="lg">
       <Box
@@ -35,4 +35,4 @@ const About: NextPage = () => {
   );
 };
 
-export default About;
+export default MuiIntro;
