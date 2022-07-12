@@ -2,16 +2,29 @@ from http.client import ResponseNotReady
 from urllib import response
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-import crud
-import schemas
-from db_handler import SessionLocal, engine
+from fastapi.middleware.cors import CORSMiddleware
 import models
 
 models.Base.metadata.create_all(bind=engine)
 
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+    "https://apeview-api-dev-back.herokuapp.com/"
+]
+
+
 app = FastAPI(
     title = "BOSCH/ETS Project Manager (Made by ApeView)",
     version = "0.0.1"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 def get_db():
