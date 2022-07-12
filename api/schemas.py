@@ -6,9 +6,10 @@ class ProjectBase(BaseModel):
     project_name: str
     students: str
     area: str
-    created_date: datetime
+    create_date: datetime
     description: str
     techs: str
+    contact: str
     finish_ratio: int
     status: str
 
