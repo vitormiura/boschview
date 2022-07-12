@@ -3,7 +3,6 @@ import { useState } from "react";
 import Box from "@mui/material/Box";
 import SearchBar from "./SearchBar";
 import Modal from "@mui/material/Modal";
-import { Button } from "@mui/material";
 
 const SearchModal: NextPage = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -36,15 +35,13 @@ const SearchModal: NextPage = () => {
             width: 700,
             height: 800,
             bgcolor: "background.paper",
-            border: "2px solid #000",
+            border: "none",
+            outline: "none",
             boxShadow: 24,
             p: 6,
           }}
         >
           <SearchBar />
-          <Button variant="outlined" href="/projects">
-            Ver mais resultados
-          </Button>
         </Box>
       </Modal>
     </Box>
