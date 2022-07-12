@@ -63,8 +63,8 @@ const Home: NextPage = () => {
               <h3>Area: {value.area}</h3>
               <div>
                 <b>Alunos:</b>
-                {value.alunos.map((aluno) => (
-                  <p>{aluno}</p>
+                {value.alunos.map((aluno, index) => (
+                  <p key={index}>{aluno}</p>
                 ))}
               </div>
             </Box>

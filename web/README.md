@@ -5,6 +5,7 @@
 **Todo**
 
 - Modal search box in Home page when clicking the search icon in header
+- Study about creating charts in react
 
 **MVP:**
 
