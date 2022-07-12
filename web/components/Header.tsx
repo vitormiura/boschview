@@ -32,6 +32,27 @@ const HeaderComponent: NextPage = () => {
           </Box>
         );
         break;
+      case "/projects/[id]":
+        return (
+          <Box
+            sx={{
+              gridColumn: "span 2",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <h1>Project</h1>
+            </Box>
+            <Box></Box>
+          </Box>
+        );
+        break;
       default:
         return (
           <Box
