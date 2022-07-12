@@ -6,9 +6,9 @@ def getProjectbyProjectId(db:Session, project_id: str):
     return db.query(models.Projects).filter(models.Projects.project_id == project_id).first()
 
 def getProjects(db:Session, skip: int = 0, limit: int = 100):
-    return db.query(models.projects).offset(skip).limit(limit).all()
+    return db.query(models.Projects).offset(skip).limit(limit).all()
 
-def getProjectsById(db:Session, sl_id: int):
+def getProjectsById(db:Session, sl_id: str):
     return db.query(models.Projects).filter(models.Projects.id == sl_id).first() 
 
 def newProject(db:Session, proj: schemas.ProjectAdd):
@@ -29,16 +29,15 @@ def newProject(db:Session, proj: schemas.ProjectAdd):
     db.refresh(project_details)
     return models.Projects(**proj.dict())
 
-def updateProject(db:Session, sl_id: int, details: schemas.UpdateProject):
+def updateProject(db:Session, sl_id: str, details: schemas.UpdateProject):
     db.query(models.Projects).filter(models.Projects.id == sl_id).update(vars(details))
     db.commit()
     return db.query(models.Monkeys).filter(models.Projects.id == sl_id).first()
 
-def deleteProject(db:Session, sl_id: int):
+def deleteProject(db:Session, sl_id: str):
     try:
         db.query(models.Projects).filter(models.Projects.id == sl_id).delete()
         db.commit()
     except Exception as e:
         raise Exception(e)
-
 

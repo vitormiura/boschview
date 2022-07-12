@@ -1,12 +1,11 @@
 from datetime import datetime
 from pydantic import BaseModel
 
-
 class ProjectBase(BaseModel):
     project_name: str
     students: str
     area: str
-    create_date: datetime
+    create_date: str
     description: str
     techs: str
     contact: str
@@ -33,6 +32,5 @@ class UpdateProject(BaseModel):
     techs: str
     finish_ratio: int
     status: str
-    
     class Config:
         orm_mode = True
