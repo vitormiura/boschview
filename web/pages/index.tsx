@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 // import Image from "next/image";
-import styles from "../styles/Home.module.css";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -44,15 +43,15 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <Head>
         <title>Apeview | Home</title>
         <meta name="description" content="Apeview home page" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1>Welcome to dashboard</h1>
+      <main style={{ width: "80%", padding: 2 }}>
+        <h1>Welcome</h1>
         <Box sx={{ display: "flex", gap: 2 }}>
           {data.map((value, index) => (
             <Box
@@ -72,7 +71,7 @@ const Home: NextPage = () => {
         </Box>
       </main>
 
-      <footer className={styles.footer}></footer>
+      <footer></footer>
     </div>
   );
 };

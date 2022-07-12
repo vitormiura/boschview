@@ -1,69 +1,87 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import Box from "@mui/material/Box";
-import { Button } from "@mui/material";
-import styles from "../styles/Header.module.css";
 import { useState } from "react";
-import Modal from "@mui/material/Modal";
-import SearchBar from "./SearchBar";
+import Box from "@mui/material/Box";
+import SearchModal from "./SearchModal";
 
 const HeaderComponent: NextPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
   console.log(router.pathname);
-  if (router.pathname === "/projects") {
-    return (
-      <header className={styles.header}>
-        <h1>Apeview Search</h1>
-      </header>
-    );
-  }
+
+  const routerHeaderRender = () => {
+    switch (router.pathname) {
+      case "/projects":
+        return (
+          <Box
+            sx={{
+              gridColumn: "span 2",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <h1>Search</h1>
+            </Box>
+            <Box></Box>
+          </Box>
+        );
+        break;
+      default:
+        return (
+          <Box
+            sx={{
+              gridColumn: "span 2",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h1>Dashboard</h1>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "end",
+              }}
+            >
+              <SearchModal />
+            </Box>
+          </Box>
+        );
+        break;
+    }
+  };
 
   return (
-    <header className={styles.header}>
-      <nav className={styles.nav}>
-        <h1>Apeview</h1>
-        <Box
-          onClick={() => setOpenModal(true)}
-          sx={{
-            backgroundColor: "red",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            cursor: "pointer",
-          }}
-        >
-          🎁
-        </Box>
-      </nav>
-      <Modal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
+    <header>
+      <nav
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr",
+          height: 80,
           alignItems: "center",
-          width: "100%",
+          backgroundColor: "gray",
+          padding: "0 10%",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: 700,
-            height: 800,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 6,
-          }}
-        >
-          <SearchBar />
-          <Button variant="outlined" href="/projects">
-            Ver mais resultados
-          </Button>
+        {/* COMPANY LOGO */}
+        <Box sx={{ display: "flex" }}>
+          <h1>Apeview</h1>
         </Box>
-      </Modal>
+        {routerHeaderRender()}
+      </nav>
     </header>
   );
 };
