@@ -10,9 +10,7 @@ import { Project } from "../common/types";
 
 const Search: NextPage = () => {
   const [data, setData] = useState<Project[]>([]);
-
   const [filteredData, setFilteredData] = useState(data);
-
   const [searchFilter, setSearchFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
 
