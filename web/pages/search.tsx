@@ -22,20 +22,24 @@ const Search: NextPage = () => {
   }, []);
 
   const filterData = () => {
-    console.log(countryFilter);
+    console.log(typeof countryFilter);
+    console.log(typeof searchFilter);
     const newData = data
       .filter((x: Project) =>
         x.title
           .toLowerCase()
           .includes(
-            searchFilter == ""
+            searchFilter === "" || searchFilter == undefined
               ? x.title.toLowerCase()
               : searchFilter.toLowerCase()
           )
       )
       .filter(
         (y: Project) =>
-          y.country == (countryFilter == undefined ? y.country : countryFilter)
+          y.country ==
+          (countryFilter === "" || countryFilter == undefined
+            ? y.country
+            : countryFilter)
       );
     setFilteredData(newData);
   };
