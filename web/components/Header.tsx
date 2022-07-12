@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import SearchModal from "./SearchModal";
+import Link from "next/link";
 
 const HeaderComponent: NextPage = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -13,34 +14,21 @@ const HeaderComponent: NextPage = () => {
     switch (router.pathname) {
       case "/projects":
         return (
-          <Box
-            sx={{
-              gridColumn: "span 2",
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-            }}
-          >
+          <Box>
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
               }}
             >
-              <h1>Search</h1>
+              <h1>Search Projects</h1>
             </Box>
-            <Box></Box>
           </Box>
         );
         break;
       case "/projects/[id]":
         return (
-          <Box
-            sx={{
-              gridColumn: "span 2",
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-            }}
-          >
+          <Box>
             <Box
               sx={{
                 display: "flex",
@@ -55,13 +43,7 @@ const HeaderComponent: NextPage = () => {
         break;
       default:
         return (
-          <Box
-            sx={{
-              gridColumn: "span 2",
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-            }}
-          >
+          <Box>
             <Box
               sx={{
                 display: "flex",
@@ -70,14 +52,6 @@ const HeaderComponent: NextPage = () => {
               }}
             >
               <h1>Dashboard</h1>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "end",
-              }}
-            >
-              <SearchModal />
             </Box>
           </Box>
         );
@@ -98,10 +72,26 @@ const HeaderComponent: NextPage = () => {
         }}
       >
         {/* COMPANY LOGO */}
-        <Box sx={{ display: "flex" }}>
-          <h1>Apeview</h1>
-        </Box>
+        <Link href={"/"}>
+          <Box
+            sx={{
+              display: "flex",
+              cursor: "pointer",
+              ":hover": { color: "white" },
+            }}
+          >
+            <h1>Apeview</h1>
+          </Box>
+        </Link>
         {routerHeaderRender()}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "end",
+          }}
+        >
+          <SearchModal />
+        </Box>
       </nav>
     </header>
   );

@@ -16,7 +16,7 @@ const SearchModal: NextPage = () => {
           padding: 2,
         }}
       >
-        🎁
+        🔎
       </Box>
       <Modal
         open={openModal}
