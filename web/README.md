@@ -4,9 +4,12 @@
 
 **Todo**
 
-- Modal search box in Home page when clicking the search icon in header
-- Study about creating charts in react
+[x] Modal search box in Home page when clicking the search icon in header
 
+[ ] Study about creating charts in react
+
+[ ] Improve page styling
+ 
 **MVP:**
 
 - Show charts in a dashboard view in Home page (using chart.js or similar) (Projects p/area, most used technologies, number of students p/area etc...)
