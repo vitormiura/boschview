@@ -1,10 +1,19 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
+// import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import GraphData from "../src/graph.json";
+import { useEffect, useState } from "react";
+
+interface GraphProject {
+  nome: string;
+  area: string;
+  alunos: string[];
+}
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -14,19 +23,25 @@ const Home: NextPage = () => {
     router.push("/login");
   }
 
-  let { isLoading, error, data } = useQuery("apiData", () =>
-    fetch("https://jsonplaceholder.typicode.com/photos").then((res) =>
-      res.json()
-    )
-  );
+  // let { isLoading, error, data } = useQuery("apiData", () =>
+  //   fetch("https://jsonplaceholder.typicode.com/photos/1").then((res) =>
+  //     res.json()
+  //   )
+  // );
 
-  isLoading = true;
+  // isLoading = false;
 
-  if (isLoading) return <CircularProgress />;
-  if (error) {
-    console.log(error);
-    return <p>An error ocurred</p>;
-  }
+  // if (isLoading) return <CircularProgress />;
+  // if (error) {
+  //   console.log(error);
+  //   return <p>An error ocurred</p>;
+  // }
+
+  const [data, setData] = useState<GraphProject[]>([]);
+
+  useEffect(() => {
+    setData(GraphData);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -37,8 +52,24 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <p>Welcome to dashboard</p>
-        <p>{JSON.stringify(data)}</p>
+        <h1>Welcome to dashboard</h1>
+        <Box sx={{ display: "flex", gap: 2 }}>
+          {data.map((value, index) => (
+            <Box
+              key={index}
+              sx={{ backgroundColor: "lightgreen", paddingX: 6, paddingY: 2 }}
+            >
+              <h1>{value.nome}</h1>
+              <h3>Area: {value.area}</h3>
+              <div>
+                <b>Alunos:</b>
+                {value.alunos.map((aluno) => (
+                  <p>{aluno}</p>
+                ))}
+              </div>
+            </Box>
+          ))}
+        </Box>
       </main>
 
       <footer className={styles.footer}></footer>
