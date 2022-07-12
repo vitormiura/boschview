@@ -9,6 +9,8 @@ class ProjectBase(BaseModel):
     created_date: datetime
     description: str
     techs: str
+    finish_ratio: int
+    status: str
 
 class ProjectAdd(ProjectBase):
     project_id: str
@@ -26,9 +28,10 @@ class UpdateProject(BaseModel):
     project_name: str
     students: str
     area: str
-    created_date: datetime
     description: str
     techs: str
+    finish_ratio: int
+    status: str
     
     class Config:
         orm_mode = True

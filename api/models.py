@@ -16,3 +16,5 @@ class Projects(Base):
     created_date = Column(DateTime, default=datetime.datetime.utcnow, index=True, nullable=False)
     description = Column(String(255), index=True, nullable=False)
     techs = Column(String(255), index=True, nullable=False)
+    finish_ratio = Column(Integer(2), index=True, nullable=False)
+    status = Column(String(255), index=True, nullable=False)
