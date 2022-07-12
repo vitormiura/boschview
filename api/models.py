@@ -1,6 +1,7 @@
 from email.policy import default
 from xmlrpc.client import Boolean
 from sqlalchemy import Column, String, Integer, Boolean
+from db_handler import Base
 
 class Projects(Base):
     __tablename__ = "project"
