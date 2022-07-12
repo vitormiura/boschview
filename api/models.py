@@ -18,3 +18,4 @@ class Projects(Base):
     techs = Column(String(255), index=True, nullable=False)
     finish_ratio = Column(Integer(2), index=True, nullable=False)
     status = Column(String(255), index=True, nullable=False)
+    image = Column(String(255), index=True, nullable=False)
