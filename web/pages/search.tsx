@@ -20,8 +20,6 @@ const Search: NextPage = () => {
   }, []);
 
   const filterData = () => {
-    console.log(typeof countryFilter);
-    console.log(typeof searchFilter);
     const newData = data
       .filter((x: Project) =>
         x.title
