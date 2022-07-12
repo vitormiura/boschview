@@ -2,28 +2,15 @@ import type { NextPage } from "next";
 import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
-import bookData from "../src/data.json"; // Should fetch from api instead, react query is interesting
-import ProjectCard from "../components/ProjectCard";
+import bookData from "../../src/data.json"; // Should fetch from api instead, react query is interesting
+import ProjectCard from "../../components/ProjectCard";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
-import { Project } from "../common/types";
+import { Project } from "../../common/types";
 
-const Search: NextPage = () => {
-  const [data, setData] = useState<Project[]>([
-    {
-      author: "first",
-      country: "",
-      imageLink: "",
-      language: "",
-      link: "",
-      pages: 0,
-      title: "",
-      year: 0,
-    },
-  ]);
-
+const Projects: NextPage = () => {
+  const [data, setData] = useState<Project[]>([]);
   const [filteredData, setFilteredData] = useState(data);
-
   const [searchFilter, setSearchFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
 
@@ -33,20 +20,22 @@ const Search: NextPage = () => {
   }, []);
 
   const filterData = () => {
-    console.log(countryFilter);
     const newData = data
       .filter((x: Project) =>
         x.title
           .toLowerCase()
           .includes(
-            searchFilter == ""
+            searchFilter === "" || searchFilter == undefined
               ? x.title.toLowerCase()
               : searchFilter.toLowerCase()
           )
       )
       .filter(
         (y: Project) =>
-          y.country == (countryFilter == undefined ? y.country : countryFilter)
+          y.country ==
+          (countryFilter === "" || countryFilter == undefined
+            ? y.country
+            : countryFilter)
       );
     setFilteredData(newData);
   };
@@ -54,6 +43,14 @@ const Search: NextPage = () => {
   const uniq = (a: string[]) => {
     return Array.from(new Set(a));
   };
+
+  if (data == undefined) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -111,4 +108,4 @@ const Search: NextPage = () => {
   );
 };
 
-export default Search;
+export default Projects;
