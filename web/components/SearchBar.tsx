@@ -40,7 +40,6 @@ const SearchBar: NextPage = () => {
         label="Something"
         variant="outlined"
         onChange={(e: any) => {
-          console.log(e.target.value);
           filterData(e.target.value);
         }}
         sx={{ width: "100%" }}

@@ -10,8 +10,8 @@ import SearchBar from "./SearchBar";
 const HeaderComponent: NextPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
-
-  if (router.pathname === "/search") {
+  console.log(router.pathname);
+  if (router.pathname === "/projects") {
     return (
       <header className={styles.header}>
         <h1>Apeview Search</h1>
@@ -59,7 +59,7 @@ const HeaderComponent: NextPage = () => {
           }}
         >
           <SearchBar />
-          <Button variant="outlined" href="/search">
+          <Button variant="outlined" href="/projects">
             Ver mais resultados
           </Button>
         </Box>

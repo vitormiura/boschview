@@ -2,13 +2,13 @@ import type { NextPage } from "next";
 import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
-import bookData from "../src/data.json"; // Should fetch from api instead, react query is interesting
-import ProjectCard from "../components/ProjectCard";
+import bookData from "../../src/data.json"; // Should fetch from api instead, react query is interesting
+import ProjectCard from "../../components/ProjectCard";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
-import { Project } from "../common/types";
+import { Project } from "../../common/types";
 
-const Search: NextPage = () => {
+const Projects: NextPage = () => {
   const [data, setData] = useState<Project[]>([]);
   const [filteredData, setFilteredData] = useState(data);
   const [searchFilter, setSearchFilter] = useState("");
@@ -108,4 +108,4 @@ const Search: NextPage = () => {
   );
 };
 
-export default Search;
+export default Projects;
