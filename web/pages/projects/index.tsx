@@ -53,58 +53,59 @@ const Projects: NextPage = () => {
   }
 
   return (
-    <div>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "lightgray",
+        height: "auto",
+        padding: 2,
+        gap: 2,
+      }}
+    >
       <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "lightgray",
-          height: "auto",
-          padding: 2,
-          gap: 2,
-        }}
+        sx={{ width: "80%", display: "flex", gap: 2, flexDirection: "column" }}
       >
-        <Box sx={{ display: "flex", width: 768, gap: 2 }}>
+        <Box sx={{ display: "flex", gap: 2 }}>
           <Autocomplete
             disablePortal
             id="combo-box-demo"
             options={uniq(data.map((value) => value.country))}
-            renderInput={(params) => <TextField {...params} label="country" />}
+            renderInput={(params) => (
+              <TextField {...params} label="Filter by country" />
+            )}
             onChange={(e: any, newValue: any) => setCountryFilter(newValue)}
             sx={{ width: "100%" }}
           />
         </Box>
-
         <TextField
-          label="Something"
+          label="Search by name"
           variant="outlined"
           onChange={(e: any) => setSearchFilter(e.target.value)}
-          sx={{ width: 768 }}
+          sx={{ width: "100%" }}
         />
-
         <Button variant="contained" onClick={filterData}>
           Search
         </Button>
-
-        <Box
-          sx={{
-            backgroundColor: "lightblue",
-            width: 768,
-            padding: 2,
-            display: "flex",
-            flexDirection: "column",
-            gap: 2,
-          }}
-        >
-          <p>{filteredData.length} items found</p>
-          {filteredData.map((value, index) => {
-            return <ProjectCard key={index} project={value} />;
-          })}
-        </Box>
       </Box>
-    </div>
+
+      <p>{filteredData.length} items found</p>
+
+      <Box
+        sx={{
+          width: "80%",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr",
+          gap: 2,
+        }}
+      >
+        {filteredData.map((value, index) => {
+          return <ProjectCard key={index} project={value} />;
+        })}
+      </Box>
+    </Box>
   );
 };
 
