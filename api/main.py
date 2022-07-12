@@ -10,11 +10,7 @@ from db_handler import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
 
-origins = [
-    "http://localhost",
-    "http://localhost:8080",
-    "https://apeview-api-dev-back.herokuapp.com/"
-]
+origins = ["*"]
 
 
 app = FastAPI(
