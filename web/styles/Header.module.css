@@ -1,0 +1,8 @@
+.header {
+    background-color: gray;
+}
+
+.nav {
+    justify-content: space-around;
+    display: flex;
+}
