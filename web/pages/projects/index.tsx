@@ -1,9 +1,7 @@
 import type { NextPage } from "next";
 import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
-import { useEffect, useState } from "react";
-import bookData from "../../src/data.json"; // Should fetch from api instead, react query is interesting
-import projectsData from "../../src/projects.json"; // Should fetch from api instead, react query is interesting
+import { useState } from "react";
 import ProjectCard from "../../components/ProjectCard";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
@@ -12,38 +10,21 @@ import { Project } from "../../common/types";
 import { useQuery } from "react-query";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const fetchProjects = async (): Promise<Project[]> => {
-  const response = await fetch(
-    "https://apeview-api-dev.herokuapp.com/projects"
-  );
-  return response.json();
-};
-
 const Projects: NextPage = () => {
-  const [data, setData] = useState<Project[]>([]);
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState<Project[]>([]);
   const [searchFilter, setSearchFilter] = useState("");
   const [areaFilter, setAreaFilter] = useState("");
 
-  // let { isLoading, error, data: apiData } = useQuery("projects", fetchProjects);
-  // isLoading = false; // debugging purposes
-  // if (isLoading) return <CircularProgress />;
-  // if (error) {
-  //   console.log(error);
-  //   return <p>An error ocurred</p>;
-  // }
-  // if (apiData == undefined) {
-  //   return <p>Data could not be retrieved</p>;
-  // }
-
-  // console.log(apiData);
-
-  useEffect(() => {
-    setData(projectsData);
-    setFilteredData(projectsData);
-  }, []);
+  const fetchProjects = async (): Promise<Project[]> => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`).then(
+      (res) => res.json()
+    );
+    setFilteredData(response);
+    return response;
+  };
 
   const filterData = () => {
+    if (data == undefined) return;
     const newData = data
       .filter((x: Project) =>
         x.project_name
@@ -66,12 +47,15 @@ const Projects: NextPage = () => {
     return Array.from(new Set(a));
   };
 
+  let { isLoading, error, data } = useQuery("projects", fetchProjects);
+  isLoading = false; // debugging purposes
+  if (isLoading) return <CircularProgress />;
+  if (error) {
+    console.log(error);
+    return <p>An error ocurred</p>;
+  }
   if (data == undefined) {
-    return (
-      <div>
-        <p>Loading...</p>
-      </div>
-    );
+    return <p>Data could not be retrieved</p>;
   }
 
   return (
