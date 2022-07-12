@@ -4,24 +4,24 @@ import { Project } from "../common/types";
 import Box from "@mui/material/Box";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
-import bookData from "../src/data.json";
+import projectsData from "../src/projects.json";
 
 const SearchBar: NextPage = () => {
   const [data, setData] = useState<Project[]>([]);
   const [filteredData, setFilteredData] = useState(data);
 
   useEffect(() => {
-    setData(bookData);
-    setFilteredData(bookData);
+    setData(projectsData);
+    setFilteredData(projectsData);
   }, []);
 
   const filterData = (searchFilter: string) => {
     const newData = data.filter((x: Project) =>
-      x.title
+      x.project_name
         .toLowerCase()
         .includes(
           searchFilter === "" || searchFilter == undefined
-            ? x.title.toLowerCase()
+            ? x.project_name.toLowerCase()
             : searchFilter.toLowerCase()
         )
     );
@@ -53,7 +53,7 @@ const SearchBar: NextPage = () => {
         {filteredData.map((value, index) => {
           return (
             <div key={index}>
-              <p>{value.title}</p>
+              <p>{value.project_name}</p>
             </div>
           );
         })}

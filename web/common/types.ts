@@ -1,10 +1,14 @@
 export interface Project {
-  author: string;
-  country: string;
-  imageLink: string;
-  language: string;
-  link: string;
-  pages: number;
-  title: string;
-  year: number;
+  project_name: string;
+  students: string; // list separated by comma?
+  area: string;
+  create_date: string;
+  description: string;
+  techs: string; // list separated by comma?
+  contact: string;
+  finish_ratio: number;
+  // status: "Em andamento" | "Concluído" | "Implementado";
+  status: string;
+  project_id: string;
+  id: number;
 }

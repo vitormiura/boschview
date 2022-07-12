@@ -8,19 +8,20 @@ const ProjectPage: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  let { isLoading, error, data } = useQuery("apiData", () =>
-    fetch("https://jsonplaceholder.typicode.com/photos/1").then((res) =>
-      res.json()
-    )
-  );
+  // needs to fetch only one project
+  // let { isLoading, error, data } = useQuery("jsonPlaceholder", () =>
+  //   fetch("https://jsonplaceholder.typicode.com/photos/1").then((res) =>
+  //     res.json()
+  //   )
+  // );
 
-  isLoading = false;
+  // isLoading = false;
 
-  if (isLoading) return <CircularProgress />;
-  if (error) {
-    console.log(error);
-    return <p>An error ocurred</p>;
-  }
+  // if (isLoading) return <CircularProgress />;
+  // if (error) {
+  //   console.log(error);
+  //   return <p>An error ocurred</p>;
+  // }
 
   return <div>{id}</div>;
 };

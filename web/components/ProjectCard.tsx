@@ -9,7 +9,7 @@ interface Props {
 
 const ProjectCard: NextPage<Props> = ({ project }) => {
   return (
-    <Link href={`/projects/${project.title}`}>
+    <Link href={`/projects/${project.project_id}`}>
       <Box
         sx={{
           backgroundColor: "white",
@@ -19,10 +19,10 @@ const ProjectCard: NextPage<Props> = ({ project }) => {
           cursor: "pointer",
         }}
       >
-        <h2>{project.title}</h2>
-        <h3>Author: {project.author}</h3>
-        <p>Language: {project.language}</p>
-        <p>Country: {project.country}</p>
+        <h2>{project.project_name}</h2>
+        <h3>Status: {project.status}</h3>
+        <p>Area: {project.area}</p>
+        <p>Description: {project.description}</p>
       </Box>
     </Link>
   );

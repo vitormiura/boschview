@@ -3,39 +3,61 @@ import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
 import bookData from "../../src/data.json"; // Should fetch from api instead, react query is interesting
+import projectsData from "../../src/projects.json"; // Should fetch from api instead, react query is interesting
 import ProjectCard from "../../components/ProjectCard";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import { Project } from "../../common/types";
 
+import { useQuery } from "react-query";
+import CircularProgress from "@mui/material/CircularProgress";
+
+const fetchProjects = async (): Promise<Project[]> => {
+  const response = await fetch(
+    "https://apeview-api-dev.herokuapp.com/projects"
+  );
+  return response.json();
+};
+
 const Projects: NextPage = () => {
   const [data, setData] = useState<Project[]>([]);
   const [filteredData, setFilteredData] = useState(data);
   const [searchFilter, setSearchFilter] = useState("");
-  const [countryFilter, setCountryFilter] = useState("");
+  const [areaFilter, setAreaFilter] = useState("");
+
+  // let { isLoading, error, data: apiData } = useQuery("projects", fetchProjects);
+  // isLoading = false; // debugging purposes
+  // if (isLoading) return <CircularProgress />;
+  // if (error) {
+  //   console.log(error);
+  //   return <p>An error ocurred</p>;
+  // }
+  // if (apiData == undefined) {
+  //   return <p>Data could not be retrieved</p>;
+  // }
+
+  // console.log(apiData);
 
   useEffect(() => {
-    setData(bookData);
-    setFilteredData(bookData);
+    setData(projectsData);
+    setFilteredData(projectsData);
   }, []);
 
   const filterData = () => {
     const newData = data
       .filter((x: Project) =>
-        x.title
+        x.project_name
           .toLowerCase()
           .includes(
             searchFilter === "" || searchFilter == undefined
-              ? x.title.toLowerCase()
+              ? x.project_name.toLowerCase()
               : searchFilter.toLowerCase()
           )
       )
       .filter(
         (y: Project) =>
-          y.country ==
-          (countryFilter === "" || countryFilter == undefined
-            ? y.country
-            : countryFilter)
+          y.area ==
+          (areaFilter === "" || areaFilter == undefined ? y.area : areaFilter)
       );
     setFilteredData(newData);
   };
@@ -72,11 +94,11 @@ const Projects: NextPage = () => {
           <Autocomplete
             disablePortal
             id="combo-box-demo"
-            options={uniq(data.map((value) => value.country))}
+            options={uniq(data.map((value) => value.area))}
             renderInput={(params) => (
-              <TextField {...params} label="Filter by country" />
+              <TextField {...params} label="Filter by Area" />
             )}
-            onChange={(e: any, newValue: any) => setCountryFilter(newValue)}
+            onChange={(e: any, newValue: any) => setAreaFilter(newValue)}
             sx={{ width: "100%" }}
           />
         </Box>
