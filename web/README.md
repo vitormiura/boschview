@@ -24,7 +24,7 @@
 - Working login and sign up users auth
 - Different types of users, normal vs admin
 - Admin registration email confirmation
-- Dark mode mode
+- Dark mode
 - Display a page for each user, showing all related informations
 - Display a page for each area, showing all related informations
 
