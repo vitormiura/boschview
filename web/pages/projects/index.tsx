@@ -48,14 +48,13 @@ const Projects: NextPage = () => {
   };
 
   let { isLoading, error, data } = useQuery("projects", fetchProjects);
-  isLoading = false; // debugging purposes
-  if (isLoading) return <CircularProgress />;
+  if (data == undefined) {
+    if (isLoading) return <CircularProgress />;
+    else return <p>Data could not be retrieved</p>;
+  }
   if (error) {
     console.log(error);
     return <p>An error ocurred</p>;
-  }
-  if (data == undefined) {
-    return <p>Data could not be retrieved</p>;
   }
 
   return (
