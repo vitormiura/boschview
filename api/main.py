@@ -2,16 +2,28 @@ from http.client import ResponseNotReady
 from urllib import response
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
+import models
 import crud
 import schemas
 from db_handler import SessionLocal, engine
-import models
 
 models.Base.metadata.create_all(bind=engine)
+
+origins = ["*"]
+
 
 app = FastAPI(
     title = "BOSCH/ETS Project Manager (Made by ApeView)",
     version = "0.0.1"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 def get_db():
@@ -25,6 +37,11 @@ def get_db():
 def retrieveAllProjects(skip:int = 0, limit:int = 100, db:Session = Depends(get_db)):
     projects = crud.getProjects(db = db, skip = skip, limit = limit)
     return projects
+
+@app.get('/projects/{project_id}', response_model = schemas.Project)
+def retrieveSingleProject(project_id:str, db:Session = Depends(get_db)):
+    project = crud.getProjectbyProjectId(db=db, project_id=project_id)
+    return project
 
 @app.put('/projects/update/', response_model = schemas.Project)
 def updateProject(sl_id:str, update_param:schemas.UpdateProject, db:Session = Depends(get_db)):

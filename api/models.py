@@ -13,6 +13,7 @@ class Projects(Base):
     project_name = Column(String(255), index=True, nullable=False)
     students = Column(String(255), index=True, nullable=False)
     area = Column(String(25), index=True, nullable=False)
+    course = Column(String(50), index=True, nullable=False)
     create_date = Column(String, index=True, nullable=False)
     description = Column(String(255), index=True, nullable=False)
     techs = Column(String(255), index=True, nullable=False)

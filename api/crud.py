@@ -17,6 +17,7 @@ def newProject(db:Session, proj: schemas.ProjectAdd):
         project_name = proj.project_name,
         students = proj.students,
         area = proj.area,
+        course = proj.course,
         create_date = proj.create_date,
         description = proj.description,
         techs = proj.techs,
