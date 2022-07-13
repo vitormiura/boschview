@@ -1,9 +1,9 @@
-from datetime import datetime
+from datetime import date, datetime
 from email.policy import default
 from sqlite3 import Date
 import datetime
 from xmlrpc.client import Boolean
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, DateTime
 from db_handler import Base
 
 class Projects(Base):
@@ -14,7 +14,7 @@ class Projects(Base):
     students = Column(String(255), index=True, nullable=False)
     area = Column(String(25), index=True, nullable=False)
     course = Column(String(50), index=True, nullable=False)
-    create_date = Column(String, index=True, nullable=False)
+    created_date = Column(DateTime, default=datetime.datetime.utcnow, autoincrement=True, index=True, nullable=False)
     description = Column(String(255), index=True, nullable=False)
     techs = Column(String(255), index=True, nullable=False)
     contact = Column(String(255), index=True, nullable=False)

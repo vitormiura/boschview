@@ -6,7 +6,7 @@ class ProjectBase(BaseModel):
     students: str
     area: str
     course: str
-    create_date: str
+    created_date: datetime
     description: str
     techs: str
     contact: str
