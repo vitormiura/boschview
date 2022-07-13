@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import projectData from "../../src/projects.json";
+import projectData from "../../../src/projects.json";
 import Image from "next/image";
-import image1 from "../../assets/image1.jpg";
-import { Project } from "../../common/types";
-import ProjectStack from "../../components/ProjectStack";
+import image1 from "../../../assets/image1.jpg";
+import { Project } from "../../../common/types";
+import ProjectStack from "../../../components/ProjectStack";
 import { Button } from "@mui/material";
 
 interface Props {
@@ -43,7 +43,7 @@ const ProjectHeader: NextPage<Props> = ({ project }) => {
         <Button
           variant="contained"
           color="info"
-          href={`/project/edit/${project.project_id}`}
+          href={`/projects/${project.project_id}/edit`}
         >
           Edit this page
         </Button>
@@ -113,6 +113,7 @@ const ProjectPage: NextPage = () => {
 
   return (
     <Box sx={{ backgroundColor: "lightgray" }}>
+      <p>{id}</p>
       <ProjectHeader project={data} />
       <ProjectContent project={data} />
     </Box>
