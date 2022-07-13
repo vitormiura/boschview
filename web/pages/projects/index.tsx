@@ -1,41 +1,44 @@
 import type { NextPage } from "next";
 import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
-import { useEffect, useState } from "react";
-import bookData from "../../src/data.json"; // Should fetch from api instead, react query is interesting
+import { useState } from "react";
 import ProjectCard from "../../components/ProjectCard";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import { Project } from "../../common/types";
 
-const Projects: NextPage = () => {
-  const [data, setData] = useState<Project[]>([]);
-  const [filteredData, setFilteredData] = useState(data);
-  const [searchFilter, setSearchFilter] = useState("");
-  const [countryFilter, setCountryFilter] = useState("");
+import { useQuery } from "react-query";
+import CircularProgress from "@mui/material/CircularProgress";
 
-  useEffect(() => {
-    setData(bookData);
-    setFilteredData(bookData);
-  }, []);
+const Projects: NextPage = () => {
+  const [filteredData, setFilteredData] = useState<Project[]>([]);
+  const [searchFilter, setSearchFilter] = useState("");
+  const [areaFilter, setAreaFilter] = useState("");
+
+  const fetchProjects = async (): Promise<Project[]> => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`).then(
+      (res) => res.json()
+    );
+    setFilteredData(response);
+    return response;
+  };
 
   const filterData = () => {
+    if (data == undefined) return;
     const newData = data
       .filter((x: Project) =>
-        x.title
+        x.project_name
           .toLowerCase()
           .includes(
             searchFilter === "" || searchFilter == undefined
-              ? x.title.toLowerCase()
+              ? x.project_name.toLowerCase()
               : searchFilter.toLowerCase()
           )
       )
       .filter(
         (y: Project) =>
-          y.country ==
-          (countryFilter === "" || countryFilter == undefined
-            ? y.country
-            : countryFilter)
+          y.area ==
+          (areaFilter === "" || areaFilter == undefined ? y.area : areaFilter)
       );
     setFilteredData(newData);
   };
@@ -44,67 +47,70 @@ const Projects: NextPage = () => {
     return Array.from(new Set(a));
   };
 
+  let { isLoading, error, data } = useQuery("projects", fetchProjects);
   if (data == undefined) {
-    return (
-      <div>
-        <p>Loading...</p>
-      </div>
-    );
+    if (isLoading) return <CircularProgress />;
+    else return <p>Data could not be retrieved</p>;
+  }
+  if (error) {
+    console.log(error);
+    return <p>An error ocurred</p>;
   }
 
   return (
-    <div>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "lightgray",
+        height: "auto",
+        padding: 2,
+        gap: 2,
+      }}
+    >
       <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "lightgray",
-          height: "auto",
-          padding: 2,
-          gap: 2,
-        }}
+        sx={{ width: "80%", display: "flex", gap: 2, flexDirection: "column" }}
       >
-        <Box sx={{ display: "flex", width: 768, gap: 2 }}>
+        <Box sx={{ display: "flex", gap: 2 }}>
           <Autocomplete
             disablePortal
             id="combo-box-demo"
-            options={uniq(data.map((value) => value.country))}
-            renderInput={(params) => <TextField {...params} label="country" />}
-            onChange={(e: any, newValue: any) => setCountryFilter(newValue)}
+            options={uniq(data.map((value) => value.area))}
+            renderInput={(params) => (
+              <TextField {...params} label="Filter by Area" />
+            )}
+            onChange={(e: any, newValue: any) => setAreaFilter(newValue)}
             sx={{ width: "100%" }}
           />
         </Box>
-
         <TextField
-          label="Something"
+          label="Search by name"
           variant="outlined"
           onChange={(e: any) => setSearchFilter(e.target.value)}
-          sx={{ width: 768 }}
+          sx={{ width: "100%" }}
         />
-
         <Button variant="contained" onClick={filterData}>
           Search
         </Button>
-
-        <Box
-          sx={{
-            backgroundColor: "lightblue",
-            width: 768,
-            padding: 2,
-            display: "flex",
-            flexDirection: "column",
-            gap: 2,
-          }}
-        >
-          <p>{filteredData.length} items found</p>
-          {filteredData.map((value, index) => {
-            return <ProjectCard key={index} project={value} />;
-          })}
-        </Box>
       </Box>
-    </div>
+
+      <p>{filteredData.length} items found</p>
+
+      <Box
+        sx={{
+          width: "80%",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr",
+          gap: 2,
+        }}
+      >
+        {filteredData.map((value, index) => {
+          return <ProjectCard key={index} project={value} />;
+        })}
+      </Box>
+    </Box>
   );
 };
 
