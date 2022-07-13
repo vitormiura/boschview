@@ -35,7 +35,7 @@ const HeaderComponent: NextPage = () => {
                 justifyContent: "center",
               }}
             >
-              <h1>Project's Page</h1>
+              <h1>Project Page</h1>
             </Box>
             <Box></Box>
           </Box>
@@ -50,7 +50,7 @@ const HeaderComponent: NextPage = () => {
                 justifyContent: "center",
               }}
             >
-              <h1>Edit Project's Page</h1>
+              <h1>Edit Project Page</h1>
             </Box>
             <Box></Box>
           </Box>
