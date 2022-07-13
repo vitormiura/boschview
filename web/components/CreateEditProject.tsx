@@ -29,14 +29,14 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
   const [inputFinishRatio, setInputFinishRatio] = useState(0);
   const [inputStatus, setInputStatus] = useState('');
 
-  const saveChanges = () => {
+  const saveChanges = async () => {
     alert('saving..');
     const body: Project = {
       project_name: inputName,
       students: inputTeam,
       area: inputArea,
       course: inputCourse,
-      create_date: '',
+      created_date: Date.now().toString(),
       description: inputDescription,
       techs: inputTechs,
       contact: inputContact,
@@ -49,8 +49,31 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
 
     if (isEdit) {
       // then use PUT
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/update/?sl_id=${isEdit.project_id}`,
+        {
+          method: 'PUT',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        }
+      )
+        .then((res) => res.json())
+        .then((json) => console.log(json));
     } else {
       // use POST
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/add/`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      })
+        .then((res) => res.json())
+        .then((json) => console.log(json));
     }
   };
 

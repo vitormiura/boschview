@@ -3,7 +3,7 @@ export interface Project {
   students: string; // list separated by comma?
   area: string;
   course: string;
-  create_date: string;
+  created_date: string;
   description: string;
   techs: string; // list separated by comma?
   contact: string;
