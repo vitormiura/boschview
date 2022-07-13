@@ -32,5 +32,6 @@ class UpdateProject(BaseModel):
     techs: str
     finish_ratio: int
     status: str
+    
     class Config:
         orm_mode = True

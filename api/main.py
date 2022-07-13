@@ -38,6 +38,11 @@ def retrieveAllProjects(skip:int = 0, limit:int = 100, db:Session = Depends(get_
     projects = crud.getProjects(db = db, skip = skip, limit = limit)
     return projects
 
+@app.get('/projects/{project_id}', response_model = schemas.Project)
+def readProjects(project_id:str, db:Session = Depends(get_db)):
+    project = crud.getProjectbyProjectId(db=db, project_id=project_id)
+    return project
+
 @app.put('/projects/update/', response_model = schemas.Project)
 def updateProject(sl_id:str, update_param:schemas.UpdateProject, db:Session = Depends(get_db)):
     details = crud.getProjectsById(db = db, sl_id = sl_id)
