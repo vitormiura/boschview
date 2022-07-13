@@ -1,32 +1,32 @@
 [
-    {
-        "nome": "Projeto1",
-        "area": "GS",
-        "alunos": ["abe", "eba", "bae"]
-    },
-    {
-        "nome": "Projeto2",
-        "area": "GS",
-        "alunos": ["oraci", "icaro"]
-    },
-    {
-        "nome": "Projeto3",
-        "area": "PT",
-        "alunos": ["dente"]
-    },
-    {
-        "nome": "Projeto4",
-        "area": "PT",
-        "alunos": ["monta"]
-    },
-    {
-        "nome": "Projeto5",
-        "area": "PT",
-        "alunos": ["eba"]
-    },
-    {
-        "nome": "Projeto6",
-        "area": "CI",
-        "alunos": ["miura"]
-    }
+  {
+    "nome": "Projeto1",
+    "area": "GS",
+    "alunos": ["abe", "eba", "bae"]
+  },
+  {
+    "nome": "Projeto2",
+    "area": "GS",
+    "alunos": ["oraci", "icaro"]
+  },
+  {
+    "nome": "Projeto3",
+    "area": "PT",
+    "alunos": ["dente"]
+  },
+  {
+    "nome": "Projeto4",
+    "area": "PT",
+    "alunos": ["monta"]
+  },
+  {
+    "nome": "Projeto5",
+    "area": "PT",
+    "alunos": ["eba"]
+  },
+  {
+    "nome": "Projeto6",
+    "area": "CI",
+    "alunos": ["miura"]
+  }
 ]

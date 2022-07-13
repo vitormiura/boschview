@@ -1,23 +1,23 @@
-import type { NextPage } from "next";
-import { TextField } from "@mui/material";
-import Box from "@mui/material/Box";
-import { useState } from "react";
-import ProjectCard from "../../components/ProjectCard";
-import Autocomplete from "@mui/material/Autocomplete";
-import Button from "@mui/material/Button";
-import { Project } from "../../common/types";
+import type { NextPage } from 'next';
+import { TextField } from '@mui/material';
+import Box from '@mui/material/Box';
+import { useState } from 'react';
+import ProjectCard from '../../components/ProjectCard';
+import Autocomplete from '@mui/material/Autocomplete';
+import Button from '@mui/material/Button';
+import { Project } from '../../common/types';
 
-import { useQuery } from "react-query";
-import CircularProgress from "@mui/material/CircularProgress";
+import { useQuery } from 'react-query';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Projects: NextPage = () => {
   const [filteredData, setFilteredData] = useState<Project[]>([]);
-  const [searchFilter, setSearchFilter] = useState("");
-  const [areaFilter, setAreaFilter] = useState("");
+  const [searchFilter, setSearchFilter] = useState('');
+  const [areaFilter, setAreaFilter] = useState('');
 
   const fetchProjects = async (): Promise<Project[]> => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`).then(
-      (res) => res.json()
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`).then((res) =>
+      res.json()
     );
     setFilteredData(response);
     return response;
@@ -30,15 +30,14 @@ const Projects: NextPage = () => {
         x.project_name
           .toLowerCase()
           .includes(
-            searchFilter === "" || searchFilter == undefined
+            searchFilter === '' || searchFilter == undefined
               ? x.project_name.toLowerCase()
               : searchFilter.toLowerCase()
           )
       )
       .filter(
         (y: Project) =>
-          y.area ==
-          (areaFilter === "" || areaFilter == undefined ? y.area : areaFilter)
+          y.area == (areaFilter === '' || areaFilter == undefined ? y.area : areaFilter)
       );
     setFilteredData(newData);
   };
@@ -47,7 +46,7 @@ const Projects: NextPage = () => {
     return Array.from(new Set(a));
   };
 
-  let { isLoading, error, data } = useQuery("projects", fetchProjects);
+  let { isLoading, error, data } = useQuery('projects', fetchProjects);
   if (data == undefined) {
     if (isLoading) return <CircularProgress />;
     else return <p>Data could not be retrieved</p>;
@@ -60,36 +59,32 @@ const Projects: NextPage = () => {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "lightgray",
-        height: "auto",
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'lightgray',
+        height: 'auto',
         padding: 2,
         gap: 2,
       }}
     >
-      <Box
-        sx={{ width: "80%", display: "flex", gap: 2, flexDirection: "column" }}
-      >
-        <Box sx={{ display: "flex", gap: 2 }}>
+      <Box sx={{ width: '80%', display: 'flex', gap: 2, flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', gap: 2 }}>
           <Autocomplete
             disablePortal
             id="combo-box-demo"
             options={uniq(data.map((value) => value.area))}
-            renderInput={(params) => (
-              <TextField {...params} label="Filter by Area" />
-            )}
+            renderInput={(params) => <TextField {...params} label="Filter by Area" />}
             onChange={(e: any, newValue: any) => setAreaFilter(newValue)}
-            sx={{ width: "100%" }}
+            sx={{ width: '100%' }}
           />
         </Box>
         <TextField
           label="Search by name"
           variant="outlined"
           onChange={(e: any) => setSearchFilter(e.target.value)}
-          sx={{ width: "100%" }}
+          sx={{ width: '100%' }}
         />
         <Button variant="contained" onClick={filterData}>
           Search
@@ -100,9 +95,9 @@ const Projects: NextPage = () => {
 
       <Box
         sx={{
-          width: "80%",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
+          width: '80%',
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 1fr',
           gap: 2,
         }}
       >

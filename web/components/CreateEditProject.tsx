@@ -1,5 +1,5 @@
-import { Box, TextField } from "@mui/material";
-import type { NextPage } from "next";
+import { Box, TextField } from '@mui/material';
+import type { NextPage } from 'next';
 
 interface CreateEditProjectProps {
   isEdit: false | { project_id: string };
@@ -22,15 +22,13 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
     }
   };
   return (
-    <Box
-      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-    >
+    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Box
         sx={{
-          width: "80%",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 2fr",
-          gridTemplateRows: "1fr 1fr 3fr 2fr",
+          width: '80%',
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 2fr',
+          gridTemplateRows: '1fr 1fr 3fr 2fr',
           gap: 2,
         }}
       >
@@ -39,18 +37,18 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
         <TextField variant="outlined" label="Start date" />
         <TextField variant="outlined" label="Contact" />
         <TextField variant="outlined" label="Area" />
-        <Box sx={{ gridRow: "span 2", backgroundColor: "red" }}>Imagem</Box>
+        <Box sx={{ gridRow: 'span 2', backgroundColor: 'red' }}>Imagem</Box>
         <TextField
           variant="outlined"
           label="Description"
-          sx={{ gridColumn: "span 2" }}
+          sx={{ gridColumn: 'span 2' }}
           multiline
           rows={6}
         />
         <TextField
           variant="outlined"
           label="Team"
-          sx={{ gridColumn: "span 2" }}
+          sx={{ gridColumn: 'span 2' }}
           multiline
           rows={4}
         />
