@@ -41,7 +41,22 @@ const HeaderComponent: NextPage = () => {
           </Box>
         );
         break;
-      default:
+      case "/projects/[id]/edit":
+        return (
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <h1>Edit Project's Page</h1>
+            </Box>
+            <Box></Box>
+          </Box>
+        );
+        break;
+      case "/":
         return (
           <Box>
             <Box
@@ -52,6 +67,21 @@ const HeaderComponent: NextPage = () => {
               }}
             >
               <h1>Dashboard</h1>
+            </Box>
+          </Box>
+        );
+        break;
+      default:
+        return (
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h1>Not found</h1>
             </Box>
           </Box>
         );
