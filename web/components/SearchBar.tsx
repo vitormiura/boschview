@@ -1,15 +1,21 @@
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Project } from "../common/types";
 import Box from "@mui/material/Box";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import projectsData from "../src/projects.json";
 import ProjectMiniCard from "./ProjectMiniCard";
+import { useRouter } from "next/router";
 
-const SearchBar: NextPage = () => {
+interface SearchBarProps {
+  closeModal: Dispatch<SetStateAction<boolean>>;
+}
+
+const SearchBar: NextPage<SearchBarProps> = ({ closeModal }) => {
   const [data, setData] = useState<Project[]>([]);
   const [filteredData, setFilteredData] = useState(data);
+  const router = useRouter();
 
   useEffect(() => {
     setData(projectsData);
@@ -56,7 +62,17 @@ const SearchBar: NextPage = () => {
         }}
       >
         {filteredData.map((value, index) => {
-          return <ProjectMiniCard key={index} project={value} />;
+          return (
+            <div
+              key={index}
+              onClick={() => {
+                closeModal(false); // Need to close the modal before navigating
+                router.push(`/projects/${value.project_id}`);
+              }}
+            >
+              <ProjectMiniCard project={value} />
+            </div>
+          );
         })}
       </Box>
 

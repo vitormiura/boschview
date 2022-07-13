@@ -41,7 +41,7 @@ const SearchModal: NextPage = () => {
             p: 6,
           }}
         >
-          <SearchBar />
+          <SearchBar closeModal={setOpenModal} />
         </Box>
       </Modal>
     </Box>
