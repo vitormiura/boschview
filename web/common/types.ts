@@ -2,6 +2,7 @@ export interface Project {
   project_name: string;
   students: string; // list separated by comma?
   area: string;
+  course: string;
   create_date: string;
   description: string;
   techs: string; // list separated by comma?

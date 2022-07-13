@@ -37,7 +37,7 @@ const ProjectHeader: NextPage<Props> = ({ project }) => {
         <h1>{project.project_name}</h1>
         <h3>Area: {project.area}</h3>
         <h3>Contato: {project.contact}</h3>
-        <h3>Curso: </h3>
+        <h3>Curso: {project.course}</h3>
       </Box>
       <Box sx={{ marginLeft: "auto" }}>
         <Button
@@ -107,9 +107,25 @@ const ProjectContent: NextPage<Props> = ({ project }) => {
 };
 
 const ProjectPage: NextPage = () => {
-  const data = projectData[0];
   const router = useRouter();
   const { id } = router.query;
+
+  const fetchProjects = async (): Promise<Project> => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${id}`
+    ).then((res) => res.json());
+    return response;
+  };
+
+  const { isLoading, error, data } = useQuery("oneProject", fetchProjects);
+  if (data == undefined) {
+    if (isLoading) return <CircularProgress />;
+    else return <p>Data could not be retrieved</p>;
+  }
+  if (error) {
+    console.log(error);
+    return <p>An error ocurred</p>;
+  }
 
   return (
     <Box sx={{ backgroundColor: "lightgray" }}>
