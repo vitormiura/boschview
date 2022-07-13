@@ -1,69 +1,128 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import Box from "@mui/material/Box";
-import { Button } from "@mui/material";
-import styles from "../styles/Header.module.css";
 import { useState } from "react";
-import Modal from "@mui/material/Modal";
-import SearchBar from "./SearchBar";
+import Box from "@mui/material/Box";
+import SearchModal from "./SearchModal";
+import Link from "next/link";
 
 const HeaderComponent: NextPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
   console.log(router.pathname);
-  if (router.pathname === "/projects") {
-    return (
-      <header className={styles.header}>
-        <h1>Apeview Search</h1>
-      </header>
-    );
-  }
+
+  const routerHeaderRender = () => {
+    switch (router.pathname) {
+      case "/projects":
+        return (
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <h1>Search Projects</h1>
+            </Box>
+          </Box>
+        );
+        break;
+      case "/projects/[id]":
+        return (
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <h1>Project Page</h1>
+            </Box>
+            <Box></Box>
+          </Box>
+        );
+        break;
+      case "/projects/[id]/edit":
+        return (
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <h1>Edit Project Page</h1>
+            </Box>
+            <Box></Box>
+          </Box>
+        );
+        break;
+      case "/":
+        return (
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h1>Dashboard</h1>
+            </Box>
+          </Box>
+        );
+        break;
+      default:
+        return (
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h1>Not found</h1>
+            </Box>
+          </Box>
+        );
+        break;
+    }
+  };
 
   return (
-    <header className={styles.header}>
-      <nav className={styles.nav}>
-        <h1>Apeview</h1>
-        <Box
-          onClick={() => setOpenModal(true)}
-          sx={{
-            backgroundColor: "red",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            cursor: "pointer",
-          }}
-        >
-          🎁
-        </Box>
-      </nav>
-      <Modal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
+    <header>
+      <nav
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr",
+          height: 80,
           alignItems: "center",
-          width: "100%",
+          backgroundColor: "gray",
+          padding: "0 10%",
         }}
       >
+        {/* COMPANY LOGO */}
+        <Link href={"/"}>
+          <Box
+            sx={{
+              display: "flex",
+              cursor: "pointer",
+              ":hover": { color: "white" },
+            }}
+          >
+            <h1>Apeview</h1>
+          </Box>
+        </Link>
+        {routerHeaderRender()}
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            width: 700,
-            height: 800,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 6,
+            justifyContent: "end",
           }}
         >
-          <SearchBar />
-          <Button variant="outlined" href="/projects">
-            Ver mais resultados
-          </Button>
+          <SearchModal />
         </Box>
-      </Modal>
+      </nav>
     </header>
   );
 };
