@@ -6,6 +6,7 @@ from xmlrpc.client import Boolean
 from sqlalchemy import Column, String, Integer, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from db_handler import Base
+
 class Projects(Base):
     __tablename__ = "project"
     project_id = Column(String(255), primary_key=True)
