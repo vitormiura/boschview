@@ -3,12 +3,23 @@ import { useState } from "react";
 import Box from "@mui/material/Box";
 import SearchBar from "./SearchBar";
 import Modal from "@mui/material/Modal";
+import { useRouter } from "next/router";
 
 const SearchModal: NextPage = () => {
   const [openModal, setOpenModal] = useState(false);
+  const router = useRouter();
 
   return (
-    <Box>
+    <Box sx={{ display: "flex" }}>
+      <Box
+        onClick={() => router.push("/projects/create")}
+        sx={{
+          cursor: "pointer",
+          padding: 2,
+        }}
+      >
+        ➕
+      </Box>
       <Box
         onClick={() => setOpenModal(true)}
         sx={{

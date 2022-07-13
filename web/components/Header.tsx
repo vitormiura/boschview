@@ -56,6 +56,21 @@ const HeaderComponent: NextPage = () => {
           </Box>
         );
         break;
+      case "/projects/create":
+        return (
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <h1>Create Project Page</h1>
+            </Box>
+            <Box></Box>
+          </Box>
+        );
+        break;
       case "/":
         return (
           <Box>
