@@ -14,13 +14,12 @@ class ProjectBase(BaseModel):
     status: str
 
 class ProjectAdd(ProjectBase):
-    project_id: str
-    
+    #project_id: str
     class Config:
         orm_mode = True
 
 class Project(ProjectAdd):
-    id: int
+    project_id: str
     
     class Config:
         orm_mode = True

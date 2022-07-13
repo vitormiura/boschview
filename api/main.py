@@ -63,7 +63,7 @@ def deleteProject(sl_id:str, db:Session = Depends(get_db)):
 
 @app.post('/projects/add/', response_model = schemas.ProjectAdd)
 def newProject(project:schemas.ProjectAdd, db:Session = Depends(get_db)):
-    project_id = crud.getProjectbyProjectId(db = db, project_id = project.project_id)
-    if project_id:
-        raise HTTPException(status_code=400, detail=f"Project ID: {project.project_id} is already on db: {project_id}")
+    project_name = crud.getProjectbyProjectId(db = db, project_id = project.project_name)
+    if project_name:
+        raise HTTPException(status_code=400, detail=f"Project ID: {project.project_name} is already on db: {project_name}")
     return crud.newProject(db = db, proj=project)
