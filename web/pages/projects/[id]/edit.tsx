@@ -20,7 +20,6 @@ const ProjectEditPage: NextPage = () => {
 
   return (
     <Box sx={{ backgroundColor: 'lightgray' }}>
-      <p>Edit page</p>
       <CreateEditProject isEdit={{ project_id: id.toString() }} />
     </Box>
   );

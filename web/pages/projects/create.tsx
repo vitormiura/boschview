@@ -11,7 +11,6 @@ import CreateEditProject from '../../components/CreateEditProject';
 const ProjectCreatePage: NextPage = () => {
   return (
     <Box sx={{ backgroundColor: 'lightgray' }}>
-      <p>Create page</p>
       <CreateEditProject isEdit={false} />
     </Box>
   );
