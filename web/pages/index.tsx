@@ -1,12 +1,13 @@
-import type { NextPage } from "next";
-import Head from "next/head";
+import type { NextPage } from 'next';
+import Head from 'next/head';
 // import Image from "next/image";
-import { useRouter } from "next/router";
-import { useQuery } from "react-query";
-import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
-import GraphData from "../src/graph.json";
-import { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
+import { useQuery } from 'react-query';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import GraphData from '../src/graph.json';
+import { useEffect, useState } from 'react';
+import { Button } from '@mui/material';
 
 interface GraphProject {
   nome: string;
@@ -19,7 +20,7 @@ const Home: NextPage = () => {
   const isAuthenticated: boolean = true;
 
   if (!isAuthenticated) {
-    router.push("/login");
+    router.push('/login');
   }
 
   // let { isLoading, error, data } = useQuery("apiData", () =>
@@ -43,20 +44,23 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
       <Head>
         <title>Apeview | Home</title>
         <meta name="description" content="Apeview home page" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main style={{ width: "80%", padding: 2 }}>
+      <main style={{ width: '80%', padding: 2 }}>
         <h1>Welcome</h1>
-        <Box sx={{ display: "flex", gap: 2 }}>
+        <Button variant="outlined" href="/projects">
+          Todos os projetos
+        </Button>
+        <Box sx={{ display: 'flex', gap: 2 }}>
           {data.map((value, index) => (
             <Box
               key={index}
-              sx={{ backgroundColor: "lightgreen", paddingX: 6, paddingY: 2 }}
+              sx={{ backgroundColor: 'lightgreen', paddingX: 6, paddingY: 2 }}
             >
               <h1>{value.nome}</h1>
               <h3>Area: {value.area}</h3>

@@ -1,9 +1,9 @@
-import { Box } from "@mui/material";
-import type { NextPage } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { Project } from "../common/types";
-import Techs from "../src/techs.json";
+import { Box } from '@mui/material';
+import type { NextPage } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Project } from '../common/types';
+import Techs from '../src/techs.json';
 
 interface Props {
   stack: string[];
@@ -20,7 +20,7 @@ const Tech: NextPage<TechProps> = ({ tech }) => {
 
     const logoExists = Techs.map((value) => value.name).includes(tech);
     if (logoExists) {
-      let techIcon = "";
+      let techIcon = '';
       Techs.map((value) => {
         if (value.name == tech) {
           techIcon = value.svg;
@@ -35,12 +35,12 @@ const Tech: NextPage<TechProps> = ({ tech }) => {
   return (
     <Box
       sx={{
-        backgroundColor: "white",
-        padding: "1rem",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: 100,
+        backgroundColor: 'white',
+        padding: '1rem',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minWidth: 100,
         height: 100,
       }}
     >
@@ -53,8 +53,8 @@ const ProjectStack: NextPage<Props> = ({ stack }) => {
   return (
     <Box
       sx={{
-        display: "flex",
-        gap: "1rem",
+        display: 'flex',
+        gap: '1rem',
       }}
     >
       {stack.map((tech, index) => (
