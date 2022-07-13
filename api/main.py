@@ -39,7 +39,7 @@ def retrieveAllProjects(skip:int = 0, limit:int = 100, db:Session = Depends(get_
     return projects
 
 @app.get('/projects/{project_id}', response_model = schemas.Project)
-def readProjects(project_id:str, db:Session = Depends(get_db)):
+def retrieveSingleProject(project_id:str, db:Session = Depends(get_db)):
     project = crud.getProjectbyProjectId(db=db, project_id=project_id)
     return project
 
