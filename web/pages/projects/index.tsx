@@ -17,6 +17,8 @@ const Projects: NextPage = () => {
   const [statusFilter, setStatusFilter] = useState('');
   const [courseFilter, setCourseFilter] = useState('');
 
+  const [stackFilter, setStackFilter] = useState<string>('');
+
   const fetchProjects = async (): Promise<Project[]> => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`).then((res) =>
       res.json()
@@ -50,6 +52,9 @@ const Projects: NextPage = () => {
         (a: Project) =>
           a.course ==
           (courseFilter === '' || courseFilter == undefined ? a.course : courseFilter)
+      )
+      .filter((b: Project) =>
+        stackFilter === '' || stackFilter == undefined ? b : b.techs.includes(stackFilter)
       );
     setFilteredData(newData);
   };
@@ -67,6 +72,14 @@ const Projects: NextPage = () => {
     console.log(error);
     return <p>An error ocurred</p>;
   }
+
+  let techStackArr: string[] = [];
+
+  data.forEach((project) => {
+    project.techs.split(';').map((tech) => {
+      techStackArr.push(tech);
+    });
+  });
 
   return (
     <Box
@@ -102,6 +115,17 @@ const Projects: NextPage = () => {
             options={uniq(data.map((value) => value.course))}
             renderInput={(params) => <TextField {...params} label="Filter by Course" />}
             onChange={(e: any, newValue: any) => setCourseFilter(newValue)}
+            sx={{ width: '100%' }}
+          />
+
+          <Autocomplete
+            disablePortal
+            options={uniq(techStackArr)}
+            renderInput={(params) => <TextField {...params} label="Filter by Tech" />}
+            onChange={(e: any, newValue: any) => {
+              setStackFilter(newValue);
+              console.log(newValue);
+            }}
             sx={{ width: '100%' }}
           />
         </Box>
