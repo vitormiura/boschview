@@ -30,6 +30,41 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
   const [inputFinishRatio, setInputFinishRatio] = useState(0);
   const [inputStatus, setInputStatus] = useState('');
 
+  let updateButton: string = 'Create project';
+
+  if (isEdit) {
+    updateButton = 'Save changes';
+    const fetchProjects = async (): Promise<Project> => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/${isEdit.project_id}`
+      ).then((res) => res.json());
+      setInputName(response.project_name);
+      setInputCourse(response.course);
+      setInputContact(response.contact);
+      setInputArea(response.area);
+      setInputTechs(response.techs);
+      setInputDescription(response.description);
+      setInputTeam(response.students);
+      setInputFinishRatio(response.finish_ratio);
+      setInputStatus(response.status);
+      console.log(response);
+      return response;
+    };
+
+    const { isLoading, error, data } = useQuery('oneProject', fetchProjects, {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    });
+    if (data == undefined) {
+      if (isLoading) return <CircularProgress />;
+      else return <p>Data could not be retrieved</p>;
+    }
+    if (error) {
+      console.log(error);
+      return <p>An error ocurred</p>;
+    }
+  }
+
   const saveChanges = async () => {
     alert('saving..');
     const body: Project = {
@@ -98,8 +133,6 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
     console.log(inputTechs);
   };
 
-  let updateButton: string = 'Create project';
-
   const editOrCreateRender = () => {
     if (isEdit) {
       return (
@@ -115,39 +148,6 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
       );
     }
   };
-
-  if (isEdit) {
-    updateButton = 'Save changes';
-    const fetchProjects = async (): Promise<Project> => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/${isEdit.project_id}`
-      ).then((res) => res.json());
-      setInputName(response.project_name);
-      setInputCourse(response.course);
-      setInputContact(response.contact);
-      setInputArea(response.area);
-      setInputTechs(response.techs);
-      setInputDescription(response.description);
-      setInputTeam(response.students);
-      setInputFinishRatio(response.finish_ratio);
-      setInputStatus(response.status);
-      console.log(response);
-      return response;
-    };
-
-    const { isLoading, error, data } = useQuery('oneProject', fetchProjects, {
-      staleTime: Infinity,
-      cacheTime: Infinity,
-    });
-    if (data == undefined) {
-      if (isLoading) return <CircularProgress />;
-      else return <p>Data could not be retrieved</p>;
-    }
-    if (error) {
-      console.log(error);
-      return <p>An error ocurred</p>;
-    }
-  }
 
   const handleInput = (e: any, hookSet: Dispatch<SetStateAction<any>>) => {
     hookSet(e.target.value);
