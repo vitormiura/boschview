@@ -31,10 +31,10 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
   const [inputStatus, setInputStatus] = useState('');
 
   let updateButton: string = 'Create project';
+  if (isEdit) updateButton = 'Save changes';
 
-  if (isEdit) {
-    updateButton = 'Save changes';
-    const fetchProjects = async (): Promise<Project> => {
+  const fetchProjects = async (): Promise<Project> => {
+    if (isEdit) {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/${isEdit.project_id}`
       ).then((res) => res.json());
@@ -49,20 +49,25 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
       setInputStatus(response.status);
       console.log(response);
       return response;
-    };
+    } else {
+      const serverPing = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`).then((res) =>
+        res.json()
+      );
+      return serverPing;
+    }
+  };
 
-    const { isLoading, error, data } = useQuery('oneProject', fetchProjects, {
-      staleTime: Infinity,
-      cacheTime: Infinity,
-    });
-    if (data == undefined) {
-      if (isLoading) return <CircularProgress />;
-      else return <p>Data could not be retrieved</p>;
-    }
-    if (error) {
-      console.log(error);
-      return <p>An error ocurred</p>;
-    }
+  const { isLoading, error, data } = useQuery('oneProject', fetchProjects, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+  if (data == undefined) {
+    if (isLoading) return <CircularProgress />;
+    else return <p>Data could not be retrieved</p>;
+  }
+  if (error) {
+    console.log(error);
+    return <p>An error ocurred</p>;
   }
 
   const saveChanges = async () => {
