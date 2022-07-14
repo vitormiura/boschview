@@ -8,14 +8,17 @@ import Box from '@mui/material/Box';
 import GraphData from '../src/graph.json';
 import { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
-
-interface GraphProject {
-  nome: string;
-  area: string;
-  alunos: string[];
-}
+import Dashboard from '../components/charts/Dashboard';
+import { Project } from '../common/types';
 
 const Home: NextPage = () => {
+  const fetchProjects = async (): Promise<Project[]> => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`).then((res) =>
+      res.json()
+    );
+    return response;
+  };
+
   const router = useRouter();
   const isAuthenticated: boolean = true;
 
@@ -23,25 +26,15 @@ const Home: NextPage = () => {
     router.push('/login');
   }
 
-  // let { isLoading, error, data } = useQuery("apiData", () =>
-  //   fetch("https://jsonplaceholder.typicode.com/photos/1").then((res) =>
-  //     res.json()
-  //   )
-  // );
-
-  // isLoading = false;
-
-  // if (isLoading) return <CircularProgress />;
-  // if (error) {
-  //   console.log(error);
-  //   return <p>An error ocurred</p>;
-  // }
-
-  const [data, setData] = useState<GraphProject[]>([]);
-
-  useEffect(() => {
-    setData(GraphData);
-  }, []);
+  let { isLoading, error, data } = useQuery('projects', fetchProjects);
+  if (data == undefined) {
+    if (isLoading) return <CircularProgress />;
+    else return <p>Data could not be retrieved</p>;
+  }
+  if (error) {
+    console.log(error);
+    return <p>An error ocurred</p>;
+  }
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -57,21 +50,7 @@ const Home: NextPage = () => {
           Todos os projetos
         </Button>
         <Box sx={{ display: 'flex', gap: 2 }}>
-          {data.map((value, index) => (
-            <Box
-              key={index}
-              sx={{ backgroundColor: 'lightgreen', paddingX: 6, paddingY: 2 }}
-            >
-              <h1>{value.nome}</h1>
-              <h3>Area: {value.area}</h3>
-              <div>
-                <b>Alunos:</b>
-                {value.alunos.map((aluno, index) => (
-                  <p key={index}>{aluno}</p>
-                ))}
-              </div>
-            </Box>
-          ))}
+          <Dashboard projects={data} />
         </Box>
       </main>
 
