@@ -20,9 +20,11 @@ const ProjectCard: NextPage<Props> = ({ project }) => {
         }}
       >
         <h2>{project.project_name}</h2>
+        <h2>{project.course}</h2>
         <h3>Status: {project.status}</h3>
         <p>Area: {project.area}</p>
         <p>Description: {project.description}</p>
+        <p>Tech Stack: {project.techs}</p>
       </Box>
     </Link>
   );

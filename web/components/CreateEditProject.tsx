@@ -10,6 +10,7 @@ import {
   TextField,
 } from '@mui/material';
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Project } from '../common/types';
@@ -29,6 +30,7 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
   const [inputTechs, setInputTechs] = useState('');
   const [inputFinishRatio, setInputFinishRatio] = useState(0);
   const [inputStatus, setInputStatus] = useState('');
+  const router = useRouter();
 
   let updateButton: string = 'Create project';
   if (isEdit) updateButton = 'Save changes';
@@ -71,7 +73,6 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
   }
 
   const saveChanges = async () => {
-    alert('saving..');
     const body: Project = {
       project_name: inputName,
       students: inputTeam,
@@ -116,6 +117,8 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
         .then((res) => res.json())
         .then((json) => console.log(json));
     }
+
+    router.push('/projects');
   };
 
   const addTech = (tech: string) => {

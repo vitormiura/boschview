@@ -66,12 +66,7 @@ const ProjectContent: NextPage<Props> = ({ project }) => {
           }}
         >
           <h2>Descrição</h2>
-          <Box sx={{ backgroundColor: 'white', padding: 2 }}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
-            excepturi debitis est. Praesentium officiis deserunt, molestias nam aut
-            corporis, asperiores natus vitae ab excepturi enim recusandae similique
-            laborum. Eveniet, quaerat.
-          </Box>
+          <Box sx={{ backgroundColor: 'white', padding: 2 }}>{project.description}</Box>
         </Box>
         <Box
           sx={{
@@ -82,12 +77,7 @@ const ProjectContent: NextPage<Props> = ({ project }) => {
           }}
         >
           <h2>Alunos</h2>
-          <Box sx={{ backgroundColor: 'white', padding: 2 }}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
-            excepturi debitis est. Praesentium officiis deserunt, molestias nam aut
-            corporis, asperiores natus vitae ab excepturi enim recusandae similique
-            laborum. Eveniet, quaerat.
-          </Box>
+          <Box sx={{ backgroundColor: 'white', padding: 2 }}>{project.students}</Box>
         </Box>
       </Box>
       <Box>
@@ -123,7 +113,6 @@ const ProjectPage: NextPage = () => {
 
   return (
     <Box sx={{ backgroundColor: 'lightgray' }}>
-      <p>{id}</p>
       <ProjectHeader project={data} />
       <ProjectContent project={data} />
     </Box>

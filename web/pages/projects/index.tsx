@@ -14,6 +14,8 @@ const Projects: NextPage = () => {
   const [filteredData, setFilteredData] = useState<Project[]>([]);
   const [searchFilter, setSearchFilter] = useState('');
   const [areaFilter, setAreaFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [courseFilter, setCourseFilter] = useState('');
 
   const fetchProjects = async (): Promise<Project[]> => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`).then((res) =>
@@ -38,6 +40,16 @@ const Projects: NextPage = () => {
       .filter(
         (y: Project) =>
           y.area == (areaFilter === '' || areaFilter == undefined ? y.area : areaFilter)
+      )
+      .filter(
+        (z: Project) =>
+          z.status ==
+          (statusFilter === '' || statusFilter == undefined ? z.status : statusFilter)
+      )
+      .filter(
+        (a: Project) =>
+          a.course ==
+          (courseFilter === '' || courseFilter == undefined ? a.course : courseFilter)
       );
     setFilteredData(newData);
   };
@@ -73,10 +85,23 @@ const Projects: NextPage = () => {
         <Box sx={{ display: 'flex', gap: 2 }}>
           <Autocomplete
             disablePortal
-            id="combo-box-demo"
             options={uniq(data.map((value) => value.area))}
             renderInput={(params) => <TextField {...params} label="Filter by Area" />}
             onChange={(e: any, newValue: any) => setAreaFilter(newValue)}
+            sx={{ width: '100%' }}
+          />
+          <Autocomplete
+            disablePortal
+            options={uniq(data.map((value) => value.status))}
+            renderInput={(params) => <TextField {...params} label="Filter by Status" />}
+            onChange={(e: any, newValue: any) => setStatusFilter(newValue)}
+            sx={{ width: '100%' }}
+          />
+          <Autocomplete
+            disablePortal
+            options={uniq(data.map((value) => value.course))}
+            renderInput={(params) => <TextField {...params} label="Filter by Course" />}
+            onChange={(e: any, newValue: any) => setCourseFilter(newValue)}
             sx={{ width: '100%' }}
           />
         </Box>
