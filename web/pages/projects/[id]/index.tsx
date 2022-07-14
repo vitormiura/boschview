@@ -93,7 +93,7 @@ const ProjectContent: NextPage<Props> = ({ project }) => {
       <Box>
         <h2>Tecnologias</h2>
         <Box>
-          <ProjectStack stack={project.techs.split(';')} />
+          <ProjectStack onEdit={false} stack={project.techs} />
         </Box>
       </Box>
     </Box>

@@ -13,6 +13,7 @@ import type { NextPage } from 'next';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Project } from '../common/types';
+import ProjectStack from './ProjectStack';
 
 interface CreateEditProjectProps {
   isEdit: false | { project_id: string };
@@ -77,6 +78,26 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
     }
   };
 
+  const addTech = (tech: string) => {
+    if (inputTechs != '') {
+      if (!inputTechs.split(';').includes(tech)) setInputTechs(`${inputTechs};${tech}`);
+    } else {
+      setInputTechs(tech);
+    }
+
+    console.log(inputTechs);
+  };
+
+  const deleteTech = (tech: string) => {
+    setInputTechs(
+      inputTechs
+        .split(';')
+        .filter((item) => item != tech)
+        .join(';')
+    );
+    console.log(inputTechs);
+  };
+
   let updateButton: string = 'Create project';
 
   const editOrCreateRender = () => {
@@ -105,6 +126,7 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
       setInputCourse(response.course);
       setInputContact(response.contact);
       setInputArea(response.area);
+      setInputTechs(response.techs);
       setInputDescription(response.description);
       setInputTeam(response.students);
       setInputFinishRatio(response.finish_ratio);
@@ -145,7 +167,7 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
           gap: 2,
         }}
       >
-        <Button variant="outlined" onClick={saveChanges} sx={{ gridColumn: 'span 3' }}>
+        <Button variant="contained" onClick={saveChanges} sx={{ gridColumn: 'span 3' }}>
           {updateButton}
         </Button>
         <TextField
@@ -218,7 +240,15 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
           rows={4}
         />
         {/* TECH STACK */}
-        <Box>Tech</Box>
+        <Box>
+          <p>Tech</p>
+          <ProjectStack
+            addTech={addTech}
+            deleteTech={deleteTech}
+            onEdit={true}
+            stack={inputTechs}
+          />
+        </Box>
 
         {editOrCreateRender()}
       </Box>

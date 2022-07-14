@@ -4,16 +4,22 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Project } from '../common/types';
 import Techs from '../src/techs.json';
+import AddTechModal from './AddTechModal';
 
 interface Props {
-  stack: string[];
+  stack: string;
+  onEdit: boolean;
+  deleteTech?: (tech: string) => void; // actually a function that modify states lmao
+  addTech?: (tech: string) => void;
 }
 
 interface TechProps {
   tech: string;
+  onEdit: boolean;
+  deleteTech: any;
 }
 
-const Tech: NextPage<TechProps> = ({ tech }) => {
+const Tech: NextPage<TechProps> = ({ tech, onEdit, deleteTech }) => {
   // apply some conditional rendering
   const renderLogo = () => {
     // if logo exists in json render logo
@@ -32,6 +38,31 @@ const Tech: NextPage<TechProps> = ({ tech }) => {
 
     return <h2>{tech}</h2>;
   };
+
+  if (onEdit) {
+    return (
+      <Box
+        sx={{
+          backgroundColor: 'white',
+          padding: '0.5rem',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minWidth: 100,
+          height: 100,
+        }}
+      >
+        {renderLogo()}
+        <Box
+          onClick={() => deleteTech(tech)}
+          sx={{ marginLeft: 'auto', marginBottom: 'auto', cursor: 'pointer' }}
+        >
+          🗑️
+        </Box>
+      </Box>
+    );
+  }
+
   return (
     <Box
       sx={{
@@ -49,19 +80,45 @@ const Tech: NextPage<TechProps> = ({ tech }) => {
   );
 };
 
-const ProjectStack: NextPage<Props> = ({ stack }) => {
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        gap: '1rem',
-      }}
-    >
-      {stack.map((tech, index) => (
-        <Tech key={index} tech={tech} />
-      ))}
-    </Box>
-  );
+const ProjectStack: NextPage<Props> = ({ stack, onEdit, deleteTech, addTech }) => {
+  console.log('teste');
+
+  const renderModalButton = () => {
+    if (onEdit && addTech != undefined) {
+      return <AddTechModal addTech={addTech} />;
+    }
+  };
+
+  const renderTechStack = () => {
+    if (stack != '') {
+      return (
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '1rem',
+          }}
+        >
+          {stack.split(';').map((tech, index) => (
+            <Tech key={index} tech={tech} onEdit={onEdit} deleteTech={deleteTech} />
+          ))}
+          {renderModalButton()}
+        </Box>
+      );
+    } else {
+      return (
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '1rem',
+          }}
+        >
+          {renderModalButton()}
+        </Box>
+      );
+    }
+  };
+
+  return <Box>{renderTechStack()}</Box>;
 };
 
 export default ProjectStack;
