@@ -1,6 +1,8 @@
 from http.client import ResponseNotReady
+from typing import Optional
 from urllib import response
-from fastapi import FastAPI, Depends, HTTPException, File, UploadFile
+from fastapi import FastAPI, Depends, HTTPException, File, UploadFile, Request
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 import models
@@ -8,6 +10,7 @@ import crud
 import schemas
 import shutil
 from db_handler import SessionLocal, engine
+
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -39,14 +42,14 @@ def retrieveAllProjects(skip:int = 0, limit:int = 100, db:Session = Depends(get_
     projects = crud.getProjects(db = db, skip = skip, limit = limit)
     return projects
 
-@app.post('/projects/add/image')
-async def imageUpload(file:UploadFile = File(...)):
-    file_location = f'media/{file.filename}'
-    with open(file_location, 'wb') as buffer:
-        shutil.copyfileobj(file.file,buffer) 
-    image = str('media/'+file.filename)
+# @app.post('/projects/add/image')
+# async def imageUpload(file:UploadFile = File(...)):
+#     file_location = f'media/{file.filename}'
+#     with open(file_location, 'wb') as buffer:
+#         shutil.copyfileobj(file.file,buffer) 
+#     image = str('media/'+file.filename)
     
-    return image
+#     return image
 
 @app.get('/projects/{project_id}', response_model = schemas.Project)
 def retrieveSingleProject(project_id:str, db:Session = Depends(get_db)):
@@ -71,9 +74,31 @@ def deleteProject(sl_id:str, db:Session = Depends(get_db)):
         raise HTTPException(status_code = 400, detail=f'Unable to delete: {e}')
     return {'delete status':'success'}
 
-@app.post('/projects/add/', response_model = schemas.ProjectAdd)
-def newProject(project:schemas.ProjectAdd, db:Session = Depends(get_db)):
-    project_name = crud.getProjectbyProjectName(db = db, project_name = project.project_name)
+# @app.post('/projects/add/', response_model = schemas.ProjectAdd)
+# def newProject(project:schemas.ProjectAdd, db:Session = Depends(get_db)):
+#     project_name = crud.getProjectbyProjectName(db = db, project_name = project.project_name)
+#     if project_name:
+#         raise HTTPException(status_code=400, detail=f"Project: {project.project_name} is already on db as {project_name}")
+#     # file_location = f'media/{file.filename}'
+#     # with open(file_location, 'wb') as buffer:       
+#     #     shutil.copyfileobj(file.file,buffer) 
+#     # image = str('media/'+file.filename)
+#     # image = str(file.filename)
+#     return crud.newProject(db = db, proj=project, image='teste')
+
+@app.post('/projects/add')
+async def upload_accept_file(options: schemas.ProjectAdd = Depends(),data: UploadFile = File(...), db:Session = Depends(get_db)):
+    project_name = crud.getProjectbyProjectName(db = db, project_name = options.project_name)
     if project_name:
-        raise HTTPException(status_code=400, detail=f"Project: {project.project_name} is already on db as {project_name}")
-    return crud.newProject(db = db, proj=project)
+        raise HTTPException(status_code=400, detail=f"Project: {options.project_name} is already on db as {project_name}")
+
+    file_location = f'media/{data.filename}'
+
+    with open(file_location, 'wb') as buffer:
+        shutil.copyfileobj(data.file,buffer) 
+
+    return crud.newProject(db = db, proj=options, image_path=data.filename)
+
+@app.get('/projects/media/{image_path}')
+def get_image(image_path):
+    return FileResponse(f'media/{image_path}')

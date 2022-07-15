@@ -1,4 +1,6 @@
 from datetime import datetime
+# from xmlrpc.client import DateTime
+from fastapi import FastAPI, Depends, HTTPException, File, UploadFile
 from pydantic import BaseModel
 
 class ProjectBase(BaseModel):
@@ -6,21 +8,21 @@ class ProjectBase(BaseModel):
     students: str
     area: str
     course: str
-    created_date: datetime
     description: str
     techs: str
     contact: str
     finish_ratio: int
     status: str
-    #image: str
+    # image_path: str
 
 class ProjectAdd(ProjectBase):
-    #project_id: str
     class Config:
         orm_mode = True
 
 class Project(ProjectAdd):
     project_id: str
+    created_date: datetime
+    image_path: str
     
     class Config:
         orm_mode = True
@@ -35,6 +37,7 @@ class UpdateProject(BaseModel):
     techs: str
     finish_ratio: int
     status: str
+    #image_path: str
 
     class Config:
         orm_mode = True

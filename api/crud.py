@@ -1,3 +1,4 @@
+import string
 from sqlalchemy.orm import Session
 import models
 import schemas
@@ -39,7 +40,7 @@ def generateUniqueUUID(db: Session):
         id = str(uuid.uuid4()).replace("-", "")
     return id
 
-def newProject(db:Session, proj: schemas.ProjectAdd, main = main):
+def newProject(db:Session, proj: schemas.ProjectAdd, image_path: str):
 
     project_details = models.Projects(
         project_id = generateUniqueUUID(db),
@@ -53,7 +54,7 @@ def newProject(db:Session, proj: schemas.ProjectAdd, main = main):
         contact = proj.contact,
         finish_ratio = proj.finish_ratio,
         status = proj.status,
-        #image = main.imageUpload(),
+        image_path = image_path,
     )
     
     db.add(project_details)

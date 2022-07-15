@@ -5,7 +5,7 @@ from sqlite3 import Date
 import datetime
 from xmlrpc.client import Boolean
 from sqlalchemy import Column, String, Integer, DateTime
-from sqlalchemy_utils import URLType
+#from sqlalchemy_utils import URLType
 from sqlalchemy.dialects.postgresql import UUID
 from db_handler import Base
 
@@ -22,4 +22,4 @@ class Projects(Base):
     contact = Column(String(255), index=True, nullable=False)
     finish_ratio = Column(Integer, index=True, nullable=False)
     status = Column(String(255), index=True, nullable=False)
-    image = Column(URLType, index=True, nullable=True)
+    image_path  = Column(String(255), index=True, nullable=True)
