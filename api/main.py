@@ -14,7 +14,7 @@ from db_handler import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
 
-origins = ['*']
+origins = ["*"]
 
 
 app = FastAPI(
@@ -26,8 +26,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
-    allow_headers=['Accept', 'Content-Type', 'Authorization'],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 def get_db():
