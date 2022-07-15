@@ -1,9 +1,9 @@
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import Box from "@mui/material/Box";
-import SearchModal from "./SearchModal";
-import Link from "next/link";
+import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import Box from '@mui/material/Box';
+import SearchModal from './SearchModal';
+import Link from 'next/link';
 
 const HeaderComponent: NextPage = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -12,13 +12,13 @@ const HeaderComponent: NextPage = () => {
 
   const routerHeaderRender = () => {
     switch (router.pathname) {
-      case "/projects":
+      case '/projects':
         return (
           <Box>
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "center",
+                display: 'flex',
+                justifyContent: 'center',
               }}
             >
               <h1>Search Projects</h1>
@@ -26,13 +26,13 @@ const HeaderComponent: NextPage = () => {
           </Box>
         );
         break;
-      case "/projects/[id]":
+      case '/projects/[id]':
         return (
           <Box>
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "center",
+                display: 'flex',
+                justifyContent: 'center',
               }}
             >
               <h1>Project Page</h1>
@@ -41,13 +41,13 @@ const HeaderComponent: NextPage = () => {
           </Box>
         );
         break;
-      case "/projects/[id]/edit":
+      case '/projects/[id]/edit':
         return (
           <Box>
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "center",
+                display: 'flex',
+                justifyContent: 'center',
               }}
             >
               <h1>Edit Project Page</h1>
@@ -56,14 +56,29 @@ const HeaderComponent: NextPage = () => {
           </Box>
         );
         break;
-      case "/":
+      case '/projects/create':
         return (
           <Box>
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <h1>Create Project Page</h1>
+            </Box>
+            <Box></Box>
+          </Box>
+        );
+        break;
+      case '/':
+        return (
+          <Box>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
               <h1>Dashboard</h1>
@@ -76,9 +91,9 @@ const HeaderComponent: NextPage = () => {
           <Box>
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
               <h1>Not found</h1>
@@ -93,21 +108,21 @@ const HeaderComponent: NextPage = () => {
     <header>
       <nav
         style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 1fr',
           height: 80,
-          alignItems: "center",
-          backgroundColor: "gray",
-          padding: "0 10%",
+          alignItems: 'center',
+          backgroundColor: 'gray',
+          padding: '0 10%',
         }}
       >
         {/* COMPANY LOGO */}
-        <Link href={"/"}>
+        <Link href={'/'}>
           <Box
             sx={{
-              display: "flex",
-              cursor: "pointer",
-              ":hover": { color: "white" },
+              display: 'flex',
+              cursor: 'pointer',
+              ':hover': { color: 'white' },
             }}
           >
             <h1>Apeview</h1>
@@ -116,8 +131,8 @@ const HeaderComponent: NextPage = () => {
         {routerHeaderRender()}
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "end",
+            display: 'flex',
+            justifyContent: 'end',
           }}
         >
           <SearchModal />
