@@ -12,24 +12,33 @@
 
 **MVP:**
 
-- Show charts in a dashboard view in Home page (using chart.js or similar) (Projects p/area, most used technologies, number of students p/area etc...)
-- Search projets by name, technology and area
-- Display a page for each project, showing all related informations (students, area, description, tecnologies, finish ratio and current status)
-- Add photo to project
-- Add, edit and delete projects
-- Follow bosch brandguides
-- About us page
-- Local storage auth
+[ ] Show charts in a dashboard view in Home page (using chart.js or similar) (Projects p/area, most used technologies, number of students p/area etc...)
+
+[x] Search projets by name, technology and area
+
+[x] Display a page for each project, showing all related informations (students, area, description, tecnologies, finish ratio and current status)
+
+[x] Add photo to project
+
+[x] Add, edit and delete projects
+
+[ ] Follow bosch brandguides
+
+[ ] About us page
+
+[ ] Local storage auth
 
 **Post-MVP:**
 
 - Students can add/edit/delete/view comments to indicate more information about the project finish ratio
 - Working login and sign up users auth
+- Project Rating
 - Different types of users, normal vs admin
 - Admin registration email confirmation
 - Dark mode
 - Display a page for each user, showing all related informations
 - Display a page for each area, showing all related informations
+- Export database to CSV
 
 ## Getting Started
 
