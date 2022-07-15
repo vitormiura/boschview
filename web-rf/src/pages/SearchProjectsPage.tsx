@@ -12,7 +12,7 @@ export default function SearchProjectsPage({ allProjects }: { allProjects: Proje
   const [courseFilter, setCourseFilter] = useState('');
   const [stackFilter, setStackFilter] = useState('');
 
-  const unique = (list: string[]) => Array.from(new Set(list));
+  const uniqueArray = (array: string[]) => Array.from(new Set(array));
   function filterData() {
     console.log('> Filtering');
     setFilteredData(
@@ -55,22 +55,22 @@ export default function SearchProjectsPage({ allProjects }: { allProjects: Proje
       <Box>
         {/* Filters */}
         <Autocomplete
-          options={unique(allProjects.map((project) => project.area))}
+          options={uniqueArray(allProjects.map((project) => project.area))}
           renderInput={(params) => <TextField {...params} label="Filter by Area" />}
           onInputChange={(e, value) => setAreaFilter(value)}
         />
         <Autocomplete
-          options={unique(allProjects.map((project) => project.course))}
+          options={uniqueArray(allProjects.map((project) => project.course))}
           renderInput={(params) => <TextField {...params} label="Filter by Course" />}
           onInputChange={(e, value) => setCourseFilter(value)}
         />
         <Autocomplete
-          options={unique(allProjects.map((project) => project.status))}
+          options={uniqueArray(allProjects.map((project) => project.status))}
           renderInput={(params) => <TextField {...params} label="Filter by Status" />}
           onInputChange={(e, value) => setStatusFilter(value)}
         />
         <Autocomplete
-          options={unique(
+          options={uniqueArray(
             allProjects
               .map((project) => {
                 const projectTechs = project.techs.split(';');
