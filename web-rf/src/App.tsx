@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { Button } from '@mui/material';
+import { Routes, Route, Link } from 'react-router-dom';
 
 import reactLogo from './assets/react.svg';
 import './App.css';
 import { fetchAllProjects } from './common/functions';
+import HomePage from './pages/HomePage';
+import HeaderComponent from './components/HeaderComponent';
 
 function App() {
   //import.meta.env.VITE_API_URL
@@ -17,8 +19,10 @@ function App() {
 
   return (
     <div className="App">
-      <p>Hello World</p>
-      <Button variant="contained">Hello World</Button>
+      <HeaderComponent />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
     </div>
   );
 }
