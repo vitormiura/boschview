@@ -14,6 +14,8 @@ interface Props {
 }
 
 const ProjectHeader: NextPage<Props> = ({ project }) => {
+  const image = `${process.env.NEXT_PUBLIC_API_URL}/media/${project.image_path}`;
+  console.log(image);
   return (
     <Box
       sx={{
@@ -25,7 +27,7 @@ const ProjectHeader: NextPage<Props> = ({ project }) => {
       }}
     >
       <Box>
-        <Image style={{ borderRadius: '1rem' }} src={image1} width={500} height={300} />
+        <img alt={project.image_path} src={image} width={500} height={300} />
       </Box>
       <Box sx={{}}>
         <h1>{project.project_name}</h1>
@@ -110,6 +112,8 @@ const ProjectPage: NextPage = () => {
     console.log(error);
     return <p>An error ocurred</p>;
   }
+
+  console.log(data);
 
   return (
     <Box sx={{ backgroundColor: 'lightgray' }}>

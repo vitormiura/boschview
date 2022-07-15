@@ -30,6 +30,7 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
   const [inputTechs, setInputTechs] = useState('');
   const [inputFinishRatio, setInputFinishRatio] = useState(0);
   const [inputStatus, setInputStatus] = useState('');
+  const [inputImage, setInputImage] = useState<any>(undefined);
   const router = useRouter();
 
   let updateButton: string = 'Create project';
@@ -85,6 +86,7 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
       finish_ratio: inputFinishRatio,
       status: inputStatus,
       project_id: '',
+      image_path: '',
     };
 
     console.log(body);
@@ -106,14 +108,19 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
         .then((json) => console.log(json));
     } else {
       // use POST
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/add/`, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      })
+      console.log('trying to create project');
+      if (inputImage == undefined) return;
+      const formData = new FormData();
+      formData.append('data', inputImage, inputImage.name);
+
+      await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/add?project_name=${body.project_name}&students=${body.students}&area=${body.area}&course=${body.course}&description=${body.description}&techs=${body.techs}&contact=${body.contact}&finish_ratio=${body.finish_ratio}&status=${body.status}`,
+        //'https://apeview-api-dev-back.herokuapp.com/projects/add?project_name=teste100&students=teste5&area=teste5&course=teste5&description=teste5&techs=teste5&contact=teste5&finish_ratio=2&status=teste5',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      )
         .then((res) => res.json())
         .then((json) => console.log(json));
     }
@@ -162,6 +169,10 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
     console.log(e.target.value);
   };
 
+  const fileName = () => {
+    if (inputImage != undefined) return <p>{inputImage.name}</p>;
+  };
+
   return (
     <Box
       sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 2 }}
@@ -197,6 +208,8 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
             valueLabelDisplay="on"
             value={inputFinishRatio}
             onChange={(e: any) => handleInput(e, setInputFinishRatio)}
+            step={10}
+            marks
             min={0}
             max={100}
           />
@@ -213,7 +226,21 @@ const CreateEditProject: NextPage<CreateEditProjectProps> = ({ isEdit }) => {
           variant="outlined"
           label="Area"
         />
-        <Box sx={{ gridRow: 'span 3', backgroundColor: 'red' }}>Imagem</Box>
+        <Box sx={{ gridRow: 'span 3' }}>
+          <Button variant="contained" component="label">
+            Upload / file: {fileName()}
+            <input
+              onChange={(e: any) => {
+                setInputImage(e.target.files[0]);
+              }}
+              id="input-file"
+              hidden
+              accept="image/*"
+              multiple
+              type="file"
+            />
+          </Button>
+        </Box>
         <FormControl sx={{ gridColumn: 'span 2' }}>
           <InputLabel id="status-label">Status</InputLabel>
           <Select

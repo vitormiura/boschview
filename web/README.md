@@ -30,6 +30,7 @@
 - Dark mode
 - Display a page for each user, showing all related informations
 - Display a page for each area, showing all related informations
+- Export database to CSV
 
 ## Getting Started
 

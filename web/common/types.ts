@@ -11,4 +11,5 @@ export interface Project {
   // status: "Em andamento" | "Concluído" | "Implementado";
   status: string;
   project_id: string;
+  image_path: string; 
 }
