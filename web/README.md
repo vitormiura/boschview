@@ -25,6 +25,7 @@
 
 - Students can add/edit/delete/view comments to indicate more information about the project finish ratio
 - Working login and sign up users auth
+- Project Rating
 - Different types of users, normal vs admin
 - Admin registration email confirmation
 - Dark mode
