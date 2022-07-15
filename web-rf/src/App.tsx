@@ -18,10 +18,6 @@ import { CircularProgress } from '@mui/material';
 
 function App() {
   //import.meta.env.VITE_API_URL
-  const { isLoading, error, data } = useQuery('projects', fetchAllProjects);
-
-  if (isLoading || data == undefined) return <CircularProgress />;
-  if (error) return <div>Error</div>;
 
   // console.log(data);
 
@@ -33,7 +29,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/projects" element={<SearchProjectsPage allProjects={data} />} />
+        <Route path="/projects" element={<SearchProjectsPage />} />
         <Route path="/projects/create" element={<CreateProjectPage />} />
         <Route path="/projects/:projectid" element={<ProjectPage />} />
         <Route path="/projects/:projectid/edit" element={<EditProjectPage />} />

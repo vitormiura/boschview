@@ -1,9 +1,16 @@
-import { Autocomplete, Box, Button, TextField } from '@mui/material';
+import { Autocomplete, Box, Button, CircularProgress, TextField } from '@mui/material';
 import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { fetchAllProjects } from '../common/functions';
 import { Project } from '../common/types';
 import ProjectCard from '../components/Projects/ProjectCard';
 
-export default function SearchProjectsPage({ allProjects }: { allProjects: Project[] }) {
+export default function SearchProjectsPage() {
+  const { isLoading, error, data: allProjects } = useQuery('projects', fetchAllProjects);
+
+  if (isLoading || allProjects == undefined || allProjects === void [])
+    return <CircularProgress />;
+  if (error) return <div>Error</div>;
   // console.log(allProjects);
   const [filteredData, setFilteredData] = useState<Project[]>(allProjects);
   const [searchFilter, setSearchFilter] = useState('');
@@ -15,6 +22,7 @@ export default function SearchProjectsPage({ allProjects }: { allProjects: Proje
   const uniqueArray = (array: string[]) => Array.from(new Set(array));
   function filterData() {
     console.log('> Filtering');
+    if (allProjects == undefined) return;
     setFilteredData(
       allProjects
         .filter((x: Project) =>
