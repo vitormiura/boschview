@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import models
 import crud
 import schemas
+import shutil
 from db_handler import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)

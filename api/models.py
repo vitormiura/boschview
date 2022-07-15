@@ -20,3 +20,4 @@ class Projects(Base):
     contact = Column(String(255), index=True, nullable=False)
     finish_ratio = Column(Integer, index=True, nullable=False)
     status = Column(String(255), index=True, nullable=False)
+    #images = Column(String, index=True, nullable=True)

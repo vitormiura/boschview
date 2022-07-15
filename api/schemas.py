@@ -12,6 +12,7 @@ class ProjectBase(BaseModel):
     contact: str
     finish_ratio: int
     status: str
+    #image: str
 
 class ProjectAdd(ProjectBase):
     #project_id: str
@@ -27,6 +28,9 @@ class Project(ProjectAdd):
 class UpdateProject(BaseModel):
     project_name: str
     students: str
+    area: str
+    course: str
+    contact: str
     description: str
     techs: str
     finish_ratio: int
