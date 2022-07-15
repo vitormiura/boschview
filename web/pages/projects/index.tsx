@@ -100,7 +100,7 @@ const Projects: NextPage = () => {
             disablePortal
             options={uniq(data.map((value) => value.area))}
             renderInput={(params) => <TextField {...params} label="Filter by Area" />}
-            onChange={(e: any, newValue: any) => setAreaFilter(newValue)}
+            onInputChange={(e, newValue) => setAreaFilter(newValue)}
             sx={{ width: '100%' }}
           />
           <Autocomplete
