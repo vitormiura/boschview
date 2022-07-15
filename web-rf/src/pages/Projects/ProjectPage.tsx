@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { fetchOneProject } from '../../common/functions';
 import { Project } from '../../common/types';
+import ViewTechStack from '../../components/Techs/ViewTechStack';
 
 export default function ProjectPage() {
   const params = useParams();
@@ -52,6 +53,9 @@ export default function ProjectPage() {
           <Box>
             <h2>Alunos</h2>
             <Box>{data.students}</Box>
+          </Box>
+          <Box>
+            <ViewTechStack stack={data.techs} />
           </Box>
         </Box>
       </Box>
