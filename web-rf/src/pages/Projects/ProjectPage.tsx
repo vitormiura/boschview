@@ -1,21 +1,17 @@
 import { Box, Button, CircularProgress } from '@mui/material';
-import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { fetchOneProject } from '../../common/functions';
 import { Project } from '../../common/types';
 import ViewTechStack from '../../components/Techs/ViewTechStack';
+import useFetch, { FetchResult } from 'react-fetch-hook';
 
 export default function ProjectPage() {
   const params = useParams();
   const projectid = params.projectid;
   if (projectid === undefined) return <div>Failed to retrieve data</div>;
 
-  const { isLoading, error, data } = useQuery('project', () =>
-    fetchOneProject(projectid)
+  const { isLoading, data, error }: FetchResult<Project> = useFetch(
+    `${import.meta.env.VITE_API_URL}/${projectid}`
   );
-
-  console.log(data);
-
   if (isLoading || data == undefined) return <CircularProgress />;
   if (error) return <div>Error</div>;
 

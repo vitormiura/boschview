@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { useQuery } from 'react-query';
 import { Routes, Route, Link } from 'react-router-dom';
 
 import reactLogo from './assets/react.svg';
 import './App.css';
-import { fetchAllProjects } from './common/functions';
 import HomePage from './pages/HomePage';
 import HeaderComponent from './components/HeaderComponent';
 import SearchProjectsPage from './pages/SearchProjectsPage';

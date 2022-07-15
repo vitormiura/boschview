@@ -1,27 +1,42 @@
 import { Autocomplete, Box, Button, CircularProgress, TextField } from '@mui/material';
-import { useState } from 'react';
-import { useQuery } from 'react-query';
-import { fetchAllProjects } from '../common/functions';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Project } from '../common/types';
 import ProjectCard from '../components/Projects/ProjectCard';
 
 export default function SearchProjectsPage() {
-  const {
-    isLoading,
-    error,
-    data: allProjects,
-  } = useQuery('projects', () => fetchAllProjects(setFilteredData));
-
-  if (isLoading || allProjects == undefined || allProjects === void [])
-    return <CircularProgress />;
-  if (error) return <div>Error</div>;
-  // console.log(allProjects);
   const [filteredData, setFilteredData] = useState<Project[]>([]);
   const [searchFilter, setSearchFilter] = useState('');
   const [areaFilter, setAreaFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [courseFilter, setCourseFilter] = useState('');
   const [stackFilter, setStackFilter] = useState('');
+
+  const [allProjects, setAllProjects] = useState<Project[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get(import.meta.env.VITE_API_URL);
+        setAllProjects(response.data);
+        setFilteredData(response.data);
+        setError(null);
+      } catch (err: any) {
+        setError(err.message);
+        setAllProjects(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getData();
+  }, []);
+
+  if (loading || allProjects == undefined) return <CircularProgress />;
+  if (error) return <div>Error</div>;
+
+  console.log(allProjects);
 
   const uniqueArray = (array: string[]) => Array.from(new Set(array));
   function filterData() {
