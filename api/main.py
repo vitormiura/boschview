@@ -1,6 +1,6 @@
 from http.client import ResponseNotReady
 from urllib import response
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, File, UploadFile
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 import models
@@ -39,6 +39,15 @@ def retrieveAllProjects(skip:int = 0, limit:int = 100, db:Session = Depends(get_
     projects = crud.getProjects(db = db, skip = skip, limit = limit)
     return projects
 
+@app.post('/projects/add/image')
+async def imageUpload(file:UploadFile = File(...)):
+    file_location = f'media/{file.filename}'
+    with open(file_location, 'wb') as buffer:
+        shutil.copyfileobj(file.file,buffer) 
+    image = str('media/'+file.filename)
+    
+    return image
+
 @app.get('/projects/{project_id}', response_model = schemas.Project)
 def retrieveSingleProject(project_id:str, db:Session = Depends(get_db)):
     project = crud.getProjectbyProjectId(db=db, project_id=project_id)
@@ -64,7 +73,7 @@ def deleteProject(sl_id:str, db:Session = Depends(get_db)):
 
 @app.post('/projects/add/', response_model = schemas.ProjectAdd)
 def newProject(project:schemas.ProjectAdd, db:Session = Depends(get_db)):
-    project_name = crud.getProjectbyProjectId(db = db, project_id = project.project_name)
+    project_name = crud.getProjectbyProjectName(db = db, project_name = project.project_name)
     if project_name:
-        raise HTTPException(status_code=400, detail=f"Project ID: {project.project_name} is already on db: {project_name}")
+        raise HTTPException(status_code=400, detail=f"Project: {project.project_name} is already on db as {project_name}")
     return crud.newProject(db = db, proj=project)
