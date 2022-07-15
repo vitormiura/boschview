@@ -6,13 +6,17 @@ import { Project } from '../common/types';
 import ProjectCard from '../components/Projects/ProjectCard';
 
 export default function SearchProjectsPage() {
-  const { isLoading, error, data: allProjects } = useQuery('projects', fetchAllProjects);
+  const {
+    isLoading,
+    error,
+    data: allProjects,
+  } = useQuery('projects', () => fetchAllProjects(setFilteredData));
 
   if (isLoading || allProjects == undefined || allProjects === void [])
     return <CircularProgress />;
   if (error) return <div>Error</div>;
   // console.log(allProjects);
-  const [filteredData, setFilteredData] = useState<Project[]>(allProjects);
+  const [filteredData, setFilteredData] = useState<Project[]>([]);
   const [searchFilter, setSearchFilter] = useState('');
   const [areaFilter, setAreaFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
