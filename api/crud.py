@@ -46,8 +46,34 @@ def newProject(db:Session, proj: schemas.ProjectAdd, image_path: str):
     db.refresh(project_details)
     return models.Projects(**proj.dict())
 
+def newProjectWithoutImage(db:Session, proj: schemas.ProjectAdd):
+    project_details = models.Projects(
+        project_id = generateUniqueUUID(db),
+        project_name = proj.project_name,
+        students = proj.students,
+        area = proj.area,
+        course = proj.course,
+        description = proj.description,
+        techs = proj.techs,
+        contact = proj.contact,
+        finish_ratio = proj.finish_ratio,
+        status = proj.status,
+    )
+    
+    db.add(project_details)
+    db.commit()
+    db.refresh(project_details)
+    return models.Projects(**proj.dict())
+
 def updateProject(db:Session, sl_id: str, up: schemas.UpdateProject, img:str):
     up.imageSet(img)
+    db.query(models.Projects).filter(models.Projects.project_id == sl_id).update(vars(up))
+    db.commit()
+    return db.query(models.Projects).filter(models.Projects.project_id == sl_id).first()
+
+def updateProjectWithoutImage(db:Session, sl_id: str, up: schemas.UpdateProject):
+    imagem = db.query(models.Projects).filter(models.Projects.project_id == sl_id).first()
+    up.imageSet(str(imagem.image_path))
     db.query(models.Projects).filter(models.Projects.project_id == sl_id).update(vars(up))
     db.commit()
     return db.query(models.Projects).filter(models.Projects.project_id == sl_id).first()

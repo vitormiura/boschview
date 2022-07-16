@@ -58,26 +58,25 @@ def get_image(image_path):
     return FileResponse(f'media/{image_path}')
 
 @app.post('/projects/add')
-async def upload_accept_file(options: schemas.ProjectAdd = Depends(), data: UploadFile = File(...), db:Session = Depends(get_db)):
+async def upload_accept_file(options: schemas.ProjectAdd = Depends(), data: UploadFile = File(default=None), db:Session = Depends(get_db)):
     project_name = crud.getProjectbyProjectName(db = db, project_name = options.project_name)
     if project_name:
         raise HTTPException(status_code=409, detail=f"Project: {options.project_name} is already on db: {project_name}")
-    file_location = f'media/{data.filename}'
-
-    with open(file_location, 'wb') as buffer:
-        shutil.copyfileobj(data.file,buffer) 
-
-    return crud.newProject(db = db, proj=options, image_path=data.filename)
+    if data != None:
+        file_location = f'media/{data.filename}'
+        with open(file_location, 'wb') as buffer:
+            shutil.copyfileobj(data.file,buffer) 
+        return crud.newProject(db = db, proj=options, image_path=data.filename)
+    return crud.newProjectWithoutImage(db=db, proj=options)
 
 @app.put('/projects/update', response_model = schemas.Project)
-async def updateProject(options:schemas.UpdateProject = Depends(), db:Session = Depends(get_db), data: UploadFile = File(...),):
+async def updateProject(options:schemas.UpdateProject = Depends(), db:Session = Depends(get_db), data: UploadFile = File(default=None)):
     details = crud.getProjectbyProjectId(db = db, project_id = options.project_id)
     if not details:
         raise HTTPException(status_code=404, detail=f'Nothing was found to update')
-
-    file_location = f'media/{data.filename}'
-
-    with open(file_location, 'wb') as buffer:
-        shutil.copyfileobj(data.file,buffer)
-
-    return crud.updateProject(db = db, up = options, sl_id = options.project_id, img=data.filename)
+    if data != None:
+        file_location = f'media/{data.filename}'
+        with open(file_location, 'wb') as buffer:
+            shutil.copyfileobj(data.file,buffer)
+        return crud.updateProject(db = db, up = options, sl_id = options.project_id, img=data.filename)
+    return crud.updateProjectWithoutImage(db = db, up = options, sl_id = options.project_id)
