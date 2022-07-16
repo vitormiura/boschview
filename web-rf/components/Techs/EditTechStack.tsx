@@ -52,7 +52,6 @@ export default function EditTechStack({
   };
   return (
     <div>
-      <p>edit {stack}</p>
       {renderStack()}
       <Modal
         open={openModal}

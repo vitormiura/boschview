@@ -7,11 +7,14 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Project } from "../../common/types";
 import ProjectCard from "../../components/Projects/ProjectCard";
 
 const SearchProjectsPage: NextPage = () => {
+  const router = useRouter();
+
   const [filteredData, setFilteredData] = useState<Project[]>([]);
   const [searchFilter, setSearchFilter] = useState("");
   const [areaFilter, setAreaFilter] = useState("");
@@ -22,30 +25,6 @@ const SearchProjectsPage: NextPage = () => {
   const [allProjects, setAllProjects] = useState<Project[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const uniqueArray = (array: string[]) => Array.from(new Set(array));
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}`);
-        setAllProjects(response.data);
-        setFilteredData(response.data);
-        setError(null);
-      } catch (err: any) {
-        setError(err.message);
-        setAllProjects(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getData();
-  }, []);
-
-  if (loading || allProjects == undefined) return <CircularProgress />;
-  if (error) return <div>Error</div>;
-
-  // console.log(allProjects);
 
   function filterData() {
     console.log("> Filtering");
@@ -87,6 +66,42 @@ const SearchProjectsPage: NextPage = () => {
         )
     );
   }
+
+  const uniqueArray = (array: string[]) => Array.from(new Set(array));
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}`);
+        setAllProjects(response.data);
+        setFilteredData(response.data);
+        setError(null);
+        const searchParam = router.query.s;
+        if (searchParam != undefined) {
+          console.log("searching with param");
+          setSearchFilter(searchParam.toString());
+          setFilteredData(
+            response.data.filter((x: Project) =>
+              x.project_name
+                .toLowerCase()
+                .includes(searchParam.toString().toLowerCase())
+            )
+          );
+        }
+      } catch (err: any) {
+        setError(err.message);
+        setAllProjects(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getData();
+  }, [router]);
+
+  if (loading || allProjects == undefined) return <CircularProgress />;
+  if (error) return <div>Error</div>;
+
+  // console.log(allProjects);
+
   return (
     <div>
       <p>Projects:</p>
@@ -134,11 +149,12 @@ const SearchProjectsPage: NextPage = () => {
         <TextField
           label="Search by name"
           variant="outlined"
+          value={searchFilter}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setSearchFilter(e.target.value)
           }
         />
-        <Button variant="contained" onClick={filterData}>
+        <Button variant="contained" onClick={() => filterData()}>
           Search
         </Button>
       </Box>

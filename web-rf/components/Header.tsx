@@ -1,11 +1,25 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, InputAdornment, Modal, TextField } from "@mui/material";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import ModalSearch from "./ModalSearch";
 
 export default function Header() {
+  const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
   return (
     <Box sx={{ display: "flex", justifyContent: "space-around" }}>
-      <p>Header?</p>
+      <Box onClick={() => router.push("/")}>
+        <p>Header?</p>
+      </Box>
+      <TextField
+        InputProps={{
+          startAdornment: <InputAdornment position="start">🔎</InputAdornment>,
+        }}
+        variant="outlined"
+        placeholder="Ctrl K to Quick Search"
+        onClick={() => setOpenModal(true)}
+      />
+      <ModalSearch openModal={openModal} setOpenModal={setOpenModal} />
       <Button
         variant="contained"
         size="small"

@@ -18,7 +18,6 @@ export default function ViewTechStack({ stack }: { stack: string }) {
   if (stack == undefined) return <></>;
   return (
     <div>
-      <p>view {stack}</p>
       {stack.split(";").map((tech, index) => (
         <Chip key={index} label={tech} avatar={renderLogo(tech)} />
       ))}

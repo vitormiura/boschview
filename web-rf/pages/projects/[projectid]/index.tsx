@@ -74,6 +74,7 @@ const ProjectPage: NextPage = () => {
             <Box>{data.students}</Box>
           </Box>
           <Box>
+            <h2>Stack</h2>
             <ViewTechStack stack={data.techs} />
           </Box>
         </Box>
