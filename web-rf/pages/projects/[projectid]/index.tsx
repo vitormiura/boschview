@@ -38,6 +38,23 @@ const ProjectPage: NextPage = () => {
   if (loading || data == undefined) return <CircularProgress />;
   if (error) return <div>Error</div>;
 
+  const renderImage = () => {
+    if (data.image_path != undefined)
+      return (
+        <img alt={data.image_path} src={imageUrl} width={500} height={300} />
+      );
+  };
+
+  const renderStack = () => {
+    if (data.techs != undefined && data.techs != "")
+      return (
+        <Box>
+          <h2>Stack</h2>
+          <ViewTechStack stack={data.techs} />
+        </Box>
+      );
+  };
+
   const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}/media/${data.image_path}`;
 
   return (
@@ -45,7 +62,7 @@ const ProjectPage: NextPage = () => {
       <p>{projectid}</p>
       <Box>
         {/* HEADER */}
-        <img alt={data.image_path} src={imageUrl} width={500} height={300} />
+        {renderImage()}
         <Box>
           <h1>{data.project_name}</h1>
           <h3>Area: {data.area}</h3>
@@ -86,10 +103,7 @@ const ProjectPage: NextPage = () => {
             <h2>Alunos</h2>
             <Box>{data.students}</Box>
           </Box>
-          <Box>
-            <h2>Stack</h2>
-            <ViewTechStack stack={data.techs} />
-          </Box>
+          {renderStack()}
         </Box>
       </Box>
     </div>

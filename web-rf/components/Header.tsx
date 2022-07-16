@@ -9,14 +9,15 @@ export default function Header() {
   return (
     <Box sx={{ display: "flex", justifyContent: "space-around" }}>
       <Box onClick={() => router.push("/")}>
-        <p>Header?</p>
+        <h2>Bosch</h2>
       </Box>
       <TextField
         InputProps={{
           startAdornment: <InputAdornment position="start">🔎</InputAdornment>,
         }}
+        disabled
         variant="outlined"
-        placeholder="Ctrl K to Quick Search"
+        placeholder="Ctrl K"
         onClick={() => setOpenModal(true)}
       />
       <ModalSearch openModal={openModal} setOpenModal={setOpenModal} />

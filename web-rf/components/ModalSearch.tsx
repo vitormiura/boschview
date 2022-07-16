@@ -102,16 +102,18 @@ export default function ModalSearch({
           }}
           placeholder="Quick Search"
         />
-        {filteredData.map((project, index) => {
-          return (
-            <ProjectCard
-              onClick={() => setOpenModal(false)}
-              size="small"
-              key={index}
-              project={project}
-            />
-          );
-        })}
+        <Box sx={{ overflowY: "scroll" }}>
+          {filteredData.map((project, index) => {
+            return (
+              <ProjectCard
+                onClick={() => setOpenModal(false)}
+                size="small"
+                key={index}
+                project={project}
+              />
+            );
+          })}
+        </Box>
         <Button variant="outlined" href={`/projects?s=${searchFilter}`}>
           See more results
         </Button>

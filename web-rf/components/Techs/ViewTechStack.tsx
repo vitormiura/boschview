@@ -15,7 +15,7 @@ export default function ViewTechStack({ stack }: { stack: string }) {
     }
   }
 
-  if (stack == undefined) return <></>;
+  if (stack == undefined || stack == "") return <></>;
   return (
     <div>
       {stack.split(";").map((tech, index) => (

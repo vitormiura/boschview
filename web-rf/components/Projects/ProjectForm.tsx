@@ -73,7 +73,7 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
 
     if (inputImage != undefined) {
       console.log("there exists an image");
-      formData.append("data", inputImage, inputImage.name);
+      formData.append("data", inputImage, inputImage.name.replace("#", ""));
     } else {
       formData.append("data", "");
     }
@@ -236,7 +236,6 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
           </Select>
         </FormControl>
         <TextField
-          required
           name="description"
           label={"Description"}
           onChange={handleChange}
