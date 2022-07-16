@@ -7,8 +7,8 @@ class ProjectBase(BaseModel):
     students: str
     area: str
     course: str
-    description: str
-    techs: str
+    description: Optional[str]
+    techs: Optional[str]
     contact: str
     finish_ratio: int
     status: str
@@ -32,8 +32,8 @@ class UpdateProject(BaseModel):
     area: str
     course: str
     contact: str
-    description: str
-    techs: str
+    description: Optional[str]
+    techs: Optional[str]
     finish_ratio: int
     status: str
     image_path: Optional[str]
@@ -51,8 +51,8 @@ class UpdateProjectNoImage(BaseModel):
     area: str
     course: str
     contact: str
-    description: str
-    techs: str
+    description: Optional[str]
+    techs: Optional[str]
     finish_ratio: int
     status: str
 
