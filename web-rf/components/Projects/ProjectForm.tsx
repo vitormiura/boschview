@@ -81,25 +81,23 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
 
     if (project_id != undefined) {
       console.log("Updating project");
-      const response = axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/update`,
-        formData,
-        { params: inputProject }
-      );
+      const response = axios
+        .put(`${process.env.NEXT_PUBLIC_API_URL}/update`, formData, {
+          params: inputProject,
+        })
+        .then(() => router.push("/projects"))
+        .catch((err) => console.log(err));
 
       console.log(response);
     } else {
       console.log("Adding new project");
-      const response = axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/add`,
-        formData,
-        { params: inputProject }
-      );
-
-      console.log(response);
+      const response = axios
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/add`, formData, {
+          params: inputProject,
+        })
+        .then(() => router.push("/projects"))
+        .catch((err) => console.log(err));
     }
-
-    router.push("/projects");
   };
 
   const handleChange = (event: any) => {
