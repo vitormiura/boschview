@@ -1,4 +1,4 @@
-export default function HeaderComponent() {
+export default function Header() {
   return (
     <div>
       <p>Header?</p>

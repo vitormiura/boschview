@@ -2,19 +2,40 @@ import type { NextPage } from "next";
 import { Box, Button, CircularProgress } from "@mui/material";
 import { Project } from "../../../common/types";
 import ViewTechStack from "../../../components/Techs/ViewTechStack";
-import useFetch, { FetchResult } from "react-fetch-hook";
+import axios from "axios";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const ProjectPage: NextPage = () => {
   const router = useRouter();
   const projectid = router.query.projectid;
 
-  if (projectid === undefined) return <div>Failed to retrieve data</div>;
+  console.log(projectid);
 
-  const { isLoading, data, error }: FetchResult<Project> = useFetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/${projectid}`
-  );
-  if (isLoading || data == undefined) return <CircularProgress />;
+  const [data, setData] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        if (projectid == undefined) return;
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/${projectid}`
+        );
+        setData(response.data);
+        setError(null);
+      } catch (err: any) {
+        setError(err.message);
+        setData(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getData();
+  }, [projectid]);
+
+  if (loading || data == undefined) return <CircularProgress />;
   if (error) return <div>Error</div>;
 
   const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}/media/${data.image_path}`;
