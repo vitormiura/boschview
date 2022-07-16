@@ -1,12 +1,6 @@
 from datetime import datetime
-from email.mime import image
-from email.policy import default
-from sqlite3 import Date
 import datetime
-from xmlrpc.client import Boolean
 from sqlalchemy import Column, String, Integer, DateTime
-#from sqlalchemy_utils import URLType
-from sqlalchemy.dialects.postgresql import UUID
 from db_handler import Base
 
 class Projects(Base):

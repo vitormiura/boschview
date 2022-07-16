@@ -1,6 +1,4 @@
 from datetime import datetime
-# from xmlrpc.client import DateTime
-from fastapi import FastAPI, Depends, HTTPException, File, UploadFile
 from pydantic import BaseModel
 
 class ProjectBase(BaseModel):
@@ -13,7 +11,6 @@ class ProjectBase(BaseModel):
     contact: str
     finish_ratio: int
     status: str
-    # image_path: str
 
 class ProjectAdd(ProjectBase):
     class Config:
@@ -28,6 +25,7 @@ class Project(ProjectAdd):
         orm_mode = True
         
 class UpdateProject(BaseModel):
+    project_id: str
     project_name: str
     students: str
     area: str
@@ -37,7 +35,10 @@ class UpdateProject(BaseModel):
     techs: str
     finish_ratio: int
     status: str
-    #image_path: str
+    image_path: str
+
+    def imageSet(self, newImg):
+        self.image_path = newImg
 
     class Config:
         orm_mode = True
