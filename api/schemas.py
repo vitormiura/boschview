@@ -26,16 +26,16 @@ class Project(ProjectAdd):
         orm_mode = True
         
 class UpdateProject(BaseModel):
-    project_id: str
-    project_name: str
-    students: str
-    area: str
-    course: str
-    contact: str
+    project_id: Optional[str]
+    project_name: Optional[str]
+    students: Optional[str]
+    area: Optional[str]
+    course: Optional[str]
+    contact: Optional[str]
     description: Optional[str]
     techs: Optional[str]
-    finish_ratio: int
-    status: str
+    finish_ratio: Optional[int]
+    status: Optional[str]
     image_path: Optional[str]
 
     def imageSet(self, newImg):
@@ -45,16 +45,16 @@ class UpdateProject(BaseModel):
         orm_mode = True
 
 class UpdateProjectNoImage(BaseModel):
-    project_id: str
-    project_name: str
-    students: str
-    area: str
-    course: str
-    contact: str
+    project_id: Optional[str]
+    project_name: Optional[str]
+    students: Optional[str]
+    area: Optional[str]
+    course: Optional[str]
+    contact: Optional[str]
     description: Optional[str]
     techs: Optional[str]
-    finish_ratio: int
-    status: str
+    finish_ratio: Optional[int]
+    status: Optional[str]
 
     class Config:
         orm_mode = True

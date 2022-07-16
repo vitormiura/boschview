@@ -64,9 +64,10 @@ async def upload_accept_file(options: schemas.ProjectAdd = Depends(), data: Uplo
         raise HTTPException(status_code=409, detail=f"Project: {options.project_name} is already on db: {project_name}")
     if data != None:
         file_location = f'media/{data.filename}'
-        with open(file_location, 'wb') as buffer:
+        x = file_location.replace('#','')
+        with open(x, 'wb') as buffer:
             shutil.copyfileobj(data.file,buffer) 
-        return crud.newProject(db = db, proj=options, image_path=data.filename)
+        return crud.newProject(db = db, proj=options, image_path=data.filename.replace('#',''))
     return crud.newProjectWithoutImage(db=db, proj=options)
 
 @app.put('/projects/update', response_model = schemas.Project)
@@ -76,7 +77,8 @@ async def updateProject(options:schemas.UpdateProject = Depends(), db:Session = 
         raise HTTPException(status_code=404, detail=f'Nothing was found to update')
     if data != None:
         file_location = f'media/{data.filename}'
-        with open(file_location, 'wb') as buffer:
-            shutil.copyfileobj(data.file,buffer)
-        return crud.updateProject(db = db, up = options, sl_id = options.project_id, img=data.filename)
+        x = file_location.replace('#','')
+        with open(x, 'wb') as buffer:
+            shutil.copyfileobj(data.file.replace('#',''),buffer)
+        return crud.updateProject(db = db, up = options, sl_id = options.project_id, img=data.filename.replace('#',''))
     return crud.updateProjectWithoutImage(db = db, up = options, sl_id = options.project_id)
