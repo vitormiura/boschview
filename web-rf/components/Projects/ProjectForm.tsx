@@ -37,6 +37,7 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
     image_path: "",
   });
   const [inputImage, setInputImage] = useState<any>(undefined);
+
   const router = useRouter();
 
   const [loading, setLoading] = useState(true);
@@ -50,6 +51,7 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
           const response = await axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/${project_id}`
           );
+
           setInputProject(response.data);
           setError(null);
         } catch (err: any) {
@@ -60,21 +62,32 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
       };
       getData();
     }
-  }, []);
+  }, [project_id]);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
     console.log("submiting..");
 
     console.log(inputProject);
-
     const formData = new FormData();
-    formData.append("data", inputImage, inputImage.name);
 
-    console.log(formData);
+    if (inputImage != undefined) {
+      console.log("there exists an image");
+      formData.append("data", inputImage, inputImage.name);
+    } else {
+      formData.append("data", "");
+    }
+    console.log("form data: " + formData);
 
     if (project_id != undefined) {
-      console.log("Unable to edit now");
+      console.log("Updating project");
+      const response = axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/update`,
+        formData,
+        { params: inputProject }
+      );
+
+      console.log(response);
     } else {
       console.log("Adding new project");
       const response = axios.post(
@@ -99,6 +112,18 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
 
   const fileName = () => {
     if (inputImage != undefined) return <p>{inputImage.name}</p>;
+    if (inputProject != undefined) return <p>{inputProject.image_path}</p>;
+  };
+
+  const renderImage = () => {
+    if (inputImage != undefined)
+      return <img src={URL.createObjectURL(inputImage)} />;
+
+    return (
+      <img
+        src={`${process.env.NEXT_PUBLIC_API_URL}/media/${inputProject.image_path}`}
+      />
+    );
   };
 
   const addTech = (tech: string) => {
@@ -194,6 +219,9 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
             type="file"
           />
         </Button>
+
+        {renderImage()}
+
         <FormControl sx={{ gridColumn: "span 2" }}>
           <InputLabel id="status-label">Status</InputLabel>
           <Select

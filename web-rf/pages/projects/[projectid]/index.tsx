@@ -60,6 +60,19 @@ const ProjectPage: NextPage = () => {
           >
             Edit this page
           </Button>
+          <Button
+            variant="contained"
+            color="warning"
+            onClick={() => {
+              if (confirm("Are you sure you want to delete this project?"))
+                axios.delete(
+                  `${process.env.NEXT_PUBLIC_API_URL}/delete/?sl_id=${data.project_id}`
+                );
+              router.push("/projects");
+            }}
+          >
+            Delete this page
+          </Button>
         </Box>
       </Box>
       <Box>

@@ -8,12 +8,7 @@ const EditProjectPage: NextPage = () => {
 
   if (projectid == undefined) return <div>Project not found</div>;
 
-  return (
-    <div>
-      <p>EditProjectPage</p>
-      <ProjectForm project_id={projectid.toString()} />
-    </div>
-  );
+  return <ProjectForm project_id={projectid.toString()} />;
 };
 
 export default EditProjectPage;
