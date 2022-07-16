@@ -5,6 +5,7 @@ import ViewTechStack from "../../../components/Techs/ViewTechStack";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import ViewTeam from "../../../components/Team/ViewTeam";
 
 const ProjectPage: NextPage = () => {
   const router = useRouter();
@@ -101,7 +102,7 @@ const ProjectPage: NextPage = () => {
           </Box>
           <Box>
             <h2>Alunos</h2>
-            <Box>{data.students}</Box>
+            <ViewTeam team={data.students} />
           </Box>
           {renderStack()}
         </Box>

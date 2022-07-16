@@ -14,6 +14,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Project } from "../../common/types";
+import EditTeam from "../Team/EditTeam";
 import EditTechStack from "../Techs/EditTechStack";
 
 interface ProjectFormProps {
@@ -115,12 +116,20 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
 
   const renderImage = () => {
     if (inputImage != undefined)
-      return <img src={URL.createObjectURL(inputImage)} />;
+      return (
+        <Box>
+          <h3>Preview: </h3>
+          <img src={URL.createObjectURL(inputImage)} />
+        </Box>
+      );
 
     return (
-      <img
-        src={`${process.env.NEXT_PUBLIC_API_URL}/media/${inputProject.image_path}`}
-      />
+      <Box>
+        <h3>Preview: </h3>
+        <img
+          src={`${process.env.NEXT_PUBLIC_API_URL}/media/${inputProject.image_path}`}
+        />
+      </Box>
     );
   };
 
@@ -136,6 +145,9 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
           ...prevState,
           ["techs"]: `${inputProject.techs};${tech}`,
         }));
+      else {
+        alert("The tech already exists!");
+      }
     }
   };
 
@@ -145,6 +157,34 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
       ["techs"]: inputProject.techs
         .split(";")
         .filter((item) => item != tech)
+        .join(";"),
+    }));
+  };
+
+  const addMember = (member: string) => {
+    if (inputProject.students == "") {
+      setInputProject((prevState) => ({
+        ...prevState,
+        ["students"]: member,
+      }));
+    } else {
+      if (!inputProject.students.split(";").includes(member))
+        setInputProject((prevState) => ({
+          ...prevState,
+          ["students"]: `${inputProject.students};${member}`,
+        }));
+      else {
+        alert("The student already exists!");
+      }
+    }
+  };
+
+  const deleteMember = (member: string) => {
+    setInputProject((prevState) => ({
+      ...prevState,
+      ["students"]: inputProject.students
+        .split(";")
+        .filter((item) => item != member)
         .join(";"),
     }));
   };
@@ -243,12 +283,11 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
           multiline
           rows={4}
         />
-        <TextField
-          required
-          name="students"
-          label={"Team"}
-          onChange={handleChange}
-          value={inputProject.students}
+
+        <EditTeam
+          team={inputProject.students}
+          addMember={addMember}
+          deleteMember={deleteMember}
         />
 
         <EditTechStack

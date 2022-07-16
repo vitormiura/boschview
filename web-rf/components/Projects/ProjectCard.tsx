@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { Project } from "../../common/types";
 import Link from "next/link";
+import ViewTechStack from "../Techs/ViewTechStack";
 
 export default function ProjectCard({
   project,
@@ -21,7 +22,7 @@ export default function ProjectCard({
           <h3>{project.status}</h3>
           <h4>{project.area}</h4>
           <p>{project.description}</p>
-          <p>{project.techs}</p>
+          <ViewTechStack stack={project.techs} />
         </Box>
       );
     }
