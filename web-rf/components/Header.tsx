@@ -1,11 +1,25 @@
 import { Box, Button, InputAdornment, Modal, TextField } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ModalSearch from "./ModalSearch";
 
 export default function Header() {
   const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
+
+  const handleKeyPress = useCallback((e: any) => {
+    if (e.key.toLowerCase() === "q" && e.ctrlKey) {
+      setOpenModal((prevState) => !prevState);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleKeyPress, setOpenModal, openModal]);
+
   return (
     <Box sx={{ display: "flex", justifyContent: "space-around" }}>
       <Box onClick={() => router.push("/")}>
@@ -17,7 +31,7 @@ export default function Header() {
         }}
         disabled
         variant="outlined"
-        placeholder="Ctrl K"
+        placeholder="Open with Ctrl Q"
         onClick={() => setOpenModal(true)}
       />
       <ModalSearch openModal={openModal} setOpenModal={setOpenModal} />
