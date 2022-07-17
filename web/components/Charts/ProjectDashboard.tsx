@@ -37,24 +37,26 @@ export default function ProjectDashboard({
           gridTemplateRows: "200px 200px 200px",
           height: "100%",
           backgroundColor: "lightgray",
+          position: "relative",
         }}
       >
-        <Box sx={{ width: "100%", backgroundColor: "darkgray" }}>
+        <Box sx={{ minWidth: 0 }}>
           <StudentsPerArea allProjects={allProjects} />
         </Box>
-        <Box sx={{ width: "100%" }}>
+
+        <Box sx={{ minWidth: 0 }}>
           <ProjectsPerArea allProjects={allProjects} />
         </Box>
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ minWidth: 0 }}>
           <ProjectsPerStatus allProjects={allProjects} />
         </Box>
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ minWidth: 0 }}>
           <MostUsedTech allProjects={allProjects} />
         </Box>
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ minWidth: 0 }}>
           <ProjectStatusPerArea allProjects={allProjects} />
         </Box>
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ minWidth: 0 }}>
           <Box>Students:{uniqueAllStudents.length}</Box>
           <Box>Projects: {allProjects.length}</Box>
           <Box>Areas: {uniqueAllAreas.length}</Box>
