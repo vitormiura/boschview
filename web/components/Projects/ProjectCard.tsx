@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { Project } from "../../common/types";
 import Link from "next/link";
 import ViewTechStack from "../Techs/ViewTechStack";
+import ViewTeam from "../Team/ViewTeam";
 
 export default function ProjectCard({
   project,
@@ -23,6 +24,7 @@ export default function ProjectCard({
           <h4>{project.area}</h4>
           <p>{project.description}</p>
           <ViewTechStack stack={project.techs} />
+          <ViewTeam team={project.students} />
         </Box>
       );
     }
