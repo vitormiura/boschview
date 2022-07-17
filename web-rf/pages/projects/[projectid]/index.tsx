@@ -1,5 +1,12 @@
 import type { NextPage } from "next";
-import { Box, Button, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+} from "@mui/material";
 import { Notificate, Project } from "../../../common/types";
 import ViewTechStack from "../../../components/Techs/ViewTechStack";
 import axios from "axios";
@@ -11,7 +18,7 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
   const router = useRouter();
   const projectid = router.query.projectid;
 
-  console.log(projectid);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const [data, setData] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
@@ -82,16 +89,32 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
           <Button
             variant="contained"
             color="warning"
-            onClick={() => {
-              if (confirm("Are you sure you want to delete this project?"))
-                axios.delete(
-                  `${process.env.NEXT_PUBLIC_API_URL}/delete/?sl_id=${data.project_id}`
-                );
-              router.push("/projects");
-            }}
+            onClick={() => setOpenDialog(true)}
           >
             Delete this page
           </Button>
+          <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+            <DialogTitle>
+              {"Are you sure you want to delete this project?"}
+            </DialogTitle>
+            <DialogActions>
+              <Button onClick={() => setOpenDialog(false)} autoFocus>
+                No
+              </Button>
+              <Button
+                onClick={() => {
+                  axios
+                    .delete(
+                      `${process.env.NEXT_PUBLIC_API_URL}/delete/?sl_id=${data.project_id}`
+                    )
+                    .then(() => router.push("/projects"));
+                  setOpenDialog(false);
+                }}
+              >
+                Yes
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Box>
       </Box>
       <Box>

@@ -80,6 +80,16 @@ export default function ProjectForm({
       inputProject.image_path = "";
     }
 
+    if (inputProject.students == "") {
+      notificate("Fill at least one member of the team", "warning");
+      return;
+    }
+
+    if (inputProject.techs == "") {
+      notificate("Fill at least one technology", "warning");
+      return;
+    }
+
     const formData = new FormData();
 
     if (inputImage != undefined) {

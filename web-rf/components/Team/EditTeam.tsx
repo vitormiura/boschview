@@ -66,7 +66,7 @@ export default function EditTeam({
 
   return (
     <div>
-      {/* <AddButton /> */}
+      <h3>Team</h3>
       {renderTeam()}
     </div>
   );
