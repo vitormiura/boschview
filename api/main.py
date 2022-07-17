@@ -79,6 +79,6 @@ async def updateProject(options:schemas.UpdateProject = Depends(), db:Session = 
         file_location = f'media/{data.filename}'
         x = file_location.replace('#','')
         with open(x, 'wb') as buffer:
-            shutil.copyfileobj(data.file.replace('#',''),buffer)
+            shutil.copyfileobj(data.file,buffer)
         return crud.updateProject(db = db, up = options, sl_id = options.project_id, img=data.filename.replace('#',''))
     return crud.updateProjectWithoutImage(db = db, up = options, sl_id = options.project_id)
