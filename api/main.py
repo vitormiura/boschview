@@ -75,12 +75,10 @@ async def upload_accept_file(options: schemas.ProjectAdd = Depends(), data: Uplo
 @app.put('/projects/update', response_model = schemas.Project)
 async def updateProject(options:schemas.UpdateProject = Depends(), db:Session = Depends(get_db), data: UploadFile = File(default=None)):
     details = crud.getProjectbyProjectId(db = db, project_id = options.project_id)
-    project_name = crud.getProjectbyProjectName(db = db, project_name = options.project_name)
+    
     if not details:
         raise HTTPException(status_code=404, detail=f'Nothing was found to update')
-    if project_name:
-        raise HTTPException(status_code=409, detail=f"Project: {options.project_name} is already on db: {project_name}")
-        
+
     if data != None:
         file_location = f'media/{data.filename}'
         specialChars = "!@#$%^&*()" 

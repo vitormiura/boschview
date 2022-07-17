@@ -5,10 +5,10 @@ import uuid
 
 def getProjectbyProjectId(db:Session, project_id: str):
     return db.query(models.Projects).filter(models.Projects.project_id == project_id).first()
-
+    
 def getProjectbyProjectName(db:Session, project_name: str):
     return db.query(models.Projects).filter(models.Projects.project_name == project_name).first()
-
+   
 def getProjects(db:Session, skip: int = 0, limit: int = 100):
     return db.query(models.Projects).offset(skip).limit(limit).all()
 

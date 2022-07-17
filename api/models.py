@@ -6,7 +6,7 @@ from db_handler import Base
 class Projects(Base):
     __tablename__ = "project"
     project_id = Column(String(255), primary_key=True)
-    project_name = Column(String(255), index=True, nullable=True)
+    project_name = Column(String(255), index=True, nullable=True, unique=True)
     students = Column(String(255), index=True, nullable=True)
     area = Column(String(25), index=True, nullable=True)
     course = Column(String(50), index=True, nullable=True)
