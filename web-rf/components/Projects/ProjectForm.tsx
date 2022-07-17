@@ -68,7 +68,7 @@ export default function ProjectForm({
       };
       getData();
     }
-  }, [project_id]);
+  }, [project_id, notificate]);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -148,7 +148,10 @@ export default function ProjectForm({
       return (
         <Box>
           <h3>Preview: </h3>
-          <img src={URL.createObjectURL(inputImage)} />
+          <img
+            alt={inputImage.filename}
+            src={URL.createObjectURL(inputImage)}
+          />
         </Box>
       );
     }
@@ -164,6 +167,7 @@ export default function ProjectForm({
         <Box>
           <h3>Preview: </h3>
           <img
+            alt={inputProject.image_path}
             src={`${process.env.NEXT_PUBLIC_API_URL}/media/${inputProject.image_path}`}
           />
         </Box>

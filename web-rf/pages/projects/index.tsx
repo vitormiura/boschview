@@ -96,7 +96,7 @@ const SearchProjectsPage: NextPage<Notificate> = ({ notificate }) => {
       }
     };
     getData();
-  }, [router]);
+  }, [router, notificate]);
 
   if (error) return <div>Error</div>;
   if (loading || allProjects == undefined) return <CircularProgress />;

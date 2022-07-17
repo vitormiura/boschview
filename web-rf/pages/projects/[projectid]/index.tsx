@@ -42,7 +42,7 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
       }
     };
     getData();
-  }, [projectid]);
+  }, [projectid, notificate]);
 
   if (error) return <div>Error</div>;
   if (loading || data == undefined) return <CircularProgress />;

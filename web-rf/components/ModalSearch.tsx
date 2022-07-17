@@ -44,7 +44,7 @@ export default function ModalSearch({
 
   useEffect(() => {
     getData();
-  }, [openModal]);
+  }, [getData, openModal]);
 
   function filterData(searchFilter: string) {
     if (allProjects == undefined) return;
