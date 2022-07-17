@@ -18,7 +18,8 @@
     "react": "18.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-dom": "18.2.0",
-    "react-fetch-hook": "^1.9.5"
+    "react-fetch-hook": "^1.9.5",
+    "sass": "^1.53.0"
   },
   "devDependencies": {
     "@types/node": "18.0.5",

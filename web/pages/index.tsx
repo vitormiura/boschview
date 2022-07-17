@@ -5,6 +5,8 @@ import { Notificate, Project } from "../common/types";
 import useFetch, { FetchResult } from "react-fetch-hook";
 import ProjectDashboard from "../components/Charts/ProjectDashboard";
 
+import styles from "../styles/Home.module.scss";
+
 const HomePage: NextPage<Notificate> = ({ notificate }) => {
   const router = useRouter();
   const { isLoading, data, error }: FetchResult<Project[]> = useFetch(
@@ -14,18 +16,16 @@ const HomePage: NextPage<Notificate> = ({ notificate }) => {
   if (error) return <div>Error</div>;
   if (isLoading || data == undefined) return <CircularProgress />;
 
-  // console.log(data);
-
   return (
     <div
       style={{
-        width: "100vw",
+        width: "100%",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
       }}
     >
-      <p>teste</p>
+      <p className={styles.teste}>teste</p>
       <Button variant="contained" onClick={() => router.push("/projects")}>
         See All Projects
       </Button>
