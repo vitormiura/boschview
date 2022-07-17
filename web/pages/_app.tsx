@@ -26,7 +26,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   const renderHeader = () => {
-    if (router.pathname != "/login" && router.pathname != "/signup")
+    if (
+      router.pathname != "/login" &&
+      router.pathname != "/signup" &&
+      router.pathname != undefined
+    )
       return <Header notificate={notificate} />;
   };
 

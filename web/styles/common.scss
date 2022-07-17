@@ -1,0 +1,10 @@
+.container {
+  background-color: lightyellow;
+  padding: 1rem;
+}
+
+@media only screen and (min-width: 1200px) {
+  .container {
+    padding: 3rem 6rem;
+  }
+}

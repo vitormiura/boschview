@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Notificate, Project } from "../../common/types";
 import ProjectCard from "../../components/Projects/ProjectCard";
+import styles from "../../styles/SearchProjectsPage.module.scss";
 
 const SearchProjectsPage: NextPage<Notificate> = ({ notificate }) => {
   const router = useRouter();
@@ -104,7 +105,7 @@ const SearchProjectsPage: NextPage<Notificate> = ({ notificate }) => {
   // console.log(allProjects);
 
   return (
-    <div>
+    <div className={styles.container}>
       <p>Projects:</p>
       <p>Total of projects: {allProjects.length}</p>
 

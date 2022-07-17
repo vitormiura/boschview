@@ -9,6 +9,8 @@ import MostUsedTech from "./MostUsedTech";
 import ProjectStatusPerArea from "./ProjectStatusPerArea";
 import ProjectsPerStatus from "./ProjectsPerStatus";
 
+import styles from "../../styles/Home.module.scss";
+
 export default function ProjectDashboard({
   allProjects,
 }: {
@@ -28,41 +30,44 @@ export default function ProjectDashboard({
   );
 
   return (
-    <div style={{ width: "100%", height: "100%" }}>
+    <div style={{ width: "100%", height: "100%", position: "relative" }}>
       <h2>Dashboard</h2>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
-          gridTemplateRows: "200px 200px 200px",
-          height: "100%",
-          backgroundColor: "lightgray",
-          position: "relative",
-        }}
-      >
-        <Box sx={{ minWidth: 0 }}>
+      <div className={styles.dashboard}>
+        <Box>
           <StudentsPerArea allProjects={allProjects} />
         </Box>
-
-        <Box sx={{ minWidth: 0 }}>
+        <Box>
           <ProjectsPerArea allProjects={allProjects} />
         </Box>
-        <Box sx={{ minWidth: 0 }}>
+        <Box>
           <ProjectsPerStatus allProjects={allProjects} />
         </Box>
-        <Box sx={{ minWidth: 0 }}>
+        <Box>
           <MostUsedTech allProjects={allProjects} />
         </Box>
-        <Box sx={{ minWidth: 0 }}>
+        <Box>
           <ProjectStatusPerArea allProjects={allProjects} />
         </Box>
-        <Box sx={{ minWidth: 0 }}>
-          <Box>Students:{uniqueAllStudents.length}</Box>
-          <Box>Projects: {allProjects.length}</Box>
-          <Box>Areas: {uniqueAllAreas.length}</Box>
-          <Box>Courses: {uniqueAllCourses.length}</Box>
+        <Box className={styles.tiles}>
+          <Box className={styles.numbers}>
+            <Tile label="Students" data={uniqueAllStudents.length} />
+            <Tile label="Projects" data={allProjects.length} />
+            <Tile label="Areas" data={uniqueAllAreas.length} />
+            <Tile label="Courses" data={uniqueAllCourses.length} />
+          </Box>
         </Box>
       </div>
     </div>
+  );
+}
+
+function Tile({ label, data }: { label: string; data: any }) {
+  return (
+    <Box>
+      <p>
+        <b>{label}: </b>
+      </p>
+      <p>{data}</p>
+    </Box>
   );
 }

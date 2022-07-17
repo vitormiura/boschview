@@ -1,3 +1,48 @@
-.teste {
-  color: red;
+@import "common.scss";
+
+.dashboard {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  // grid-template-rows: 25vh 25vh;
+  height: auto;
+  background-color: lightgray;
+  position: relative;
+  padding: 1rem;
+
+  .tiles {
+    .numbers {
+      background-color: lightgray;
+      display: grid;
+      gap: 0.5rem;
+      height: 100%;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+
+      * {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: white;
+      }
+    }
+  }
+  * {
+    background-color: white;
+    min-width: 0;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .dashboard {
+    padding: 1rem 1.5rem;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }

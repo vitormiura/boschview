@@ -17,16 +17,9 @@ const HomePage: NextPage<Notificate> = ({ notificate }) => {
   if (isLoading || data == undefined) return <CircularProgress />;
 
   return (
-    <div
-      style={{
-        width: "100%",
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <p className={styles.teste}>teste</p>
-      <Button variant="contained" onClick={() => router.push("/projects")}>
+    <div className={styles.container}>
+      <h1>Welcome</h1>
+      <Button variant="outlined" onClick={() => router.push("/projects")}>
         See All Projects
       </Button>
       <ProjectDashboard allProjects={data} />
