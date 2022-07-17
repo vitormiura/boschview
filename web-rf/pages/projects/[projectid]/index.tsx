@@ -64,6 +64,16 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
       );
   };
 
+  const renderTeam = () => {
+    if (data.students != undefined && data.students != "")
+      return (
+        <Box>
+          <h2>Alunos</h2>
+          <ViewTeam team={data.students} />
+        </Box>
+      );
+  };
+
   const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}/media/${data.image_path}`;
 
   return (
@@ -124,10 +134,7 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
             <h2>Descrição</h2>
             <Box>{data.description}</Box>
           </Box>
-          <Box>
-            <h2>Alunos</h2>
-            <ViewTeam team={data.students} />
-          </Box>
+          {renderTeam()}
           {renderStack()}
         </Box>
       </Box>
