@@ -8,15 +8,17 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Project } from "../common/types";
+import { Notificate, Project } from "../common/types";
 import ProjectCard from "./Projects/ProjectCard";
 
 export default function ModalSearch({
   openModal,
   setOpenModal,
+  notificate,
 }: {
   openModal: boolean;
   setOpenModal: Dispatch<SetStateAction<boolean>>;
+  notificate: Notificate["notificate"];
 }) {
   const [filteredData, setFilteredData] = useState<Project[]>([]);
   const [searchFilter, setSearchFilter] = useState("");
@@ -33,6 +35,7 @@ export default function ModalSearch({
       setError(null);
     } catch (err: any) {
       setError(err.message);
+      notificate(`Error: ${err.message}`, "error");
       setAllProjects(null);
     } finally {
       setLoading(false);
@@ -58,8 +61,8 @@ export default function ModalSearch({
     );
   }
 
-  if (loading || allProjects == undefined) return <CircularProgress />;
   if (error) return <div>Error</div>;
+  if (loading || allProjects == undefined) return <CircularProgress />;
 
   return (
     <Modal

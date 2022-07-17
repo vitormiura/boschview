@@ -1,14 +1,19 @@
 import { Box, Button, InputAdornment, Modal, TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
+import { Notificate } from "../common/types";
 import ModalSearch from "./ModalSearch";
 
-export default function Header() {
+export default function Header({
+  notificate,
+}: {
+  notificate: Notificate["notificate"];
+}) {
   const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
 
   const handleKeyPress = useCallback((e: any) => {
-    if (e.key.toLowerCase() === "q" && e.ctrlKey) {
+    if ("key" in e && e.key.toLowerCase() === "q" && e.ctrlKey) {
       setOpenModal((prevState) => !prevState);
     }
   }, []);
@@ -34,7 +39,11 @@ export default function Header() {
         placeholder="Open with Ctrl Q"
         onClick={() => setOpenModal(true)}
       />
-      <ModalSearch openModal={openModal} setOpenModal={setOpenModal} />
+      <ModalSearch
+        notificate={notificate}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+      />
       <Button
         variant="contained"
         size="small"

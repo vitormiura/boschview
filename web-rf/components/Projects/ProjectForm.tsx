@@ -13,15 +13,19 @@ import {
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Project } from "../../common/types";
+import { Notificate, Project } from "../../common/types";
 import EditTeam from "../Team/EditTeam";
 import EditTechStack from "../Techs/EditTechStack";
 
 interface ProjectFormProps {
   project_id?: string;
+  notificate: Notificate["notificate"];
 }
 
-export default function ProjectForm({ project_id }: ProjectFormProps) {
+export default function ProjectForm({
+  project_id,
+  notificate,
+}: ProjectFormProps) {
   // project_id = "d07a3266369f4d7bb290e30204cd05ad";
   const [inputProject, setInputProject] = useState<Project>({
     project_name: "",
@@ -57,6 +61,7 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
           setError(null);
         } catch (err: any) {
           setError(err.message);
+          notificate(`Error: ${err.message}`, "error");
         } finally {
           setLoading(false);
         }
@@ -70,6 +75,11 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
     console.log("submiting..");
 
     console.log(inputProject);
+
+    if (inputProject.image_path === null) {
+      inputProject.image_path = "";
+    }
+
     const formData = new FormData();
 
     if (inputImage != undefined) {
@@ -86,8 +96,12 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
         .put(`${process.env.NEXT_PUBLIC_API_URL}/update`, formData, {
           params: inputProject,
         })
+        .then(() => notificate("Updated Project"))
         .then(() => router.push("/projects"))
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          notificate(`Error: ${err.message}`, "error");
+        });
 
       console.log(response);
     } else {
@@ -96,8 +110,12 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
         .post(`${process.env.NEXT_PUBLIC_API_URL}/add`, formData, {
           params: inputProject,
         })
+        .then(() => notificate("Created Project", "success"))
         .then(() => router.push("/projects"))
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          notificate(`Error: ${err.message}`, "error");
+        });
     }
   };
 
@@ -115,22 +133,32 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
   };
 
   const renderImage = () => {
-    if (inputImage != undefined)
+    if (inputImage != undefined) {
+      console.log("inputed image");
       return (
         <Box>
           <h3>Preview: </h3>
           <img src={URL.createObjectURL(inputImage)} />
         </Box>
       );
+    }
 
-    return (
-      <Box>
-        <h3>Preview: </h3>
-        <img
-          src={`${process.env.NEXT_PUBLIC_API_URL}/media/${inputProject.image_path}`}
-        />
-      </Box>
-    );
+    if (
+      inputProject.image_path === "" ||
+      inputProject.image_path === undefined ||
+      inputProject.image_path === null
+    ) {
+      console.log("null image");
+    } else {
+      return (
+        <Box>
+          <h3>Preview: </h3>
+          <img
+            src={`${process.env.NEXT_PUBLIC_API_URL}/media/${inputProject.image_path}`}
+          />
+        </Box>
+      );
+    }
   };
 
   const addTech = (tech: string) => {
@@ -190,8 +218,8 @@ export default function ProjectForm({ project_id }: ProjectFormProps) {
   };
 
   if (project_id != undefined) {
-    if (loading || inputProject == undefined) return <CircularProgress />;
     if (error) return <div>Error</div>;
+    if (loading || inputProject == undefined) return <CircularProgress />;
   }
 
   return (

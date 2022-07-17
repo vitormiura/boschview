@@ -9,10 +9,10 @@ import axios from "axios";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Project } from "../../common/types";
+import { Notificate, Project } from "../../common/types";
 import ProjectCard from "../../components/Projects/ProjectCard";
 
-const SearchProjectsPage: NextPage = () => {
+const SearchProjectsPage: NextPage<Notificate> = ({ notificate }) => {
   const router = useRouter();
 
   const [filteredData, setFilteredData] = useState<Project[]>([]);
@@ -90,6 +90,7 @@ const SearchProjectsPage: NextPage = () => {
       } catch (err: any) {
         setError(err.message);
         setAllProjects(null);
+        notificate(`Error: ${err.message}`, "error");
       } finally {
         setLoading(false);
       }
@@ -97,8 +98,8 @@ const SearchProjectsPage: NextPage = () => {
     getData();
   }, [router]);
 
-  if (loading || allProjects == undefined) return <CircularProgress />;
   if (error) return <div>Error</div>;
+  if (loading || allProjects == undefined) return <CircularProgress />;
 
   // console.log(allProjects);
 

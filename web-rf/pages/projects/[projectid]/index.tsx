@@ -1,13 +1,13 @@
 import type { NextPage } from "next";
 import { Box, Button, CircularProgress } from "@mui/material";
-import { Project } from "../../../common/types";
+import { Notificate, Project } from "../../../common/types";
 import ViewTechStack from "../../../components/Techs/ViewTechStack";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ViewTeam from "../../../components/Team/ViewTeam";
 
-const ProjectPage: NextPage = () => {
+const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
   const router = useRouter();
   const projectid = router.query.projectid;
 
@@ -28,6 +28,7 @@ const ProjectPage: NextPage = () => {
         setError(null);
       } catch (err: any) {
         setError(err.message);
+        notificate(`Error: ${err.message}`, "error");
         setData(null);
       } finally {
         setLoading(false);
@@ -36,8 +37,8 @@ const ProjectPage: NextPage = () => {
     getData();
   }, [projectid]);
 
-  if (loading || data == undefined) return <CircularProgress />;
   if (error) return <div>Error</div>;
+  if (loading || data == undefined) return <CircularProgress />;
 
   const renderImage = () => {
     if (data.image_path != undefined)

@@ -13,3 +13,10 @@ export interface Project {
   project_id: string;
   image_path: string;
 }
+
+export interface Notificate {
+  notificate: (
+    notificationMessage: string,
+    severity?: "error" | "warning" | "info" | "success"
+  ) => void;
+}
