@@ -34,8 +34,8 @@ class UpdateProject(BaseModel):
     contact: str
     description: str
     techs: str
-    finish_ratio: str
-    status: int
+    finish_ratio: int
+    status: str
     image_path: str
 
     def imageSet(self, newImg):
