@@ -50,5 +50,10 @@ source venv/bin/activate
 ```bash
 pip install -r .\requirements.txt
 ```
+4. Run the server with:
 
-4. Open [http://localhost:8000](http://localhost:8000) with your web browser.
+```bash
+uvicorn main:app --reload
+```
+
+5. Open [http://localhost:8000](http://localhost:8000) with your web browser.
