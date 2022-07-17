@@ -27,24 +27,23 @@ export default function ModalSearch({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const getData = async () => {
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}`);
-      setAllProjects(response.data);
-      setFilteredData(response.data);
-      setError(null);
-    } catch (err: any) {
-      setError(err.message);
-      notificate(`Error: ${err.message}`, "error");
-      setAllProjects(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}`);
+        setAllProjects(response.data);
+        setFilteredData(response.data);
+        setError(null);
+      } catch (err: any) {
+        setError(err.message);
+        notificate(`Error: ${err.message}`, "error");
+        setAllProjects(null);
+      } finally {
+        setLoading(false);
+      }
+    };
     getData();
-  }, [getData, openModal]);
+  }, [notificate, openModal]);
 
   function filterData(searchFilter: string) {
     if (allProjects == undefined) return;
