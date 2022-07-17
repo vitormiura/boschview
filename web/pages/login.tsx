@@ -1,12 +1,11 @@
-import { NextPage } from 'next';
+import type { NextPage } from "next";
 
-const Login: NextPage = () => {
+const LoginPage: NextPage = () => {
   return (
     <div>
-      <p>Login:</p>
-      <p>Some form here</p>
+      <p>Login page</p>
     </div>
   );
 };
 
-export default Login;
+export default LoginPage;

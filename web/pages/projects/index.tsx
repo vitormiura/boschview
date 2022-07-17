@@ -1,161 +1,173 @@
-import type { NextPage } from 'next';
-import { TextField } from '@mui/material';
-import Box from '@mui/material/Box';
-import { useState } from 'react';
-import ProjectCard from '../../components/ProjectCard';
-import Autocomplete from '@mui/material/Autocomplete';
-import Button from '@mui/material/Button';
-import { Project } from '../../common/types';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  CircularProgress,
+  TextField,
+} from "@mui/material";
+import axios from "axios";
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Notificate, Project } from "../../common/types";
+import ProjectCard from "../../components/Projects/ProjectCard";
 
-import { useQuery } from 'react-query';
-import CircularProgress from '@mui/material/CircularProgress';
+const SearchProjectsPage: NextPage<Notificate> = ({ notificate }) => {
+  const router = useRouter();
 
-const Projects: NextPage = () => {
   const [filteredData, setFilteredData] = useState<Project[]>([]);
-  const [searchFilter, setSearchFilter] = useState('');
-  const [areaFilter, setAreaFilter] = useState('');
-  const [statusFilter, setStatusFilter] = useState('');
-  const [courseFilter, setCourseFilter] = useState('');
+  const [searchFilter, setSearchFilter] = useState("");
+  const [areaFilter, setAreaFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [courseFilter, setCourseFilter] = useState("");
+  const [stackFilter, setStackFilter] = useState("");
 
-  const [stackFilter, setStackFilter] = useState<string>('');
+  const [allProjects, setAllProjects] = useState<Project[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const fetchProjects = async (): Promise<Project[]> => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`).then((res) =>
-      res.json()
+  function filterData() {
+    console.log("> Filtering");
+    if (allProjects == undefined) return;
+    setFilteredData(
+      allProjects
+        .filter((x: Project) =>
+          x.project_name
+            .toLowerCase()
+            .includes(
+              searchFilter === "" || searchFilter == undefined
+                ? x.project_name.toLowerCase()
+                : searchFilter.toLowerCase()
+            )
+        )
+        .filter(
+          (y: Project) =>
+            y.area ==
+            (areaFilter === "" || areaFilter == undefined ? y.area : areaFilter)
+        )
+        .filter(
+          (z: Project) =>
+            z.status ==
+            (statusFilter === "" || statusFilter == undefined
+              ? z.status
+              : statusFilter)
+        )
+        .filter(
+          (a: Project) =>
+            a.course ==
+            (courseFilter === "" || courseFilter == undefined
+              ? a.course
+              : courseFilter)
+        )
+        .filter((b: Project) =>
+          stackFilter === "" || stackFilter == undefined
+            ? b
+            : b.techs.includes(stackFilter)
+        )
     );
-    setFilteredData(response);
-    return response;
-  };
-
-  const filterData = () => {
-    if (data == undefined) return;
-    const newData = data
-      .filter((x: Project) =>
-        x.project_name
-          .toLowerCase()
-          .includes(
-            searchFilter === '' || searchFilter == undefined
-              ? x.project_name.toLowerCase()
-              : searchFilter.toLowerCase()
-          )
-      )
-      .filter(
-        (y: Project) =>
-          y.area == (areaFilter === '' || areaFilter == undefined ? y.area : areaFilter)
-      )
-      .filter(
-        (z: Project) =>
-          z.status ==
-          (statusFilter === '' || statusFilter == undefined ? z.status : statusFilter)
-      )
-      .filter(
-        (a: Project) =>
-          a.course ==
-          (courseFilter === '' || courseFilter == undefined ? a.course : courseFilter)
-      )
-      .filter((b: Project) =>
-        stackFilter === '' || stackFilter == undefined ? b : b.techs.includes(stackFilter)
-      );
-    setFilteredData(newData);
-  };
-
-  const uniq = (a: string[]) => {
-    return Array.from(new Set(a));
-  };
-
-  let { isLoading, error, data } = useQuery('projects', fetchProjects);
-  if (data == undefined) {
-    if (isLoading) return <CircularProgress />;
-    else return <p>Data could not be retrieved</p>;
-  }
-  if (error) {
-    console.log(error);
-    return <p>An error ocurred</p>;
   }
 
-  let techStackArr: string[] = [];
+  const uniqueArray = (array: string[]) => Array.from(new Set(array));
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}`);
+        setAllProjects(response.data);
+        setFilteredData(response.data);
+        setError(null);
+        const searchParam = router.query.s;
+        if (searchParam != undefined) {
+          console.log("searching with param");
+          setSearchFilter(searchParam.toString());
+          setFilteredData(
+            response.data.filter((x: Project) =>
+              x.project_name
+                .toLowerCase()
+                .includes(searchParam.toString().toLowerCase())
+            )
+          );
+        }
+      } catch (err: any) {
+        setError(err.message);
+        setAllProjects(null);
+        notificate(`Error: ${err.message}`, "error");
+      } finally {
+        setLoading(false);
+      }
+    };
+    getData();
+  }, [router, notificate]);
 
-  data.forEach((project) => {
-    project.techs.split(';').map((tech) => {
-      techStackArr.push(tech);
-    });
-  });
+  if (error) return <div>Error</div>;
+  if (loading || allProjects == undefined) return <CircularProgress />;
+
+  // console.log(allProjects);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'lightgray',
-        height: 'auto',
-        padding: 2,
-        gap: 2,
-      }}
-    >
-      <Box sx={{ width: '80%', display: 'flex', gap: 2, flexDirection: 'column' }}>
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <Autocomplete
-            disablePortal
-            options={uniq(data.map((value) => value.area))}
-            renderInput={(params) => <TextField {...params} label="Filter by Area" />}
-            onInputChange={(e, newValue) => setAreaFilter(newValue)}
-            sx={{ width: '100%' }}
-          />
-          <Autocomplete
-            disablePortal
-            options={uniq(data.map((value) => value.status))}
-            renderInput={(params) => <TextField {...params} label="Filter by Status" />}
-            onChange={(e: any, newValue: any) => setStatusFilter(newValue)}
-            sx={{ width: '100%' }}
-          />
-          <Autocomplete
-            disablePortal
-            options={uniq(data.map((value) => value.course))}
-            renderInput={(params) => <TextField {...params} label="Filter by Course" />}
-            onChange={(e: any, newValue: any) => setCourseFilter(newValue)}
-            sx={{ width: '100%' }}
-          />
+    <div>
+      <p>Projects:</p>
+      <p>Total of projects: {allProjects.length}</p>
 
-          <Autocomplete
-            disablePortal
-            options={uniq(techStackArr)}
-            renderInput={(params) => <TextField {...params} label="Filter by Tech" />}
-            onChange={(e: any, newValue: any) => {
-              setStackFilter(newValue);
-              console.log(newValue);
-            }}
-            sx={{ width: '100%' }}
-          />
-        </Box>
+      <Box>
+        {/* Filters */}
+        <Autocomplete
+          options={uniqueArray(allProjects.map((project) => project.area))}
+          renderInput={(params) => (
+            <TextField {...params} label="Filter by Area" />
+          )}
+          onInputChange={(e, value) => setAreaFilter(value)}
+        />
+        <Autocomplete
+          options={uniqueArray(allProjects.map((project) => project.course))}
+          renderInput={(params) => (
+            <TextField {...params} label="Filter by Course" />
+          )}
+          onInputChange={(e, value) => setCourseFilter(value)}
+        />
+        <Autocomplete
+          options={uniqueArray(allProjects.map((project) => project.status))}
+          renderInput={(params) => (
+            <TextField {...params} label="Filter by Status" />
+          )}
+          onInputChange={(e, value) => setStatusFilter(value)}
+        />
+        <Autocomplete
+          options={uniqueArray(
+            allProjects
+              .map((project) => {
+                const projectTechs = project.techs.split(";");
+                return projectTechs;
+              })
+              .flat(1)
+          )}
+          renderInput={(params) => (
+            <TextField {...params} label="Filter by Tech" />
+          )}
+          onInputChange={(e, value) => {
+            setStackFilter(value);
+          }}
+        />
         <TextField
           label="Search by name"
           variant="outlined"
-          onChange={(e: any) => setSearchFilter(e.target.value)}
-          sx={{ width: '100%' }}
+          value={searchFilter}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setSearchFilter(e.target.value)
+          }
         />
-        <Button variant="contained" onClick={filterData}>
+        <Button variant="contained" onClick={() => filterData()}>
           Search
         </Button>
       </Box>
-
-      <p>{filteredData.length} items found</p>
-
-      <Box
-        sx={{
-          width: '80%',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
-          gap: 2,
-        }}
-      >
-        {filteredData.map((value, index) => {
-          return <ProjectCard key={index} project={value} />;
+      <Box>
+        {/* Filtered Data */}
+        <p>Find {filteredData.length} projects</p>
+        {filteredData.map((project, index) => {
+          return <ProjectCard key={index} project={project} />;
         })}
       </Box>
-    </Box>
+    </div>
   );
 };
 
-export default Projects;
+export default SearchProjectsPage;

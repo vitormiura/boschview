@@ -11,5 +11,12 @@ export interface Project {
   // status: "Em andamento" | "Concluído" | "Implementado";
   status: string;
   project_id: string;
-  image_path: string; 
+  image_path: string;
+}
+
+export interface Notificate {
+  notificate: (
+    notificationMessage: string,
+    severity?: "error" | "warning" | "info" | "success"
+  ) => void;
 }

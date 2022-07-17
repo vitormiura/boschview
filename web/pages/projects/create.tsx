@@ -1,19 +1,9 @@
-import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
-import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
-import Image from 'next/image';
-import { Project } from '../../common/types';
-import { Button } from '@mui/material';
-import CreateEditProject from '../../components/CreateEditProject';
+import type { NextPage } from "next";
+import { Notificate } from "../../common/types";
+import ProjectForm from "../../components/Projects/ProjectForm";
 
-const ProjectCreatePage: NextPage = () => {
-  return (
-    <Box sx={{ backgroundColor: 'lightgray' }}>
-      <CreateEditProject isEdit={false} />
-    </Box>
-  );
+const CreateProjectPage: NextPage<Notificate> = ({ notificate }) => {
+  return <ProjectForm notificate={notificate} />;
 };
 
-export default ProjectCreatePage;
+export default CreateProjectPage;
