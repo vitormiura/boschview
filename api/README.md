@@ -6,7 +6,7 @@
 
 [x] Create initial project structure
 
-[x] Do models, schemas,endpoints and CRUD of the API
+[x] Do models, schemas, endpoints and CRUD of the API
 
 [x] Implement image to projects database
 
@@ -23,8 +23,9 @@
 - Students rating to each project
 - Login and sign up users auth
 - A single table to show info to the dashboards
-- Admin registration emaial confirmation
+- Admin registration email confirmation
 - Export database to CSV
+- Migrate database to PostgreSQL
 
 ## Getting Started
 
