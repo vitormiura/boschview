@@ -58,7 +58,7 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
     if (data.techs != undefined && data.techs != "")
       return (
         <Box>
-          <h2>Stack</h2>
+          <h2>Technologies</h2>
           <ViewTechStack stack={data.techs} />
         </Box>
       );
@@ -68,7 +68,7 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
     if (data.students != undefined && data.students != "")
       return (
         <Box>
-          <h2>Alunos</h2>
+          <h2>Team</h2>
           <ViewTeam team={data.students} />
         </Box>
       );
@@ -85,8 +85,8 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
         <Box>
           <h1>{data.project_name}</h1>
           <h3>Area: {data.area}</h3>
-          <h3>Contato: {data.contact}</h3>
-          <h3>Curso: {data.course}</h3>
+          <h3>Contact: {data.contact}</h3>
+          <h3>Course: {data.course}</h3>
         </Box>
         <Box>
           <Button
@@ -131,7 +131,7 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
         {/* ARTICLE */}
         <Box>
           <Box>
-            <h2>Descrição</h2>
+            <h2>Description</h2>
             <Box>{data.description}</Box>
           </Box>
           {renderTeam()}

@@ -66,7 +66,7 @@ export default function EditTeam({
 
   return (
     <div>
-      <h3>Team</h3>
+      <h3>Team *</h3>
       {renderTeam()}
     </div>
   );

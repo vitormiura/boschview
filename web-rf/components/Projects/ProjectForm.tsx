@@ -254,7 +254,7 @@ export default function ProjectForm({
           value={inputProject.course}
         />
         <Box>
-          <p>Finish Ratio</p>
+          <p>Finish Ratio *</p>
           <Slider
             valueLabelFormat={(value: number) => `${value}%`}
             valueLabelDisplay="on"
@@ -301,6 +301,7 @@ export default function ProjectForm({
         <FormControl sx={{ gridColumn: "span 2" }}>
           <InputLabel id="status-label">Status</InputLabel>
           <Select
+            required
             fullWidth
             name="status"
             labelId="status-label"
@@ -335,7 +336,7 @@ export default function ProjectForm({
         />
 
         <Button variant="contained" type="submit">
-          Submit
+          Save Changes
         </Button>
       </form>
     </div>
