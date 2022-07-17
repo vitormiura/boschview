@@ -1,145 +1,56 @@
-import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import Box from '@mui/material/Box';
-import SearchModal from './SearchModal';
-import Link from 'next/link';
+import { Box, Button, InputAdornment, Modal, TextField } from "@mui/material";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
+import { Notificate } from "../common/types";
+import ModalSearch from "./ModalSearch";
 
-const HeaderComponent: NextPage = () => {
+export default function Header({
+  notificate,
+}: {
+  notificate: Notificate["notificate"];
+}) {
   const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
-  console.log(router.pathname);
 
-  const routerHeaderRender = () => {
-    switch (router.pathname) {
-      case '/projects':
-        return (
-          <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <h1>Search Projects</h1>
-            </Box>
-          </Box>
-        );
-        break;
-      case '/projects/[id]':
-        return (
-          <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <h1>Project Page</h1>
-            </Box>
-            <Box></Box>
-          </Box>
-        );
-        break;
-      case '/projects/[id]/edit':
-        return (
-          <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <h1>Edit Project Page</h1>
-            </Box>
-            <Box></Box>
-          </Box>
-        );
-        break;
-      case '/projects/create':
-        return (
-          <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <h1>Create Project Page</h1>
-            </Box>
-            <Box></Box>
-          </Box>
-        );
-        break;
-      case '/':
-        return (
-          <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <h1>Dashboard</h1>
-            </Box>
-          </Box>
-        );
-        break;
-      default:
-        return (
-          <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <h1>Not found</h1>
-            </Box>
-          </Box>
-        );
-        break;
+  const handleKeyPress = useCallback((e: any) => {
+    if ("key" in e && e.key.toLowerCase() === "q" && e.ctrlKey) {
+      setOpenModal((prevState) => !prevState);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleKeyPress, setOpenModal, openModal]);
 
   return (
-    <header>
-      <nav
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
-          height: 80,
-          alignItems: 'center',
-          backgroundColor: 'gray',
-          padding: '0 10%',
+    <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+      <Box onClick={() => router.push("/")}>
+        <h2>Bosch</h2>
+      </Box>
+      <TextField
+        InputProps={{
+          startAdornment: <InputAdornment position="start">🔎</InputAdornment>,
         }}
+        disabled
+        variant="outlined"
+        placeholder="Open with Ctrl Q"
+        onClick={() => setOpenModal(true)}
+      />
+      <ModalSearch
+        notificate={notificate}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+      />
+      <Button
+        variant="contained"
+        size="small"
+        onClick={() => router.push("/projects/create")}
       >
-        {/* COMPANY LOGO */}
-        <Link href={'/'}>
-          <Box
-            sx={{
-              display: 'flex',
-              cursor: 'pointer',
-              ':hover': { color: 'white' },
-            }}
-          >
-            <h1>Apeview</h1>
-          </Box>
-        </Link>
-        {routerHeaderRender()}
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'end',
-          }}
-        >
-          <SearchModal />
-        </Box>
-      </nav>
-    </header>
+        Create new project
+      </Button>
+    </Box>
   );
-};
-
-export default HeaderComponent;
+}
