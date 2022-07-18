@@ -47,7 +47,7 @@ export default function Header({
       <Box className={styles.header}>
         {/* START */}
         <Box className={styles.start} onClick={() => router.push("/")}>
-          <img className={styles.logo} src="logo_bosch.png" />
+          <img className={styles.logo} src="/logo_bosch.png" />
         </Box>
 
         {/* END */}
@@ -58,7 +58,7 @@ export default function Header({
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <img width={20} src="icon-pesquisa.svg" />
+                  <img width={20} src="/icon-pesquisa.svg" />
                 </InputAdornment>
               ),
             }}
@@ -97,7 +97,7 @@ function BoschLine() {
     <Box style={{ width: "100%", height: "0.5rem", display: "flex" }}>
       <img
         style={{ objectFit: "cover", width: "100%" }}
-        src="Bosch-Supergraphic.svg"
+        src="/Bosch-Supergraphic.svg"
       />
     </Box>
   );

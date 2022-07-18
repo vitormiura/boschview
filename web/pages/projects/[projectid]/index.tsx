@@ -13,6 +13,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ViewTeam from "../../../components/Team/ViewTeam";
+import styles from "../../../styles/ProjectPage.module.scss";
 
 const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
   const router = useRouter();
@@ -50,7 +51,13 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
   const renderImage = () => {
     if (data.image_path != undefined)
       return (
-        <img alt={data.image_path} src={imageUrl} width={500} height={300} />
+        <img
+          className={styles.cover}
+          alt={data.image_path}
+          src={imageUrl}
+          width={500}
+          height={300}
+        />
       );
   };
 
@@ -77,19 +84,20 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
   const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}/media/${data.image_path}`;
 
   return (
-    <div>
-      <p>{projectid}</p>
-      <Box>
+    <Box>
+      <Box className={styles.header}>
         {/* HEADER */}
         {renderImage()}
         <Box>
           <h1>{data.project_name}</h1>
           <h3>Area: {data.area}</h3>
+          <h3>Start date: {data.created_date.slice(0, 10)}</h3>
           <h3>Contact: {data.contact}</h3>
           <h3>Course: {data.course}</h3>
         </Box>
-        <Box>
+        <Box className={styles.actions}>
           <Button
+            className={styles.button}
             variant="contained"
             color="info"
             onClick={() => router.push(`/projects/${data.project_id}/edit`)}
@@ -97,6 +105,7 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
             Edit this page
           </Button>
           <Button
+            className={styles.button}
             variant="contained"
             color="warning"
             onClick={() => setOpenDialog(true)}
@@ -127,18 +136,17 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
           </Dialog>
         </Box>
       </Box>
-      <Box>
-        {/* ARTICLE */}
-        <Box>
-          <Box>
-            <h2>Description</h2>
-            <Box>{data.description}</Box>
-          </Box>
-          {renderTeam()}
-          {renderStack()}
+
+      {/* ARTICLE */}
+      <Box className={styles.article}>
+        <Box className={styles.description}>
+          <h2>Description</h2>
+          <Box>{data.description}</Box>
         </Box>
+        {renderTeam()}
+        {renderStack()}
       </Box>
-    </div>
+    </Box>
   );
 };
 

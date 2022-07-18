@@ -9,7 +9,7 @@ const SignUpPage: NextPage = () => {
         <div className={styles.wrapLogin}>
           <form className={styles.loginForm}>
             <span className={styles.loginFormTitle}>
-              <img src="logo_bosch.png" alt="Logo da Bosch" />
+              <img src="/logo_bosch.png" alt="Logo da Bosch" />
               <br />
               <br />
             </span>
