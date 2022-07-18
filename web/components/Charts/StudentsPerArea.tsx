@@ -7,6 +7,8 @@ export default function StudentsPerArea({
 }: {
   allProjects: Project[];
 }) {
+  const randomNum = () => Math.floor(Math.random() * (235 - 52 + 1) + 52);
+  const randomRGB = () => `rgb(${randomNum()}, ${randomNum()}, ${randomNum()})`;
   const uniqueArray = (array: string[]) => Array.from(new Set(array));
   return (
     <Bar
@@ -29,6 +31,28 @@ export default function StudentsPerArea({
                   .reduce((a, b) => a + b);
               }
             ),
+            backgroundColor: [
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+            ],
           },
         ],
       }}
