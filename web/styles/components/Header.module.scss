@@ -1,0 +1,56 @@
+@import "../common.scss";
+
+.header {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+  background-color: $secondary;
+  padding: 1rem 1.5rem;
+  height: 5rem;
+}
+
+.start {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  .logo {
+    width: 100px;
+  }
+}
+
+.end {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .add {
+    height: 100%;
+  }
+
+  .searchBar {
+    width: 50px;
+  }
+}
+
+@media only screen and (min-width: 500px) {
+  .start {
+    .logo {
+      width: auto;
+      height: 100%;
+    }
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .end {
+    .searchBar {
+      width: auto;
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .header {
+    padding: 1rem 6rem;
+  }
+}

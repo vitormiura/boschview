@@ -7,6 +7,7 @@ import {
   TextField,
 } from "@mui/material";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Notificate, Project } from "../common/types";
 import ProjectCard from "./Projects/ProjectCard";
@@ -20,6 +21,7 @@ export default function ModalSearch({
   setOpenModal: Dispatch<SetStateAction<boolean>>;
   notificate: Notificate["notificate"];
 }) {
+  const router = useRouter();
   const [filteredData, setFilteredData] = useState<Project[]>([]);
   const [searchFilter, setSearchFilter] = useState("");
 
@@ -93,7 +95,9 @@ export default function ModalSearch({
         <TextField
           InputProps={{
             startAdornment: (
-              <InputAdornment position="start">🔎</InputAdornment>
+              <InputAdornment position="start">
+                <img width={30} src="/icon-pesquisa.svg" />
+              </InputAdornment>
             ),
           }}
           variant="outlined"
@@ -116,7 +120,13 @@ export default function ModalSearch({
             );
           })}
         </Box>
-        <Button variant="outlined" href={`/projects?s=${searchFilter}`}>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            setOpenModal(false);
+            router.push(`/projects?s=${searchFilter}`);
+          }}
+        >
           See more results
         </Button>
       </Box>

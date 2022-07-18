@@ -92,7 +92,7 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
           <Button
             variant="contained"
             color="info"
-            href={`/projects/${data.project_id}/edit`}
+            onClick={() => router.push(`/projects/${data.project_id}/edit`)}
           >
             Edit this page
           </Button>
