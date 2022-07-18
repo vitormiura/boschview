@@ -77,14 +77,15 @@ export default function ModalSearch({
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
+        padding: "1rem",
       }}
     >
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "70%",
-          height: "60%",
+          width: 700,
+          height: "90%",
           bgcolor: "background.paper",
           border: "none",
           outline: "none",
