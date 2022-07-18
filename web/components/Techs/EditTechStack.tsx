@@ -36,7 +36,7 @@ export default function EditTechStack({
   const renderStack = () => {
     if (stack != "") {
       return (
-        <div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem" }}>
           {stack.split(";").map((tech, index) => (
             <Chip
               key={index}

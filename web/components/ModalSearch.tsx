@@ -7,9 +7,11 @@ import {
   TextField,
 } from "@mui/material";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Notificate, Project } from "../common/types";
 import ProjectCard from "./Projects/ProjectCard";
+import styles from "../styles/components/ModalSearch.module.scss";
 
 export default function ModalSearch({
   openModal,
@@ -20,6 +22,7 @@ export default function ModalSearch({
   setOpenModal: Dispatch<SetStateAction<boolean>>;
   notificate: Notificate["notificate"];
 }) {
+  const router = useRouter();
   const [filteredData, setFilteredData] = useState<Project[]>([]);
   const [searchFilter, setSearchFilter] = useState("");
 
@@ -61,7 +64,18 @@ export default function ModalSearch({
   }
 
   if (error) return <div>Error</div>;
-  if (loading || allProjects == undefined) return <CircularProgress />;
+  if (loading || allProjects == undefined)
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
 
   return (
     <Modal
@@ -75,14 +89,16 @@ export default function ModalSearch({
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
+        padding: "1rem",
       }}
     >
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "70%",
-          height: "60%",
+          gap: 2,
+          width: 700,
+          height: "90%",
           bgcolor: "background.paper",
           border: "none",
           outline: "none",
@@ -93,7 +109,9 @@ export default function ModalSearch({
         <TextField
           InputProps={{
             startAdornment: (
-              <InputAdornment position="start">🔎</InputAdornment>
+              <InputAdornment position="start">
+                <img width={30} src="/icon-pesquisa.svg" />
+              </InputAdornment>
             ),
           }}
           variant="outlined"
@@ -104,19 +122,23 @@ export default function ModalSearch({
           }}
           placeholder="Quick Search"
         />
-        <Box sx={{ overflowY: "scroll" }}>
-          {filteredData.map((project, index) => {
-            return (
-              <ProjectCard
-                onClick={() => setOpenModal(false)}
-                size="small"
-                key={index}
-                project={project}
-              />
-            );
-          })}
+        <Box className={styles.cardsGrid}>
+          {filteredData.map((project, index) => (
+            <ProjectCard
+              onClick={() => setOpenModal(false)}
+              size="small"
+              key={index}
+              project={project}
+            />
+          ))}
         </Box>
-        <Button variant="outlined" href={`/projects?s=${searchFilter}`}>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            setOpenModal(false);
+            router.push(`/projects?s=${searchFilter}`);
+          }}
+        >
           See more results
         </Button>
       </Box>

@@ -1,5 +1,6 @@
-import { Avatar, Chip } from "@mui/material";
+import { Avatar, Box, Chip } from "@mui/material";
 import deviconsList from "../../assets/deviconsList.json";
+import styles from "../../styles/components/ViewTechStack.module.scss";
 
 export default function ViewTechStack({ stack }: { stack: string }) {
   function renderLogo(tech: string) {
@@ -17,10 +18,10 @@ export default function ViewTechStack({ stack }: { stack: string }) {
 
   if (stack == undefined || stack == "") return <></>;
   return (
-    <div>
+    <Box className={styles.techStackGrid}>
       {stack.split(";").map((tech, index) => (
         <Chip key={index} label={tech} avatar={renderLogo(tech)} />
       ))}
-    </div>
+    </Box>
   );
 }

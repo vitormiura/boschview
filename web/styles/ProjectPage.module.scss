@@ -1,0 +1,50 @@
+@import "common.scss";
+
+.header {
+  display: grid;
+  gap: 1rem;
+  background-color: #007bc0;
+  padding: 1rem;
+
+  .cover {
+    width: 100%;
+    height: auto;
+    border-radius: $rounded;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+
+    .button {
+      height: 3rem;
+    }
+  }
+
+  * {
+    color: white;
+  }
+}
+
+.article {
+  padding: 1rem;
+  .description {
+    background-color: white;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .header {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .header {
+    padding: 3rem 6rem;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .article {
+    padding: 3rem 6rem;
+  }
+}

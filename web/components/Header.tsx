@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { Notificate } from "../common/types";
 import ModalSearch from "./ModalSearch";
+import styles from "../styles/components/Header.module.scss";
 
 export default function Header({
   notificate,
@@ -10,6 +11,7 @@ export default function Header({
   notificate: Notificate["notificate"];
 }) {
   const [openModal, setOpenModal] = useState(false);
+  const [placeholder, setPlaceholder] = useState("");
   const router = useRouter();
 
   const handleKeyPress = useCallback((e: any) => {
@@ -25,32 +27,78 @@ export default function Header({
     };
   }, [handleKeyPress, setOpenModal, openModal]);
 
+  const updateDimensions = () => {
+    if (window.innerWidth > 900) {
+      setPlaceholder("Ctrl Q to Quick Search");
+    } else {
+      setPlaceholder("");
+    }
+  };
+  useEffect(() => {
+    if (window.innerWidth > 900) {
+      setPlaceholder("Ctrl Q to Quick Search");
+    }
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
   return (
-    <Box sx={{ display: "flex", justifyContent: "space-around" }}>
-      <Box onClick={() => router.push("/")}>
-        <h2>Bosch</h2>
+    <Box>
+      <BoschLine />
+      <Box className={styles.header}>
+        {/* START */}
+        <Box className={styles.start} onClick={() => router.push("/")}>
+          <img className={styles.logo} src="/logo_bosch.png" />
+        </Box>
+
+        {/* END */}
+        <Box className={styles.end}>
+          <TextField
+            className={styles.searchBar}
+            size="small"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <img width={20} src="/icon-pesquisa.svg" />
+                </InputAdornment>
+              ),
+            }}
+            disabled
+            placeholder={placeholder}
+            variant="outlined"
+            onClick={() => setOpenModal(true)}
+          />
+
+          <Box className={styles.add} onClick={() => router.push("/login")}>
+            <img height={"100%"} src="/icon-saida.svg" />
+          </Box>
+
+          <Button
+            className={styles.add}
+            variant="contained"
+            size="small"
+            onClick={() => router.push("/projects/create")}
+          >
+            <p style={{ fontSize: "40px" }}>+</p>
+          </Button>
+
+          <ModalSearch
+            notificate={notificate}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+          />
+        </Box>
       </Box>
-      <TextField
-        InputProps={{
-          startAdornment: <InputAdornment position="start">🔎</InputAdornment>,
-        }}
-        disabled
-        variant="outlined"
-        placeholder="Open with Ctrl Q"
-        onClick={() => setOpenModal(true)}
+    </Box>
+  );
+}
+
+function BoschLine() {
+  return (
+    <Box style={{ width: "100%", height: "0.5rem", display: "flex" }}>
+      <img
+        style={{ objectFit: "cover", width: "100%" }}
+        src="/Bosch-Supergraphic.svg"
       />
-      <ModalSearch
-        notificate={notificate}
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-      />
-      <Button
-        variant="contained"
-        size="small"
-        onClick={() => router.push("/projects/create")}
-      >
-        Create new project
-      </Button>
     </Box>
   );
 }

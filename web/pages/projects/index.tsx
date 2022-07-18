@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Notificate, Project } from "../../common/types";
 import ProjectCard from "../../components/Projects/ProjectCard";
+import styles from "../../styles/SearchProjectsPage.module.scss";
 
 const SearchProjectsPage: NextPage<Notificate> = ({ notificate }) => {
   const router = useRouter();
@@ -99,16 +100,26 @@ const SearchProjectsPage: NextPage<Notificate> = ({ notificate }) => {
   }, [router, notificate]);
 
   if (error) return <div>Error</div>;
-  if (loading || allProjects == undefined) return <CircularProgress />;
+  if (loading || allProjects == undefined)
+    return (
+      <div
+        style={{
+          display: "flex",
+          height: "80vh",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
 
   // console.log(allProjects);
 
   return (
-    <div>
-      <p>Projects:</p>
-      <p>Total of projects: {allProjects.length}</p>
-
-      <Box>
+    <div className={styles.container}>
+      <h1>Search Projects</h1>
+      <Box className={styles.filter}>
         {/* Filters */}
         <Autocomplete
           options={uniqueArray(allProjects.map((project) => project.area))}
@@ -148,6 +159,7 @@ const SearchProjectsPage: NextPage<Notificate> = ({ notificate }) => {
           }}
         />
         <TextField
+          fullWidth
           label="Search by name"
           variant="outlined"
           value={searchFilter}
@@ -155,16 +167,22 @@ const SearchProjectsPage: NextPage<Notificate> = ({ notificate }) => {
             setSearchFilter(e.target.value)
           }
         />
-        <Button variant="contained" onClick={() => filterData()}>
+        <Button
+          sx={{ width: "100%" }}
+          variant="contained"
+          onClick={() => filterData()}
+        >
           Search
         </Button>
       </Box>
       <Box>
         {/* Filtered Data */}
         <p>Find {filteredData.length} projects</p>
-        {filteredData.map((project, index) => {
-          return <ProjectCard key={index} project={project} />;
-        })}
+        <Box className={styles.cardsGrid}>
+          {filteredData.map((project, index) => {
+            return <ProjectCard key={index} project={project} />;
+          })}
+        </Box>
       </Box>
     </div>
   );

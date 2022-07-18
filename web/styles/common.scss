@@ -1,0 +1,14 @@
+$primary: #d9d9d9;
+$secondary: white;
+$rounded: 0.3rem;
+
+.container {
+  background-color: $primary;
+  padding: 1rem;
+}
+
+@media only screen and (min-width: 1200px) {
+  .container {
+    padding: 3rem 6rem;
+  }
+}

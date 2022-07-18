@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { Notificate, Project } from "../../common/types";
 import EditTeam from "../Team/EditTeam";
 import EditTechStack from "../Techs/EditTechStack";
+import styles from "../../styles/components/ProjectForm.module.scss";
 
 interface ProjectFormProps {
   project_id?: string;
@@ -149,6 +150,7 @@ export default function ProjectForm({
         <Box>
           <h3>Preview: </h3>
           <img
+            className={styles.image}
             alt={inputImage.filename}
             src={URL.createObjectURL(inputImage)}
           />
@@ -167,6 +169,7 @@ export default function ProjectForm({
         <Box>
           <h3>Preview: </h3>
           <img
+            className={styles.image}
             alt={inputProject.image_path}
             src={`${process.env.NEXT_PUBLIC_API_URL}/media/${inputProject.image_path}`}
           />
@@ -233,116 +236,163 @@ export default function ProjectForm({
 
   if (project_id != undefined) {
     if (error) return <div>Error</div>;
-    if (loading || inputProject == undefined) return <CircularProgress />;
+    if (loading || inputProject == undefined)
+      return (
+        <div
+          style={{
+            display: "flex",
+            height: "80vh",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      );
   }
 
+  const editOrCreate = () => {
+    if (project_id != undefined) {
+      return <h1>Edit Project</h1>;
+    } else {
+      return <h1>Create Project</h1>;
+    }
+  };
+
   return (
-    <div>
+    <Box className={styles.container}>
+      {editOrCreate()}
       <form
+        className={styles.form}
         style={{ display: "flex", flexDirection: "column", gap: 10 }}
         onSubmit={handleSubmit}
       >
-        <TextField
-          required
-          name="project_name"
-          label={"Name"}
-          onChange={handleChange}
-          value={inputProject.project_name}
-        />
-
-        <TextField
-          required
-          name="course"
-          label={"Course"}
-          onChange={handleChange}
-          value={inputProject.course}
-        />
-        <Box>
-          <p>Finish Ratio *</p>
-          <Slider
-            valueLabelFormat={(value: number) => `${value}%`}
-            valueLabelDisplay="on"
-            value={inputProject.finish_ratio}
-            name="finish_ratio"
-            onChange={handleChange}
-            step={10}
-            marks
-            min={0}
-            max={100}
-          />
-        </Box>
-
-        <TextField
-          required
-          name="contact"
-          label={"Contact"}
-          onChange={handleChange}
-          value={inputProject.contact}
-        />
-        <TextField
-          required
-          name="area"
-          label={"Area"}
-          onChange={handleChange}
-          value={inputProject.area}
-        />
-        <Button variant="contained" component="label">
-          Upload / file: {fileName()}
-          <input
-            onChange={(e: any) => {
-              setInputImage(e.target.files[0]);
-            }}
-            id="input-file"
-            hidden
-            accept="image/*"
-            multiple
-            type="file"
-          />
-        </Button>
-
-        {renderImage()}
-
-        <FormControl sx={{ gridColumn: "span 2" }}>
-          <InputLabel id="status-label">Status</InputLabel>
-          <Select
+        <Box className={styles.start}>
+          <TextField
             required
             fullWidth
-            name="status"
-            labelId="status-label"
-            label="Status"
-            value={inputProject.status}
+            name="project_name"
+            label={"Name"}
             onChange={handleChange}
-          >
-            <MenuItem value={"Done"}>Done</MenuItem>
-            <MenuItem value={"In Progress"}>In Progress</MenuItem>
-            <MenuItem value={"Implemented"}>Implemented</MenuItem>
-          </Select>
-        </FormControl>
-        <TextField
-          name="description"
-          label={"Description"}
-          onChange={handleChange}
-          value={inputProject.description}
-          multiline
-          rows={4}
-        />
+            value={inputProject.project_name}
+          />
 
-        <EditTeam
-          team={inputProject.students}
-          addMember={addMember}
-          deleteMember={deleteMember}
-        />
+          <TextField
+            required
+            fullWidth
+            name="course"
+            label={"Course"}
+            onChange={handleChange}
+            value={inputProject.course}
+          />
 
-        <EditTechStack
-          stack={inputProject.techs}
-          addTech={addTech}
-          deleteTech={deleteTech}
-        />
+          <TextField
+            required
+            fullWidth
+            name="contact"
+            label={"Contact"}
+            onChange={handleChange}
+            value={inputProject.contact}
+          />
 
-        <Button variant="contained" type="submit">
+          <TextField
+            required
+            fullWidth
+            name="area"
+            label={"Area"}
+            onChange={handleChange}
+            value={inputProject.area}
+          />
+
+          <Box className={styles.slider}>
+            <p>Finish Ratio *</p>
+            <Slider
+              sx={{ width: "95%" }}
+              valueLabelFormat={(value: number) => `${value}%`}
+              valueLabelDisplay="on"
+              value={inputProject.finish_ratio}
+              name="finish_ratio"
+              onChange={handleChange}
+              step={10}
+              marks
+              min={0}
+              max={100}
+            />
+          </Box>
+        </Box>
+
+        <Box className={styles.intermediary}>
+          <Box className={styles.middle}>
+            <h3>Details</h3>
+            <FormControl>
+              <InputLabel id="status-label">Status</InputLabel>
+              <Select
+                required
+                fullWidth
+                name="status"
+                labelId="status-label"
+                label="Status"
+                value={inputProject.status}
+                onChange={handleChange}
+              >
+                <MenuItem value={"Done"}>Done</MenuItem>
+                <MenuItem value={"In Progress"}>In Progress</MenuItem>
+                <MenuItem value={"Implemented"}>Implemented</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              fullWidth
+              name="description"
+              label={"Description"}
+              onChange={handleChange}
+              value={inputProject.description}
+              multiline
+              rows={4}
+            />
+
+            <EditTeam
+              team={inputProject.students}
+              addMember={addMember}
+              deleteMember={deleteMember}
+            />
+
+            <EditTechStack
+              stack={inputProject.techs}
+              addTech={addTech}
+              deleteTech={deleteTech}
+            />
+          </Box>
+          <Box className={styles.end}>
+            {renderImage()}
+            <Button
+              sx={{ height: "4rem" }}
+              variant="contained"
+              component="label"
+            >
+              Upload / file: {fileName()}
+              <input
+                onChange={(e: any) => {
+                  setInputImage(e.target.files[0]);
+                }}
+                id="input-file"
+                hidden
+                accept="image/*"
+                multiple
+                type="file"
+              />
+            </Button>
+          </Box>
+        </Box>
+
+        <Button
+          sx={{ height: "4rem" }}
+          color="success"
+          variant="contained"
+          type="submit"
+        >
           Save Changes
         </Button>
       </form>
-    </div>
+    </Box>
   );
 }

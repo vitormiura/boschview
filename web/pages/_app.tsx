@@ -3,8 +3,11 @@ import type { AppProps } from "next/app";
 import Header from "../components/Header";
 import { Alert, AlertColor, Snackbar } from "@mui/material";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  console.log(router.pathname);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState<AlertColor>("info");
@@ -21,9 +24,22 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
     setOpen(true);
   };
+
+  const renderHeader = () => {
+    console.log(router.pathname);
+    if (
+      router.pathname != "/login" &&
+      router.pathname != "/signup" &&
+      router.pathname != undefined &&
+      router.pathname != null &&
+      router.pathname != ""
+    )
+      return <Header notificate={notificate} />;
+  };
+
   return (
     <div>
-      <Header notificate={notificate} />
+      {renderHeader()}
       <Component {...pageProps} notificate={notificate} />
       <Snackbar
         open={open}
