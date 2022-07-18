@@ -22,6 +22,14 @@ const HomePage: NextPage<Notificate> = ({ notificate }) => {
       <Button variant="outlined" onClick={() => router.push("/projects")}>
         See All Projects
       </Button>
+      <Button
+        sx={{ marginLeft: "1rem" }}
+        variant="contained"
+        onClick={() => router.push("/about")}
+      >
+        About us{" "}
+        <img style={{ marginLeft: "0.7rem" }} width={25} src="/about_us.png" />
+      </Button>
       <ProjectDashboard allProjects={data} />
     </div>
   );
