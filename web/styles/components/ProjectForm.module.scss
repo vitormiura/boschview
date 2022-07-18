@@ -1,0 +1,52 @@
+@import "../common.scss";
+
+.form {
+  display: grid;
+}
+
+.image {
+  width: 100%;
+  border-radius: $rounded;
+}
+
+.start {
+  display: grid;
+  gap: 1rem;
+}
+
+.middle {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.intermediary {
+  display: grid;
+  gap: 2rem;
+}
+
+.end {
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (min-width: 600px) {
+  .start {
+    grid-template-columns: 1fr 1fr;
+  }
+  .slider {
+    grid-column: 2 span;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .intermediary {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .end {
+    width: 30vw;
+  }
+}

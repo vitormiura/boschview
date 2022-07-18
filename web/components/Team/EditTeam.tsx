@@ -19,7 +19,7 @@ export default function EditTeam({
   const renderTeam = () => {
     if (team !== "") {
       return (
-        <Box>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0.3rem" }}>
           {team.split(";").map((member, index) => (
             <Chip
               key={index}
