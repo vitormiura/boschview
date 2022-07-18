@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Link, TextField } from "@mui/material";
 import styles from "../styles/Login.module.scss";
 import { useRouter } from "next/router";
 
@@ -33,10 +33,10 @@ const LoginPage: NextPage = () => {
             </div>
 
             <div className={styles.textCenter}>
-              <span className={styles.txt1}>Don't have an account?</span>
-              <a className={styles.txt2} href="/signup">
+              <span className={styles.txt1}>Dont have an account?</span>
+              <Link className={styles.txt2} href="/signup">
                 Sign Up!
-              </a>
+              </Link>
             </div>
           </form>
         </div>

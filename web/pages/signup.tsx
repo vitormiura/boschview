@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { Button, TextField } from "@mui/material";
+import { Button, Link, TextField } from "@mui/material";
 import styles from "../styles/Login.module.scss";
 
 const SignUpPage: NextPage = () => {
@@ -33,9 +33,9 @@ const SignUpPage: NextPage = () => {
             </div>
             <div className={styles.textCenter}>
               <span className={styles.txt1}>Already have an account?</span>
-              <a className={styles.txt2} href="/login">
+              <Link className={styles.txt2} href="/login">
                 Login!
-              </a>
+              </Link>
             </div>
           </form>
         </div>
