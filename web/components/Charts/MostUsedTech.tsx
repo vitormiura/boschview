@@ -8,6 +8,8 @@ export default function MostUsedTech({
   allProjects: Project[];
 }) {
   const uniqueArray = (array: string[]) => Array.from(new Set(array));
+  const randomNum = () => Math.floor(Math.random() * (235 - 52 + 1) + 52);
+  const randomRGB = () => `rgb(${randomNum()}, ${randomNum()}, ${randomNum()})`;
 
   const uniqueAllTechs = uniqueArray(
     allProjects.map((project) => project.techs.split(";")).flat(1)
@@ -23,6 +25,41 @@ export default function MostUsedTech({
           ).length;
           return techsByProjects;
         }),
+        backgroundColor: [
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+          randomRGB(),
+        ],
       },
     ],
   };

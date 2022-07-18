@@ -39,6 +39,7 @@ export default function ProjectStatusPerArea({
                 ).length;
               }
             ),
+            backgroundColor: ["#fcea47"],
           },
           {
             label: "Done",
@@ -52,6 +53,7 @@ export default function ProjectStatusPerArea({
                 ).length;
               }
             ),
+            backgroundColor: ["#7df562"],
           },
           {
             label: "Implemented",
@@ -65,6 +67,7 @@ export default function ProjectStatusPerArea({
                 ).length;
               }
             ),
+            backgroundColor: ["#478cfc"],
           },
         ],
       }}

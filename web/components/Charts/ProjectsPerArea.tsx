@@ -8,6 +8,9 @@ export default function ProjectsPerArea({
   allProjects: Project[];
 }) {
   const uniqueArray = (array: string[]) => Array.from(new Set(array));
+  const randomNum = () => Math.floor(Math.random() * (235 - 52 + 1) + 52);
+  const randomRGB = () => `rgb(${randomNum()}, ${randomNum()}, ${randomNum()})`;
+
   return (
     <Pie
       options={{
@@ -28,6 +31,28 @@ export default function ProjectsPerArea({
                 return projectsByArea.length;
               }
             ),
+            backgroundColor: [
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+              randomRGB(),
+            ],
           },
         ],
       }}
