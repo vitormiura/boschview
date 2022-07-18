@@ -1,12 +1,13 @@
-import { Chip } from "@mui/material";
+import { Box, Chip } from "@mui/material";
+import styles from "../../styles/components/ViewTeam.module.scss";
 
 export default function ViewTeam({ team }: { team: string }) {
   if (team == undefined || team == "") return <></>;
   return (
-    <div>
+    <Box className={styles.teamGrid}>
       {team.split(";").map((member, index) => (
         <Chip key={index} label={member} />
       ))}
-    </div>
+    </Box>
   );
 }

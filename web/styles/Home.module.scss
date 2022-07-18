@@ -4,7 +4,7 @@
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(300px);
+  grid-template-rows: auto;
   height: auto;
   position: relative;
 
@@ -16,7 +16,7 @@
     .numbers {
       background-color: $primary;
       padding: 0;
-      border-radius: 0.3rem;
+      border-radius: $rounded;
       display: grid;
       gap: 0.5rem;
       height: 100%;
@@ -24,7 +24,7 @@
       grid-template-rows: 1fr 1fr;
 
       * {
-        border-radius: 0.3rem;
+        border-radius: $rounded;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -34,7 +34,7 @@
     }
   }
   * {
-    border-radius: 0.3rem;
+    border-radius: $rounded;
     padding: 0.2rem;
     background-color: $secondary;
     min-width: 0;
@@ -44,11 +44,13 @@
 @media only screen and (min-width: 768px) {
   .dashboard {
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 300px 300px 300px;
   }
 }
 
 @media only screen and (min-width: 1200px) {
   .dashboard {
     grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 300px 300px;
   }
 }

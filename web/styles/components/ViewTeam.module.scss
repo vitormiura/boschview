@@ -1,0 +1,7 @@
+@import "../common.scss";
+
+.teamGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

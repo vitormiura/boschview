@@ -106,10 +106,8 @@ const SearchProjectsPage: NextPage<Notificate> = ({ notificate }) => {
 
   return (
     <div className={styles.container}>
-      <p>Projects:</p>
-      <p>Total of projects: {allProjects.length}</p>
-
-      <Box>
+      <h1>Search Projects</h1>
+      <Box className={styles.filter}>
         {/* Filters */}
         <Autocomplete
           options={uniqueArray(allProjects.map((project) => project.area))}
@@ -149,6 +147,7 @@ const SearchProjectsPage: NextPage<Notificate> = ({ notificate }) => {
           }}
         />
         <TextField
+          fullWidth
           label="Search by name"
           variant="outlined"
           value={searchFilter}
@@ -156,16 +155,22 @@ const SearchProjectsPage: NextPage<Notificate> = ({ notificate }) => {
             setSearchFilter(e.target.value)
           }
         />
-        <Button variant="contained" onClick={() => filterData()}>
+        <Button
+          sx={{ width: "100%" }}
+          variant="contained"
+          onClick={() => filterData()}
+        >
           Search
         </Button>
       </Box>
       <Box>
         {/* Filtered Data */}
         <p>Find {filteredData.length} projects</p>
-        {filteredData.map((project, index) => {
-          return <ProjectCard key={index} project={project} />;
-        })}
+        <Box className={styles.cardsGrid}>
+          {filteredData.map((project, index) => {
+            return <ProjectCard key={index} project={project} />;
+          })}
+        </Box>
       </Box>
     </div>
   );

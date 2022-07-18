@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Notificate, Project } from "../common/types";
 import ProjectCard from "./Projects/ProjectCard";
+import styles from "../styles/components/ModalSearch.module.scss";
 
 export default function ModalSearch({
   openModal,
@@ -84,6 +85,7 @@ export default function ModalSearch({
         sx={{
           display: "flex",
           flexDirection: "column",
+          gap: 2,
           width: 700,
           height: "90%",
           bgcolor: "background.paper",
@@ -109,17 +111,15 @@ export default function ModalSearch({
           }}
           placeholder="Quick Search"
         />
-        <Box sx={{ overflowY: "scroll" }}>
-          {filteredData.map((project, index) => {
-            return (
-              <ProjectCard
-                onClick={() => setOpenModal(false)}
-                size="small"
-                key={index}
-                project={project}
-              />
-            );
-          })}
+        <Box className={styles.cardsGrid}>
+          {filteredData.map((project, index) => (
+            <ProjectCard
+              onClick={() => setOpenModal(false)}
+              size="small"
+              key={index}
+              project={project}
+            />
+          ))}
         </Box>
         <Button
           variant="outlined"
