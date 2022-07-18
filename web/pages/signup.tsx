@@ -1,8 +1,11 @@
 import type { NextPage } from "next";
 import { Button, Link, TextField } from "@mui/material";
 import styles from "../styles/Login.module.scss";
+import { Notificate } from "../common/types";
+import { useRouter } from "next/router";
 
-const SignUpPage: NextPage = () => {
+const SignUpPage: NextPage<Notificate> = ({ notificate }) => {
+  const router = useRouter();
   return (
     <div className={styles.container}>
       <div className={styles.containerLogin}>
@@ -21,13 +24,28 @@ const SignUpPage: NextPage = () => {
             <TextField className={styles.wrapInput} variant="standard" />
 
             <h4>Password:</h4>
-            <TextField className={styles.wrapInput} variant="standard" />
+            <TextField
+              type="password"
+              className={styles.wrapInput}
+              variant="standard"
+            />
 
             <h4>Confirm Password:</h4>
-            <TextField className={styles.wrapInput} variant="standard" />
+            <TextField
+              type="password"
+              className={styles.wrapInput}
+              variant="standard"
+            />
 
             <div className={styles.containerLoginFormBtn}>
-              <Button variant="contained" className={styles.loginFormBtn}>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  router.push("/login");
+                  notificate("Sign up solicitation send to admin", "success");
+                }}
+                className={styles.loginFormBtn}
+              >
                 Sign Up
               </Button>
             </div>

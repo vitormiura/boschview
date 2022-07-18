@@ -20,7 +20,11 @@ const LoginPage: NextPage = () => {
             <TextField className={styles.wrapInput} variant="standard" />
 
             <h4>Password</h4>
-            <TextField className={styles.wrapInput} variant="standard" />
+            <TextField
+              type="password"
+              className={styles.wrapInput}
+              variant="standard"
+            />
 
             <div className={styles.containerLoginFormBtn}>
               <Button

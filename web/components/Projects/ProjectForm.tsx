@@ -236,7 +236,19 @@ export default function ProjectForm({
 
   if (project_id != undefined) {
     if (error) return <div>Error</div>;
-    if (loading || inputProject == undefined) return <CircularProgress />;
+    if (loading || inputProject == undefined)
+      return (
+        <div
+          style={{
+            display: "flex",
+            height: "80vh",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      );
   }
 
   const editOrCreate = () => {

@@ -100,7 +100,19 @@ const SearchProjectsPage: NextPage<Notificate> = ({ notificate }) => {
   }, [router, notificate]);
 
   if (error) return <div>Error</div>;
-  if (loading || allProjects == undefined) return <CircularProgress />;
+  if (loading || allProjects == undefined)
+    return (
+      <div
+        style={{
+          display: "flex",
+          height: "80vh",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
 
   // console.log(allProjects);
 

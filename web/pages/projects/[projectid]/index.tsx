@@ -46,7 +46,19 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
   }, [projectid, notificate]);
 
   if (error) return <div>Error</div>;
-  if (loading || data == undefined) return <CircularProgress />;
+  if (loading || data == undefined)
+    return (
+      <div
+        style={{
+          display: "flex",
+          height: "80vh",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
 
   const renderImage = () => {
     if (data.image_path != undefined)

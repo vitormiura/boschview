@@ -64,7 +64,18 @@ export default function ModalSearch({
   }
 
   if (error) return <div>Error</div>;
-  if (loading || allProjects == undefined) return <CircularProgress />;
+  if (loading || allProjects == undefined)
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
 
   return (
     <Modal

@@ -14,7 +14,19 @@ const HomePage: NextPage<Notificate> = ({ notificate }) => {
   );
 
   if (error) return <div>Error</div>;
-  if (isLoading || data == undefined) return <CircularProgress />;
+  if (isLoading || data == undefined)
+    return (
+      <div
+        style={{
+          display: "flex",
+          height: "80vh",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
 
   return (
     <div className={styles.container}>
