@@ -1,0 +1,78 @@
+[
+  {
+    "name": "python",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+  },
+  {
+    "name": "nodejs",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+  },
+  {
+    "name": "javascript",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+  },
+  {
+    "name": "nextjs",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+  },
+  {
+    "name": "reactjs",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+  },
+  {
+    "name": "vuejs",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg"
+  },
+  {
+    "name": "java",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+  },
+  {
+    "name": "arduino",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg"
+  },
+  {
+    "name": "canva",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg"
+  },
+  {
+    "name": "linux",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg"
+  },
+  {
+    "name": "raspberry",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg"
+  },
+  {
+    "name": "fastapi",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg"
+  },
+  {
+    "name": "mysql",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original-wordmark.svg"
+  },
+  {
+    "name": "azure",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"
+  },
+  {
+    "name": "dart",
+    "svg": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg"
+  },
+  {
+    "name": "excel",
+    "svg": "https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/119_Excel_logo_logos-512.png"
+  },
+  {
+    "name": "word",
+    "svg": "https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/68-word-512.png"
+  },
+  {
+    "name": "powerbi",
+    "svg": "https://cdn0.iconfinder.com/data/icons/social-media-logo-4/32/Social_Media_power_bi-512.png"
+  },
+  {
+    "name": "solidworks",
+    "svg": "https://img.icons8.com/color/452/solidworks.png"
+  }
+]

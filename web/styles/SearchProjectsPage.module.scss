@@ -1,0 +1,46 @@
+@import "common.scss";
+.yellow {
+  color: darkgoldenrod;
+}
+.green {
+  color: darkgreen;
+}
+.blue {
+  color: darkslateblue;
+}
+
+.filter {
+  display: grid;
+  gap: 1rem;
+}
+
+.cardsGrid {
+  display: grid;
+  gap: 1rem;
+
+  .projectCard {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 1rem;
+    border-radius: $rounded;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .cardsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .filter {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .cardsGrid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .filter {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

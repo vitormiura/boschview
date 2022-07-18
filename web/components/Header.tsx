@@ -1,145 +1,104 @@
-import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import Box from '@mui/material/Box';
-import SearchModal from './SearchModal';
-import Link from 'next/link';
+import { Box, Button, InputAdornment, Modal, TextField } from "@mui/material";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
+import { Notificate } from "../common/types";
+import ModalSearch from "./ModalSearch";
+import styles from "../styles/components/Header.module.scss";
 
-const HeaderComponent: NextPage = () => {
+export default function Header({
+  notificate,
+}: {
+  notificate: Notificate["notificate"];
+}) {
   const [openModal, setOpenModal] = useState(false);
+  const [placeholder, setPlaceholder] = useState("");
   const router = useRouter();
-  console.log(router.pathname);
 
-  const routerHeaderRender = () => {
-    switch (router.pathname) {
-      case '/projects':
-        return (
-          <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <h1>Search Projects</h1>
-            </Box>
-          </Box>
-        );
-        break;
-      case '/projects/[id]':
-        return (
-          <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <h1>Project Page</h1>
-            </Box>
-            <Box></Box>
-          </Box>
-        );
-        break;
-      case '/projects/[id]/edit':
-        return (
-          <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <h1>Edit Project Page</h1>
-            </Box>
-            <Box></Box>
-          </Box>
-        );
-        break;
-      case '/projects/create':
-        return (
-          <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <h1>Create Project Page</h1>
-            </Box>
-            <Box></Box>
-          </Box>
-        );
-        break;
-      case '/':
-        return (
-          <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <h1>Dashboard</h1>
-            </Box>
-          </Box>
-        );
-        break;
-      default:
-        return (
-          <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <h1>Not found</h1>
-            </Box>
-          </Box>
-        );
-        break;
+  const handleKeyPress = useCallback((e: any) => {
+    if ("key" in e && e.key.toLowerCase() === "q" && e.ctrlKey) {
+      setOpenModal((prevState) => !prevState);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleKeyPress, setOpenModal, openModal]);
+
+  const updateDimensions = () => {
+    if (window.innerWidth > 900) {
+      setPlaceholder("Ctrl Q to Quick Search");
+    } else {
+      setPlaceholder("");
     }
   };
-
+  useEffect(() => {
+    if (window.innerWidth > 900) {
+      setPlaceholder("Ctrl Q to Quick Search");
+    }
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
   return (
-    <header>
-      <nav
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
-          height: 80,
-          alignItems: 'center',
-          backgroundColor: 'gray',
-          padding: '0 10%',
-        }}
-      >
-        {/* COMPANY LOGO */}
-        <Link href={'/'}>
-          <Box
-            sx={{
-              display: 'flex',
-              cursor: 'pointer',
-              ':hover': { color: 'white' },
-            }}
-          >
-            <h1>Apeview</h1>
-          </Box>
-        </Link>
-        {routerHeaderRender()}
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'end',
-          }}
-        >
-          <SearchModal />
+    <Box>
+      <BoschLine />
+      <Box className={styles.header}>
+        {/* START */}
+        <Box className={styles.start} onClick={() => router.push("/")}>
+          <img className={styles.logo} src="/logo_bosch.png" />
         </Box>
-      </nav>
-    </header>
-  );
-};
 
-export default HeaderComponent;
+        {/* END */}
+        <Box className={styles.end}>
+          <TextField
+            className={styles.searchBar}
+            size="small"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <img width={20} src="/icon-pesquisa.svg" />
+                </InputAdornment>
+              ),
+            }}
+            disabled
+            placeholder={placeholder}
+            variant="outlined"
+            onClick={() => setOpenModal(true)}
+          />
+
+          <Box className={styles.add} onClick={() => router.push("/login")}>
+            <img height={"100%"} src="/icon-saida.svg" />
+          </Box>
+
+          <Button
+            className={styles.add}
+            variant="contained"
+            size="small"
+            onClick={() => router.push("/projects/create")}
+          >
+            <p style={{ fontSize: "40px" }}>+</p>
+          </Button>
+
+          <ModalSearch
+            notificate={notificate}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+          />
+        </Box>
+      </Box>
+    </Box>
+  );
+}
+
+function BoschLine() {
+  return (
+    <Box style={{ width: "100%", height: "0.5rem", display: "flex" }}>
+      <img
+        style={{ objectFit: "cover", width: "100%" }}
+        src="/Bosch-Supergraphic.svg"
+      />
+    </Box>
+  );
+}

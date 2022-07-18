@@ -1,38 +1,55 @@
-import * as React from 'react';
-import Head from 'next/head';
-import { AppProps } from 'next/app';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { CacheProvider, EmotionCache } from '@emotion/react';
-import theme from '../src/theme';
-import createEmotionCache from '../src/createEmotionCache';
-import HeaderComponent from '../components/Header';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import '../styles/globals.css';
+import "../styles/globals.css";
+import type { AppProps } from "next/app";
+import Header from "../components/Header";
+import { Alert, AlertColor, Snackbar } from "@mui/material";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
-// Client-side cache, shared for the whole session of the user in the browser.
-const clientSideEmotionCache = createEmotionCache();
-const queryClient = new QueryClient();
+function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  console.log(router.pathname);
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState<AlertColor>("info");
+  const notificate = (
+    notificationMessage: string,
+    severity?: "error" | "warning" | "info" | "success"
+  ) => {
+    setMessage(notificationMessage);
+    if (severity) {
+      console.log(severity);
+      setSeverity(severity);
+    } else {
+      setSeverity("info");
+    }
+    setOpen(true);
+  };
 
-interface MyAppProps extends AppProps {
-  emotionCache?: EmotionCache;
-}
+  const renderHeader = () => {
+    console.log(router.pathname);
+    if (
+      router.pathname != "/login" &&
+      router.pathname != "/signup" &&
+      router.pathname != undefined &&
+      router.pathname != null &&
+      router.pathname != ""
+    )
+      return <Header notificate={notificate} />;
+  };
 
-export default function MyApp(props: MyAppProps) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   return (
-    <QueryClientProvider client={queryClient}>
-      <CacheProvider value={emotionCache}>
-        <Head>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </Head>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <HeaderComponent />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </CacheProvider>
-    </QueryClientProvider>
+    <div>
+      {renderHeader()}
+      <Component {...pageProps} notificate={notificate} />
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+      >
+        <Alert severity={severity}>{message}</Alert>
+      </Snackbar>
+    </div>
   );
 }
+
+export default MyApp;
