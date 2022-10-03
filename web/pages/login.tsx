@@ -47,7 +47,7 @@ const LoginPage: NextPage = () => {
               </div>
 
               <div className={styles.textCenter}>
-                <span className={styles.txt1}>Dont have an account?</span>
+                <span className={styles.txt1}>Don't have an account?</span>
                 <Link className={styles.txt2} href="/signup">
                   Sign Up!
                 </Link>
