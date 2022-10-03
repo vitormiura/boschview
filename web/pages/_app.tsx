@@ -29,6 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     console.log(router.pathname);
     if (
       router.pathname != "/login" &&
+      
       router.pathname != "/signup" &&
       router.pathname != undefined &&
       router.pathname != null &&

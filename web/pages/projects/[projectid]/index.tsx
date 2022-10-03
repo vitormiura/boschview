@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ViewTeam from "../../../components/Team/ViewTeam";
 import styles from "../../../styles/ProjectPage.module.scss";
+import Head from "next/head";
 
 const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
   const router = useRouter();
@@ -96,69 +97,79 @@ const ProjectPage: NextPage<Notificate> = ({ notificate }) => {
   const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}/media/${data.image_path}`;
 
   return (
-    <Box>
-      <Box className={styles.header}>
-        {/* HEADER */}
-        {renderImage()}
-        <Box>
-          <h1>{data.project_name}</h1>
-          <h3>Area: {data.area}</h3>
-          <h3>Start date: {data.created_date.slice(0, 10)}</h3>
-          <h3>Contact: {data.contact}</h3>
-          <h3>Course: {data.course}</h3>
+    <>
+      <Head>
+        <title>BoschView | {data.project_name}</title>
+        <meta name="description" content="" />
+        <link
+          rel="icon"
+          href="https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJwYXRoIjoiYm9zY2hcL2FjY291bnRzXC9hNVwvNDAwMDA5OFwvZmF2aWNvbnNcL2M0XC8xXC80OTE5YmU5YTQ0MWFhNTdlZWY0ZWNjODJjNTNmYTY1Zi0xNTgyODAyMzk2LnBuZyJ9:bosch:IDFHfQ1b9xJR_hcNEngAKJ1pHo2gl9MFWBp2Bn45nFk?width={width}&rect=0,0,32,32&reference_width=32"
+        />
+      </Head>
+      <Box>
+        <Box className={styles.header}>
+          {/* HEADER */}
+          {renderImage()}
+          <Box>
+            <h1>{data.project_name}</h1>
+            <h3>Area: {data.area}</h3>
+            <h3>Start date: {data.created_date.slice(0, 10)}</h3>
+            <h3>Contact: {data.contact}</h3>
+            <h3>Course: {data.course}</h3>
+          </Box>
+          <Box className={styles.actions}>
+            <Button
+              className={styles.button}
+              variant="contained"
+              color="info"
+              onClick={() => router.push(`/projects/${data.project_id}/edit`)}
+            >
+              Edit this page
+            </Button>
+            <Button
+              className={styles.button}
+              variant="contained"
+              color="warning"
+              onClick={() => setOpenDialog(true)}
+            >
+              Delete this page
+            </Button>
+            <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+              <DialogTitle>
+                {"Are you sure you want to delete this project?"}
+              </DialogTitle>
+              <DialogActions>
+                <Button onClick={() => setOpenDialog(false)} autoFocus>
+                  No
+                </Button>
+                <Button
+                  onClick={() => {
+                    axios
+                      .delete(
+                        `${process.env.NEXT_PUBLIC_API_URL}/delete/?sl_id=${data.project_id}`
+                      )
+                      .then(() => router.push("/projects"));
+                    setOpenDialog(false);
+                  }}
+                >
+                  Yes
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Box>
         </Box>
-        <Box className={styles.actions}>
-          <Button
-            className={styles.button}
-            variant="contained"
-            color="info"
-            onClick={() => router.push(`/projects/${data.project_id}/edit`)}
-          >
-            Edit this page
-          </Button>
-          <Button
-            className={styles.button}
-            variant="contained"
-            color="warning"
-            onClick={() => setOpenDialog(true)}
-          >
-            Delete this page
-          </Button>
-          <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-            <DialogTitle>
-              {"Are you sure you want to delete this project?"}
-            </DialogTitle>
-            <DialogActions>
-              <Button onClick={() => setOpenDialog(false)} autoFocus>
-                No
-              </Button>
-              <Button
-                onClick={() => {
-                  axios
-                    .delete(
-                      `${process.env.NEXT_PUBLIC_API_URL}/delete/?sl_id=${data.project_id}`
-                    )
-                    .then(() => router.push("/projects"));
-                  setOpenDialog(false);
-                }}
-              >
-                Yes
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Box>
-      </Box>
 
-      {/* ARTICLE */}
-      <Box className={styles.article}>
-        <Box className={styles.description}>
-          <h2>Description</h2>
-          <Box>{data.description}</Box>
+        {/* ARTICLE */}
+        <Box className={styles.article}>
+          <Box className={styles.description}>
+            <h2>Description</h2>
+            <Box>{data.description}</Box>
+          </Box>
+          {renderTeam()}
+          {renderStack()}
         </Box>
-        {renderTeam()}
-        {renderStack()}
       </Box>
-    </Box>
+    </>
   );
 };
 

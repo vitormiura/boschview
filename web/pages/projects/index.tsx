@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import type { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Notificate, Project } from "../../common/types";
@@ -117,74 +118,84 @@ const SearchProjectsPage: NextPage<Notificate> = ({ notificate }) => {
   // console.log(allProjects);
 
   return (
-    <div className={styles.container}>
-      <h1>Search Projects</h1>
-      <Box className={styles.filter}>
-        {/* Filters */}
-        <Autocomplete
-          options={uniqueArray(allProjects.map((project) => project.area))}
-          renderInput={(params) => (
-            <TextField {...params} label="Filter by Area" />
-          )}
-          onInputChange={(e, value) => setAreaFilter(value)}
+    <>
+      <Head>
+        <title>BoschView | Projects</title>
+        <meta name="description" content="" />
+        <link
+          rel="icon"
+          href="https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJwYXRoIjoiYm9zY2hcL2FjY291bnRzXC9hNVwvNDAwMDA5OFwvZmF2aWNvbnNcL2M0XC8xXC80OTE5YmU5YTQ0MWFhNTdlZWY0ZWNjODJjNTNmYTY1Zi0xNTgyODAyMzk2LnBuZyJ9:bosch:IDFHfQ1b9xJR_hcNEngAKJ1pHo2gl9MFWBp2Bn45nFk?width={width}&rect=0,0,32,32&reference_width=32"
         />
-        <Autocomplete
-          options={uniqueArray(allProjects.map((project) => project.course))}
-          renderInput={(params) => (
-            <TextField {...params} label="Filter by Course" />
-          )}
-          onInputChange={(e, value) => setCourseFilter(value)}
-        />
-        <Autocomplete
-          options={uniqueArray(allProjects.map((project) => project.status))}
-          renderInput={(params) => (
-            <TextField {...params} label="Filter by Status" />
-          )}
-          onInputChange={(e, value) => setStatusFilter(value)}
-        />
-        <Autocomplete
-          options={uniqueArray(
-            allProjects
-              .map((project) => {
-                const projectTechs = project.techs.split(";");
-                return projectTechs;
-              })
-              .flat(1)
-          )}
-          renderInput={(params) => (
-            <TextField {...params} label="Filter by Tech" />
-          )}
-          onInputChange={(e, value) => {
-            setStackFilter(value);
-          }}
-        />
-        <TextField
-          fullWidth
-          label="Search by name"
-          variant="outlined"
-          value={searchFilter}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setSearchFilter(e.target.value)
-          }
-        />
-        <Button
-          sx={{ width: "100%" }}
-          variant="contained"
-          onClick={() => filterData()}
-        >
-          Search
-        </Button>
-      </Box>
-      <Box>
-        {/* Filtered Data */}
-        <p>Find {filteredData.length} projects</p>
-        <Box className={styles.cardsGrid}>
-          {filteredData.map((project, index) => {
-            return <ProjectCard key={index} project={project} />;
-          })}
+      </Head>
+      <div className={styles.container}>
+        <h1>Search Projects</h1>
+        <Box className={styles.filter}>
+          {/* Filters */}
+          <Autocomplete
+            options={uniqueArray(allProjects.map((project) => project.area))}
+            renderInput={(params) => (
+              <TextField {...params} label="Filter by Area" />
+            )}
+            onInputChange={(e, value) => setAreaFilter(value)}
+          />
+          <Autocomplete
+            options={uniqueArray(allProjects.map((project) => project.course))}
+            renderInput={(params) => (
+              <TextField {...params} label="Filter by Course" />
+            )}
+            onInputChange={(e, value) => setCourseFilter(value)}
+          />
+          <Autocomplete
+            options={uniqueArray(allProjects.map((project) => project.status))}
+            renderInput={(params) => (
+              <TextField {...params} label="Filter by Status" />
+            )}
+            onInputChange={(e, value) => setStatusFilter(value)}
+          />
+          <Autocomplete
+            options={uniqueArray(
+              allProjects
+                .map((project) => {
+                  const projectTechs = project.techs.split(";");
+                  return projectTechs;
+                })
+                .flat(1)
+            )}
+            renderInput={(params) => (
+              <TextField {...params} label="Filter by Tech" />
+            )}
+            onInputChange={(e, value) => {
+              setStackFilter(value);
+            }}
+          />
+          <TextField
+            fullWidth
+            label="Search by name"
+            variant="outlined"
+            value={searchFilter}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setSearchFilter(e.target.value)
+            }
+          />
+          <Button
+            sx={{ width: "100%" }}
+            variant="contained"
+            onClick={() => filterData()}
+          >
+            Search
+          </Button>
         </Box>
-      </Box>
-    </div>
+        <Box>
+          {/* Filtered Data */}
+          <p>Find {filteredData.length} projects</p>
+          <Box className={styles.cardsGrid}>
+            {filteredData.map((project, index) => {
+              return <ProjectCard key={index} project={project} />;
+            })}
+          </Box>
+        </Box>
+      </div>
+    </>
   );
 };
 
