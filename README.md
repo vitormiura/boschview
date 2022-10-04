@@ -1,4 +1,4 @@
-# Apeview - Web Application (Front-End)
+# BoschView - Web Application (Front-End)
 
 ## Development:
 
@@ -62,7 +62,7 @@ yarn dev
 
 ***
 
-# Apeview - Web Application (Back-End)
+# BoschView - Web Application (Back-End)
 
 ## Development:
 
